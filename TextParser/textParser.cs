@@ -15,7 +15,7 @@ class TextParser
 		string read = null;
 
 		// Search Target = String we want to locate
-		string searchTarget = "Hello";
+		string searchTarget = "hello";
 
 
 		//*************PARSING LOGIC************//
@@ -26,7 +26,11 @@ class TextParser
 
 			if (read.Contains (searchTarget)) 
 			{
-				Console.WriteLine (searchTarget);
+				// Should find EACH instance of searchTarget
+
+				Console.WriteLine (searchTarget);	// Currently writes first instance of searchTarget
+
+				Console.WriteLine(read.IndexOf(searchTarget));	// Currently writes position in string of first instance of searchTarget
 			}
 
 		}
