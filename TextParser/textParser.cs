@@ -2,6 +2,19 @@
 using System;
 using System.IO;
 
+public class Nucleosomes
+{
+	public int starting_position { get; set; }
+	public string state { get; set; }
+
+	public Nucleosomes(int start, string stt)
+	{
+		starting_position = start;
+		state = stt;
+	}
+}
+
+
 class TextParser
 {
 	static void Main()
@@ -19,25 +32,23 @@ class TextParser
 
 
 		//*************PARSING LOGIC************//
-
-
+		
+		
 		while((read = s.ReadLine()) != null)		//Reads the whole line
 		{
-
+			
 			if (read.Contains (searchTarget)) 
 			{
 				// Should find EACH instance of searchTarget
-
+				
 				Console.WriteLine (searchTarget);	// Currently writes first instance of searchTarget
-
+				
 				Console.WriteLine(read.IndexOf(searchTarget));	// Currently writes position in string of first instance of searchTarget
 			}
-
+			
 		}
-
-
-
-		//**************************************//
+				
+		//**************************************//*
 		s.Close();
 	}
 
