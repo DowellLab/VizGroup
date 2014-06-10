@@ -2,21 +2,25 @@
 using System;
 using System.IO;
 
-public class Nucleosomes
-{
-	public int starting_position { get; set; }
-	public string state { get; set; }
-
-	public Nucleosomes(int start, string stt)
-	{
-		starting_position = start;
-		state = stt;
-	}
-}
 
 
 class TextParser
 {
+	// Reads in a string (a timestep) with format [(type, position, length), (type, position, length)...].
+	// It takes each component (type, position, length) and separates out the components into a list of strings called 'ar'.
+	public static void read_time_step(string s)
+	{
+		string pattern = @"\(((.*?))\)";
+		string[] ar;
+		
+		foreach(Match match in Regex.Matches(s, pattern, RegexOptions.IgnoreCase))
+		{
+			ar = (match.Value).Split (new Char[] {' '});
+			Console.WriteLine("Found type: '{0}', Found position: '{1}', Found length '{2}'", ar[0], ar[1], ar[2]);
+			Console.WriteLine();
+		}	
+	}
+
 	static void Main()
 	{
 		Console.WriteLine("Reading the contents from the test.txt file\n");
