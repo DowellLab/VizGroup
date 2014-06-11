@@ -17,7 +17,9 @@ class TextParser
 		
 		foreach(Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
 		{
-			ObjectArray = (match.Value).Split (new Char[] {' '});
+			string intermediateString1 = Regex.Replace(match.Value, "[.,()]?", "");
+
+			ObjectArray = (intermediateString1).Split (new Char[] {' '});
 			Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectArray[0], ObjectArray[1], ObjectArray[2], ObjectArray[3]);
 			Console.WriteLine();
 		}	
