@@ -3,31 +3,54 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Reflection;
 
 
 
 class TextParser
 {
 	// Reads in a string (a timestep) with format [(type, subtype, position, length), (type, subtype, position, length)...].
-	// It takes each component (type, subtype, position, length) and separates out the components into a list of strings called 'ObjectArray'.
+	// It takes each component (type, subtype, position, length) and separates out the components into a list of strings called 'IntermediateArray'.
 	public static void read_time_step(string input)
 	{
 		string pattern = @"\(((.*?))\)";
-		string[] ObjectArray;
-		
+		string intermediateString1 = "";
+		string[] IntermediateArray = (intermediateString1).Split (new Char[] {' '});
+		List<string> ObjectList;
+
+		ObjectList = new List<string> ();
+
 		foreach(Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
 		{
-			string intermediateString1 = Regex.Replace(match.Value, "[.,()]?", "");
+			intermediateString1 = Regex.Replace(match.Value, "[.,()]?", "");
+		
+			IntermediateArray = (intermediateString1).Split (new Char[] {' '});
+			ObjectList.AddRange (IntermediateArray);
 
-			ObjectArray = (intermediateString1).Split (new Char[] {' '});
-			Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectArray[0], ObjectArray[1], ObjectArray[2], ObjectArray[3]);
-			Console.WriteLine();
 		}	
+			
+		// ObjectList currently holds all elements for all timesteps. How do you split them up?
+
+		foreach (var listItem in ObjectList) 
+		{
+			Console.WriteLine("ObjectList Element '{0}'", listItem);
+			Console.WriteLine(listItem);
+			Console.WriteLine ();
+		}
+
+//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[0], ObjectList[1], ObjectList[2], ObjectList[3]);
+
+//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[4], ObjectList[5], ObjectList[6], ObjectList[7]);
+//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[8], ObjectList[9], ObjectList[10], ObjectList[11]);
+//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[12], ObjectList[13], ObjectList[14], ObjectList[15]);
+
+
 	}
 
 	static void Main()
 	{
-		Console.WriteLine("Reading the contents from the test file\n");
+		//Console.WriteLine("Reading the contents from the test file\n");
 
 		// Use stream object to open and read file
 		StreamReader s = File.OpenText ("test3.txt");
@@ -46,6 +69,7 @@ class TextParser
 		}
 				
 		//**************************************//*
+	
 		s.Close();
 	}
 

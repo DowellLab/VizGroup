@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="textParser.cs">
     <Files>
-      <File FileName="textParser.cs" Line="5" Column="14" />
+      <File FileName="textParser.cs" Line="27" Column="4" />
+      <File FileName="Regex Toolkit" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
