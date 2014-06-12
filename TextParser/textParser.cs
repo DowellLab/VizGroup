@@ -30,22 +30,30 @@ class TextParser
 
 		}	
 			
+
 		// ObjectList currently holds all elements for all timesteps. How do you split them up?
+//		foreach (var listItem in ObjectList) 
+//		{
+//			int i = 0;
+//			Console.WriteLine("ObjectList Element '{0}'", i);
+//			i++;
+//			Console.WriteLine(listItem);
+//			Console.WriteLine ();
+//		}
+//
 
-		foreach (var listItem in ObjectList) 
+		// Prints out the contents for just the first timestep!!!
+		for (int i=0; i < 1000; i= i + 4) 
 		{
-			Console.WriteLine("ObjectList Element '{0}'", listItem);
-			Console.WriteLine(listItem);
-			Console.WriteLine ();
+			if (ObjectList [i] != null) {
+				Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[i], ObjectList[i + 1], ObjectList[i + 2], ObjectList[i + 3]);
+				Console.WriteLine ();
+			} else {
+				Console.WriteLine ("No more!");
+			}
+				
 		}
-
-//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[0], ObjectList[1], ObjectList[2], ObjectList[3]);
-
-//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[4], ObjectList[5], ObjectList[6], ObjectList[7]);
-//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[8], ObjectList[9], ObjectList[10], ObjectList[11]);
-//		Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[12], ObjectList[13], ObjectList[14], ObjectList[15]);
-
-
+			
 	}
 
 	static void Main()

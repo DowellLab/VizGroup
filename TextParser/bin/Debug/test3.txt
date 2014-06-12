@@ -1,4 +1,4 @@
-[ (Nucleosome, Stable, 0, 3), (Nucleosome, Binding, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 60, 25), (Transcription_Factor, TBP, 90, 5) ]
+[ (Nucleosome, Stable, 0, 3), (Nucleosome, Binding, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 60, 25), (Transcription_Factor, TBP, 90, 5)]
 [ (Nucleosome, Stable, 0, 3), (Nucleosome, Stable, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ]
 [ (Nucleosome, Stable, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ]
 [ (Transcription_Factor, MCM1, 2, 8), (Nucleosome, Stable, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25) ] 
