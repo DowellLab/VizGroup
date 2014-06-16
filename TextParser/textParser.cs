@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 
 
@@ -30,29 +31,16 @@ class TextParser
 
 		}	
 			
-
-		// ObjectList currently holds all elements for all timesteps. How do you split them up?
-//		foreach (var listItem in ObjectList) 
-//		{
-//			int i = 0;
-//			Console.WriteLine("ObjectList Element '{0}'", i);
-//			i++;
-//			Console.WriteLine(listItem);
-//			Console.WriteLine ();
-//		}
-//
-
-		// Prints out the contents for just the first timestep!!!
-		for (int i=0; i < 1000; i= i + 4) 
+		// Prints out the contents for every timestep
+		// ObjectList.Count Divided by 4 = Number of Objects in TimeStep!!!
+		for (int i=0; i < (ObjectList.Count); i += 4) 
 		{
-			if (ObjectList [i] != null) {
-				Console.WriteLine("Found type: '{0}', Found subtype: '{1}', Found position: '{2}', Found length '{3}'", ObjectList[i], ObjectList[i + 1], ObjectList[i + 2], ObjectList[i + 3]);
-				Console.WriteLine ();
-			} else {
-				Console.WriteLine ("No more!");
-			}
-				
+			Console.WriteLine ("Type: '{0}', Subtype: '{1}', Position: '{2}', Length '{3}'", ObjectList [i], ObjectList [i + 1], ObjectList [i + 2], ObjectList [i + 3]);
+			Console.WriteLine (ObjectList.Count);
+			Console.WriteLine ();
+		
 		}
+
 			
 	}
 
