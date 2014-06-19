@@ -1,0 +1,12 @@
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/obj/Debug/Assembly-CSharp.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/UnityEngine.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/UnityEditor.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Mono.Cecil.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/nunit.framework.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/Unity.DataContract.dll
+/Users/emilyowens/Desktop/VizGroup/TranscriptionViz/Temp/bin/Debug/ICSharpCode.NRefactory.dll

@@ -1,0 +1,16 @@
+﻿<Properties>
+  <DisabledProjects>
+    <String>Assembly-UnityScript-firstpass.unityproj</String>
+  </DisabledProjects>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TimeStep.cs">
+    <Files>
+      <File FileName="Assets/TimeStep.cs" Line="57" Column="2" />
+      <File FileName="Assets/VizGeneration.cs" Line="27" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
