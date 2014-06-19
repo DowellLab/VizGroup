@@ -13,13 +13,34 @@ using System.Linq;
 public class TimeStep : MonoBehaviour
 {
 
+	// Implement waiting
+	static public TimeStep instance;
+
+	static public bool readyForNext = true;
+
+	void Awake()
+	{
+		instance = this;
+	}
+
+	static public void DoCoroutine()
+	{
+		instance.StartCoroutine ("JustWait");
+	}
+		
+
 	IEnumerator JustWait()
 	{
-		Debug.Log("Wait for a little bit.");
+		readyForNext = false;
+		Debug.Log("Start waiting.");
 		yield return new WaitForSeconds (2);
+//		Debug.Log("End waiting.");
+		readyForNext = true;
+//		ReadFile ();
 	}
 
 
+	// Generation of Objects ---> Should be better way to implement
 	public static void CreateObjects(List<string> TimeStep)
 	{
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
@@ -31,11 +52,14 @@ public class TimeStep : MonoBehaviour
 				int Position = Convert.ToInt32 (TimeStep [i + 2]);
 				int Length = Convert.ToInt32 (TimeStep [i + 3]);
 
+				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace
+
 				GameObject Nucleosome;
 
 				Nucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 				Nucleosome.transform.position = new Vector3 (Position / 3, 0, 0);
 				Nucleosome.transform.localScale = new Vector3 (Length / 3, 1, 1);		// Scale extends on both sides, so is a bad ultimate choice
+		
 
 				if (TimeStep [i + 1] == "Binding") {
 					Nucleosome.gameObject.renderer.material.color = new Color (250, 0, 0);
@@ -52,6 +76,8 @@ public class TimeStep : MonoBehaviour
 			if (TimeStep [i] == "Transcription_Factor") {
 				int Position = Convert.ToInt32 (TimeStep [i + 2]);
 				int Length = Convert.ToInt32 (TimeStep [i + 3]);
+
+				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace		
 
 				GameObject TranscriptionFactor;
 
@@ -73,6 +99,8 @@ public class TimeStep : MonoBehaviour
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 				int Position = Convert.ToInt32 (TimeStep [i + 2]);
 				int Length = Convert.ToInt32 (TimeStep [i + 3]);
+
+				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace
 
 				GameObject TranscriptionalMachinery;
 
@@ -101,7 +129,6 @@ public class TimeStep : MonoBehaviour
 
 		ObjectList = new List<string> ();
 
-
 		foreach(Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
 		{
 			intermediateString1 = Regex.Replace(match.Value, "[.,()]?", "");
@@ -111,6 +138,7 @@ public class TimeStep : MonoBehaviour
 
 		}	
 			
+		readyForNext = false;
 		return ObjectList;
 
 	}
@@ -127,16 +155,16 @@ public class TimeStep : MonoBehaviour
 
 		// The current Timestep
 		int j = 1;
-		var TimeStep = new List<string>();
+		var TimeStepList = new List<string>();
 
 		read = inputFile.ReadLine ();		// Remove while statement, and this reads the first line only
 
-		Debug.Log (String.Format("Timestep {0}", j));
-		TimeStep = read_time_step (read);
+		Debug.Log (String.Format("TimestepList {0}", j));
+		TimeStepList = read_time_step (read);
 
-		Debug.Log (TimeStep [0]);
+		Debug.Log (TimeStepList [0]);
 
-		CreateObjects (TimeStep);
+		CreateObjects (TimeStepList);
 
 
 		j++;
@@ -152,6 +180,8 @@ public class TimeStep : MonoBehaviour
 
 	public static void ReadFile()
 	{
+
+
 		// Use stream object to open and read file
 		StreamReader inputFile = File.OpenText ("test3.txt");
 
@@ -162,30 +192,34 @@ public class TimeStep : MonoBehaviour
 
 		// The current Timestep
 		int j = 1;
-		var TimeStep = new List<string>();
-
-//		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
-//		{
-
-			read = inputFile.ReadLine ();		// Remove while statement, and this reads the first line only
-
-			Debug.Log (String.Format("Timestep {0}", j));
-			TimeStep = read_time_step (read);
-
-			Debug.Log (TimeStep [0]);
-
-		CreateObjects (TimeStep);
+		var TimeStepList = new List<string>();
 
 
-		//			Debug.Log (TimeStep [0]);
+
+		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
+		{
+		
+			Debug.Log (String.Format("TimestepList {0}", j));
+			TimeStepList = read_time_step (read);
+
+			Debug.Log (TimeStepList [0]);
 
 
-//		StartCoroutine(JustWait ());
+			CreateObjects (TimeStepList);
+
+			DoCoroutine ();
+
+			Debug.Log("End waiting.");
+
+			if (readyForNext == false)
+			{
+				return;
+			}
+
+
 			j++;
 
-
-
-//		}
+		}
 
 		//**************************************//*
 

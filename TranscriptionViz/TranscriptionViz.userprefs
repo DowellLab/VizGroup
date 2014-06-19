@@ -3,10 +3,10 @@
     <String>Assembly-UnityScript-firstpass.unityproj</String>
   </DisabledProjects>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TimeStep.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/VizGeneration.cs">
     <Files>
-      <File FileName="Assets/TimeStep.cs" Line="57" Column="2" />
-      <File FileName="Assets/VizGeneration.cs" Line="27" Column="7" />
+      <File FileName="Assets/TimeStep.cs" Line="183" Column="3" />
+      <File FileName="Assets/VizGeneration.cs" Line="17" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -14,7 +14,7 @@ public class VizGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		TimeStep.InitialTimestep();
+//		TimeStep.InitialTimestep();
 
 	}
 
