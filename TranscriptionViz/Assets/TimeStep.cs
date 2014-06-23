@@ -13,6 +13,31 @@ using System.Linq;
 public class TimeStep : MonoBehaviour
 {
 
+	//Implement Destruction of Objects
+	static public void DestroyObjects()
+	{
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		foreach (GameObject go in nucleosomes)
+		{
+			Destroy (go);
+		}
+
+		foreach (GameObject go in transcriptionFactors)
+		{
+			Destroy (go);
+		}
+
+		foreach (GameObject go in transcriptionalMachineries)
+		{
+			Destroy (go);
+		}
+			
+	}
+
+
 	// Implement waiting
 	static public TimeStep instance;
 
@@ -21,6 +46,7 @@ public class TimeStep : MonoBehaviour
 	void Awake()
 	{
 		instance = this;
+		Application.targetFrameRate = 300;
 	}
 
 	static public void DoCoroutine()
@@ -34,7 +60,7 @@ public class TimeStep : MonoBehaviour
 		readyForNext = false;
 		Debug.Log("Start waiting.");
 		yield return new WaitForSeconds (2);
-//		Debug.Log("End waiting.");
+		Debug.Log("End waiting.");
 		readyForNext = true;
 //		ReadFile ();
 	}
@@ -59,6 +85,8 @@ public class TimeStep : MonoBehaviour
 				Nucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 				Nucleosome.transform.position = new Vector3 (Position / 3, 0, 0);
 				Nucleosome.transform.localScale = new Vector3 (Length / 3, 1, 1);		// Scale extends on both sides, so is a bad ultimate choice
+
+				Nucleosome.tag = "Nucleosome";
 		
 
 				if (TimeStep [i + 1] == "Binding") {
@@ -85,6 +113,8 @@ public class TimeStep : MonoBehaviour
 				TranscriptionFactor.transform.position = new Vector3 (Position / 3, 0, 0);
 				TranscriptionFactor.transform.localScale = new Vector3 (Length / 3, 1, 1);
 
+				TranscriptionFactor.tag = "TranscriptionFactor";
+
 				if (TimeStep [i + 1] == "REB1") {
 					TranscriptionFactor.gameObject.renderer.material.color = new Color (250, 0, 10);
 				} else if (TimeStep [i + 1] == "TBP") {
@@ -107,6 +137,8 @@ public class TimeStep : MonoBehaviour
 				TranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
 				TranscriptionalMachinery.transform.position = new Vector3 (Position / 3, 0, 0);
 				TranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3, 1, 1);
+
+				TranscriptionalMachinery.tag = "TranscriptionalMachinery";
 
 				if (TimeStep [i + 1] == "Init0" || TimeStep [i + 1] == "Init1") {
 					TranscriptionalMachinery.gameObject.renderer.material.color = new Color (50, 50, 150);
@@ -199,25 +231,29 @@ public class TimeStep : MonoBehaviour
 		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
 		{
 		
+			DestroyObjects ();
+
 			Debug.Log (String.Format("TimestepList {0}", j));
 			TimeStepList = read_time_step (read);
 
 			Debug.Log (TimeStepList [0]);
 
-
 			CreateObjects (TimeStepList);
 
 			DoCoroutine ();
 
-			Debug.Log("End waiting.");
+//			Debug.Log("Time for next timestep.");
 
-			if (readyForNext == false)
-			{
-				return;
-			}
+//			if (readyForNext == false)
+//			{
+//				return;
+//			}
+//
 
 
 			j++;
+
+//			DestroyObjects ();
 
 		}
 

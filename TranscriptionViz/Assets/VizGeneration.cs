@@ -14,7 +14,7 @@ public class VizGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-//		TimeStep.InitialTimestep();
+		TimeStep.InitialTimestep();
 
 	}
 
@@ -22,11 +22,17 @@ public class VizGeneration : MonoBehaviour {
 	void Update () 
 	{
 
-		if (Input.GetKeyDown ("space")) 
+	}
+
+	void OnGUI()
+	{
+		if (GUI.Button(new Rect(10, 10, 50, 50), "Start"))
 		{
 			TimeStep.ReadFile ();
 		}
 
-
 	}
+
+
+
 }
