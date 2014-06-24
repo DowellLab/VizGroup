@@ -10,8 +10,159 @@ using System.Linq;
 
 
 
+public class Nucleosome
+{
+	static int speed = 300;
+
+	public string Subtype;
+
+	public int StartPosition;
+
+	public int Length;
+
+	public GameObject CreateNucleosome(Nucleosome nucleosome)
+	{
+		GameObject NewNucleosome;
+		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+		NewNucleosome.transform.localScale = new Vector3 (nucleosome.Length / 3, nucleosome.Length / 3, nucleosome.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
+
+		nucleosome.StartPosition += nucleosome.Length / 2;
+
+
+		NewNucleosome.transform.position = new Vector3 (0, -10, -20);
+
+		Vector3 endPosition = new Vector3((nucleosome.StartPosition/3) , 0, 0);
+
+		NewNucleosome.transform.position = Vector3.Lerp (NewNucleosome.transform.position, endPosition, speed * Time.deltaTime);
+
+		NewNucleosome.transform.position = new Vector3 (nucleosome.StartPosition / 3, 0, 0);
+
+		NewNucleosome.tag = "Nucleosome";
+
+
+		// Nucleosome Color
+		if (nucleosome.Subtype == "Binding")
+		{
+			NewNucleosome.gameObject.renderer.material.color = new Color (250, 0, 0);
+
+		} else if (nucleosome.Subtype == "Unbinding") {
+
+			NewNucleosome.gameObject.renderer.material.color = new Color (0, 250, 0);
+
+		} else {
+
+			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 250);
+		}
+
+		return NewNucleosome;
+	}
+}
+
+public class TranscriptionFactor
+{
+	static int speed = 300;
+
+	public string Subtype;
+
+	public int StartPosition;
+
+	public int Length;
+
+	public GameObject CreateTranscriptionFactor(TranscriptionFactor transcriptionFactor)
+	{
+		GameObject NewTranscriptionFactor;
+		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
+		NewTranscriptionFactor.transform.localScale = new Vector3 (transcriptionFactor.Length / 3, transcriptionFactor.Length / 3, transcriptionFactor.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
+
+		transcriptionFactor.StartPosition += transcriptionFactor.Length / 2;
+
+
+		NewTranscriptionFactor.transform.position = new Vector3 (0, -10, -20);
+
+		Vector3 endPosition = new Vector3((transcriptionFactor.StartPosition/3) , 0, 0);
+
+		NewTranscriptionFactor.transform.position = Vector3.Lerp (NewTranscriptionFactor.transform.position, endPosition, speed * Time.deltaTime);
+
+		NewTranscriptionFactor.transform.position = new Vector3 (transcriptionFactor.StartPosition / 3, 0, 0);
+
+		NewTranscriptionFactor.tag = "TranscriptionFactor";
+
+
+		// Transcription Factor Color
+		if (transcriptionFactor.Subtype == "REB1")
+		{
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (250, 0, 10);
+
+		} else if (transcriptionFactor.Subtype == "TBP") {
+
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (250, 10, 0);
+
+		} else {
+
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (200, 20, 5);
+		}
+
+		return NewTranscriptionFactor;
+	}
+
+}
+
+public class TranscriptionalMachinery
+{
+	static int speed = 300;
+
+	public string Subtype;
+
+	public int StartPosition;
+
+	public int Length;
+
+	public GameObject CreateTranscriptionalMachinery(TranscriptionalMachinery transcriptionalMachinery)
+	{
+		GameObject NewTranscriptionalMachinery;
+		NewTranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
+		NewTranscriptionalMachinery.transform.localScale = new Vector3 (transcriptionalMachinery.Length / 3, transcriptionalMachinery.Length / 3, transcriptionalMachinery.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
+
+		transcriptionalMachinery.StartPosition += transcriptionalMachinery.Length / 2;
+
+
+		NewTranscriptionalMachinery.transform.position = new Vector3 (0, -10, -20);
+
+		Vector3 endPosition = new Vector3((transcriptionalMachinery.StartPosition/3) , 0, 0);
+
+		NewTranscriptionalMachinery.transform.position = Vector3.Lerp (NewTranscriptionalMachinery.transform.position, endPosition, speed * Time.deltaTime);
+
+		NewTranscriptionalMachinery.transform.position = new Vector3 (transcriptionalMachinery.StartPosition / 3, 0, 0);
+
+		NewTranscriptionalMachinery.tag = "TranscriptionalMachinery";
+
+
+		// Transcription Factor Color
+		if (transcriptionalMachinery.Subtype == "Init0" || transcriptionalMachinery.Subtype == "Init1")
+		{
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (100, 5, 50);
+
+		} else {
+
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (50, 100, 5);
+		}
+
+		return NewTranscriptionalMachinery;
+	}
+}
+
+
 public class TimeStep : MonoBehaviour
 {
+//	static int speed = 300;
+
+
+	void Awake()
+	{
+		instance = this;
+//		QualitySettings.vSyncCount = 0;
+//		Application.targetFrameRate = 1;
+	}
 
 	//Implement Destruction of Objects
 	static public void DestroyObjects()
@@ -43,11 +194,7 @@ public class TimeStep : MonoBehaviour
 
 	static public bool readyForNext = true;
 
-	void Awake()
-	{
-		instance = this;
-		Application.targetFrameRate = 300;
-	}
+
 
 	static public void DoCoroutine()
 	{
@@ -75,77 +222,40 @@ public class TimeStep : MonoBehaviour
 
 			// Handle Nucleosome Creation
 			if (TimeStep [i] == "Nucleosome") {
-				int Position = Convert.ToInt32 (TimeStep [i + 2]);
-				int Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace
+				Nucleosome TestNucleosome = new Nucleosome ();
+				TestNucleosome.Subtype = TimeStep[i + 1];
+				TestNucleosome.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
+				TestNucleosome.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				GameObject Nucleosome;
 
-				Nucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-				Nucleosome.transform.position = new Vector3 (Position / 3, 0, 0);
-				Nucleosome.transform.localScale = new Vector3 (Length / 3, 1, 1);		// Scale extends on both sides, so is a bad ultimate choice
+				TestNucleosome.CreateNucleosome (TestNucleosome);
 
-				Nucleosome.tag = "Nucleosome";
-		
-
-				if (TimeStep [i + 1] == "Binding") {
-					Nucleosome.gameObject.renderer.material.color = new Color (250, 0, 0);
-				} else if (TimeStep [i + 1] == "Unbinding") {
-					Nucleosome.gameObject.renderer.material.color = new Color (0, 250, 0);
-				} else {
-					Nucleosome.gameObject.renderer.material.color = new Color (0, 0, 250);
-				}
 
 			}
 
 
 			// Handle Transcription Factor Creation
 			if (TimeStep [i] == "Transcription_Factor") {
-				int Position = Convert.ToInt32 (TimeStep [i + 2]);
-				int Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace		
+				TranscriptionFactor TestTranscriptionFactor = new TranscriptionFactor ();
+				TestTranscriptionFactor.Subtype = TimeStep[i + 1];
+				TestTranscriptionFactor.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
+				TestTranscriptionFactor.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				GameObject TranscriptionFactor;
-
-				TranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-				TranscriptionFactor.transform.position = new Vector3 (Position / 3, 0, 0);
-				TranscriptionFactor.transform.localScale = new Vector3 (Length / 3, 1, 1);
-
-				TranscriptionFactor.tag = "TranscriptionFactor";
-
-				if (TimeStep [i + 1] == "REB1") {
-					TranscriptionFactor.gameObject.renderer.material.color = new Color (250, 0, 10);
-				} else if (TimeStep [i + 1] == "TBP") {
-					TranscriptionFactor.gameObject.renderer.material.color = new Color (250, 10, 0);
-				} else {
-					TranscriptionFactor.gameObject.renderer.material.color = new Color (250, 20, 5);
-				}
+				TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
 			}
 
 
 			// Handle Transcriptional Machinery
 			if (TimeStep [i] == "Transcriptional_Machinery") {
-				int Position = Convert.ToInt32 (TimeStep [i + 2]);
-				int Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				Position += Length / 2;			// TERRIBLE!!! Just use to DEMONSTRATE spacing ---> Delete and replace
+				TranscriptionalMachinery TestTranscriptionalMachinery = new TranscriptionalMachinery ();
+				TestTranscriptionalMachinery.Subtype = TimeStep[i + 1];
+				TestTranscriptionalMachinery.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
+				TestTranscriptionalMachinery.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				GameObject TranscriptionalMachinery;
-
-				TranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-				TranscriptionalMachinery.transform.position = new Vector3 (Position / 3, 0, 0);
-				TranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3, 1, 1);
-
-				TranscriptionalMachinery.tag = "TranscriptionalMachinery";
-
-				if (TimeStep [i + 1] == "Init0" || TimeStep [i + 1] == "Init1") {
-					TranscriptionalMachinery.gameObject.renderer.material.color = new Color (50, 50, 150);
-				} else {
-					TranscriptionalMachinery.gameObject.renderer.material.color = new Color (50, 150, 50);
-				}
-
+				TestTranscriptionalMachinery.CreateTranscriptionalMachinery (TestTranscriptionalMachinery);
 			}
 		}
 	}
@@ -170,7 +280,7 @@ public class TimeStep : MonoBehaviour
 
 		}	
 			
-		readyForNext = false;
+//		readyForNext = false;
 		return ObjectList;
 
 	}
@@ -228,32 +338,52 @@ public class TimeStep : MonoBehaviour
 
 
 
-		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
+		// Could count number of lines in Input file
+		// CALL UPDATE from ANOTHER method??
+		// UPDATE HANDLES ANIMATION ONLY???
+
+		while((j < 10) && (read = inputFile.ReadLine()) != null)		//Reads the whole line
 		{
 		
-			DestroyObjects ();
+			if (j == 1)
+			{
+				Debug.Log (String.Format("TimestepList {0}", j));
 
-			Debug.Log (String.Format("TimestepList {0}", j));
-			TimeStepList = read_time_step (read);
-
-			Debug.Log (TimeStepList [0]);
-
-			CreateObjects (TimeStepList);
-
-			DoCoroutine ();
-
-//			Debug.Log("Time for next timestep.");
-
-//			if (readyForNext == false)
-//			{
-//				return;
-//			}
+//				TimeStepList = read_time_step (read);
 //
+//				Debug.Log (TimeStepList [0]);
+//
+//				CreateObjects (TimeStepList);
+
+				j++;
+
+			} else {
+
+				DestroyObjects ();
+
+				Debug.Log (String.Format("TimestepList {0}", j));
+				TimeStepList = read_time_step (read);
+
+				Debug.Log (TimeStepList [0]);
+
+				CreateObjects (TimeStepList);
+
+//				DoCoroutine ();
+
+//				Debug.Log("Time for next timestep.");
+
+				if (readyForNext == false)
+				{
+					return;
+				}
 
 
-			j++;
+				j++;
 
-//			DestroyObjects ();
+			}
+
+
+
 
 		}
 

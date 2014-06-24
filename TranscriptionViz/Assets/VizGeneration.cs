@@ -21,7 +21,10 @@ public class VizGeneration : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
+//		if (Input.GetKeyDown("space"))
+//		{
+//			TimeStep.ReadFile ();
+//		}
 	}
 
 	void OnGUI()
