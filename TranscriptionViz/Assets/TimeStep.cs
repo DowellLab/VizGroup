@@ -12,7 +12,7 @@ using System.Linq;
 
 public class Nucleosome
 {
-	static int speed = 300;
+//	static int speed = 10;
 
 	public string Subtype;
 
@@ -26,16 +26,18 @@ public class Nucleosome
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 		NewNucleosome.transform.localScale = new Vector3 (nucleosome.Length / 3, nucleosome.Length / 3, nucleosome.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
 
-		nucleosome.StartPosition += nucleosome.Length / 2;
+		nucleosome.StartPosition += nucleosome.Length / 3;
+		NewNucleosome.transform.position = new Vector3 ((nucleosome.StartPosition/3), 0, 0);
 
+//		NewNucleosome.transform.position = new Vector3 ((nucleosome.StartPosition/3), 10, 0);
 
-		NewNucleosome.transform.position = new Vector3 (0, -10, -20);
+//		Vector3 endPosition = new Vector3((nucleosome.StartPosition/3) , 0, 0);
 
-		Vector3 endPosition = new Vector3((nucleosome.StartPosition/3) , 0, 0);
+//		NewNucleosome.transform.position = Vector3.Lerp (NewNucleosome.transform.position, endPosition, speed * Time.deltaTime);
 
-		NewNucleosome.transform.position = Vector3.Lerp (NewNucleosome.transform.position, endPosition, speed * Time.deltaTime);
+//		NewNucleosome.transform.position = new Vector3 (nucleosome.StartPosition / 3, 0, 0);
+//		NewNucleosome.transform.Translate (Vector3.down * speed * Time.deltaTime);
 
-		NewNucleosome.transform.position = new Vector3 (nucleosome.StartPosition / 3, 0, 0);
 
 		NewNucleosome.tag = "Nucleosome";
 
@@ -74,7 +76,7 @@ public class TranscriptionFactor
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
 		NewTranscriptionFactor.transform.localScale = new Vector3 (transcriptionFactor.Length / 3, transcriptionFactor.Length / 3, transcriptionFactor.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
 
-		transcriptionFactor.StartPosition += transcriptionFactor.Length / 2;
+		transcriptionFactor.StartPosition += transcriptionFactor.Length / 3;
 
 
 		NewTranscriptionFactor.transform.position = new Vector3 (0, -10, -20);
@@ -123,7 +125,7 @@ public class TranscriptionalMachinery
 		NewTranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
 		NewTranscriptionalMachinery.transform.localScale = new Vector3 (transcriptionalMachinery.Length / 3, transcriptionalMachinery.Length / 3, transcriptionalMachinery.Length/3);		// Scale extends on both sides, so is a bad ultimate choice
 
-		transcriptionalMachinery.StartPosition += transcriptionalMachinery.Length / 2;
+		transcriptionalMachinery.StartPosition += transcriptionalMachinery.Length / 3;
 
 
 		NewTranscriptionalMachinery.transform.position = new Vector3 (0, -10, -20);
@@ -154,18 +156,18 @@ public class TranscriptionalMachinery
 
 public class TimeStep : MonoBehaviour
 {
-//	static int speed = 300;
 
+	static public TimeStep instance;
 
 	void Awake()
 	{
 		instance = this;
-//		QualitySettings.vSyncCount = 0;
-//		Application.targetFrameRate = 1;
+		QualitySettings.vSyncCount = 0;
+		Application.targetFrameRate = 2;
 	}
 
 	//Implement Destruction of Objects
-	static public void DestroyObjects()
+	public static void DestroyObjects()
 	{
 		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
 		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
@@ -190,31 +192,31 @@ public class TimeStep : MonoBehaviour
 
 
 	// Implement waiting
-	static public TimeStep instance;
 
 	static public bool readyForNext = true;
 
 
 
-	static public void DoCoroutine()
+	public IEnumerator DoCoroutine()
 	{
-		instance.StartCoroutine ("JustWait");
+		yield return instance.StartCoroutine ("JustWait");
 	}
 		
 
-	IEnumerator JustWait()
+	public IEnumerator JustWait()
 	{
 		readyForNext = false;
 		Debug.Log("Start waiting.");
 		yield return new WaitForSeconds (2);
 		Debug.Log("End waiting.");
 		readyForNext = true;
+		Debug.Log("readyForNext reset");
 //		ReadFile ();
 	}
 
 
 	// Generation of Objects ---> Should be better way to implement
-	public static void CreateObjects(List<string> TimeStep)
+	public IEnumerator CreateObjects(List<string> TimeStep)
 	{
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
 
@@ -229,8 +231,8 @@ public class TimeStep : MonoBehaviour
 				TestNucleosome.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
 
-				TestNucleosome.CreateNucleosome (TestNucleosome);
-
+				yield return TestNucleosome.CreateNucleosome (TestNucleosome);
+//				TestNucleosome.CreateNucleosome (TestNucleosome);
 
 			}
 
@@ -243,7 +245,9 @@ public class TimeStep : MonoBehaviour
 				TestTranscriptionFactor.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
 				TestTranscriptionFactor.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
+				yield return TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
+//				TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
+
 			}
 
 
@@ -255,7 +259,9 @@ public class TimeStep : MonoBehaviour
 				TestTranscriptionalMachinery.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
 				TestTranscriptionalMachinery.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
-				TestTranscriptionalMachinery.CreateTranscriptionalMachinery (TestTranscriptionalMachinery);
+				yield return TestTranscriptionalMachinery.CreateTranscriptionalMachinery (TestTranscriptionalMachinery);
+//				TestTranscriptionalMachinery.CreateTranscriptionalMachinery (TestTranscriptionalMachinery);
+
 			}
 		}
 	}
@@ -285,7 +291,7 @@ public class TimeStep : MonoBehaviour
 
 	}
 
-	public static void InitialTimestep()
+	public IEnumerator InitialTimestep()
 	{
 		// Use stream object to open and read file
 		StreamReader inputFile = File.OpenText ("test3.txt");
@@ -304,9 +310,9 @@ public class TimeStep : MonoBehaviour
 		Debug.Log (String.Format("TimestepList {0}", j));
 		TimeStepList = read_time_step (read);
 
-		Debug.Log (TimeStepList [0]);
+//		Debug.Log (TimeStepList [0]);
 
-		CreateObjects (TimeStepList);
+		yield return instance.CreateObjects (TimeStepList);
 
 
 		j++;
@@ -320,7 +326,7 @@ public class TimeStep : MonoBehaviour
 
 
 
-	public static void ReadFile()
+	public IEnumerator ReadFile()
 	{
 
 
@@ -342,54 +348,52 @@ public class TimeStep : MonoBehaviour
 		// CALL UPDATE from ANOTHER method??
 		// UPDATE HANDLES ANIMATION ONLY???
 
-		while((j < 10) && (read = inputFile.ReadLine()) != null)		//Reads the whole line
+		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
 		{
 		
-			if (j == 1)
-			{
-				Debug.Log (String.Format("TimestepList {0}", j));
-
-//				TimeStepList = read_time_step (read);
-//
-//				Debug.Log (TimeStepList [0]);
-//
-//				CreateObjects (TimeStepList);
+			if (j == 1) {
 
 				j++;
 
 			} else {
 
+		
+//				instance.StartCoroutine ("JustWait");
+
+//				if (readyForNext == true) {
+
+//					Debug.Log ("Entered Location");
+			
+
 				DestroyObjects ();
 
-				Debug.Log (String.Format("TimestepList {0}", j));
+				Debug.Log (String.Format ("TimestepList {0}", j));
 				TimeStepList = read_time_step (read);
 
 				Debug.Log (TimeStepList [0]);
 
-				CreateObjects (TimeStepList);
+				yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
 //				DoCoroutine ();
 
 //				Debug.Log("Time for next timestep.");
 
-				if (readyForNext == false)
-				{
-					return;
-				}
-
 
 				j++;
+				
+				}
 
-			}
+	
 
-
-
+//			}
+				
 
 		}
 
 		//**************************************//*
 
 		inputFile.Close();
+
 	}
 
 

@@ -8,34 +8,81 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.Xml;
+
+
+//public static class StreamExtensions
+//{
+//	public static void CopyTo(this Stream input, Stream output)
+//	{
+//		if (input == null)
+//		{
+//			throw new ArgumentNullException("input");
+//		}
+//		if (output == null)
+//		{
+//			throw new ArgumentNullException("output");
+//		}
+//						
+//		byte[] buffer = new byte[8192];
+//		int bytesRead;
+//
+//		while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
+//		{
+//			output.Write(buffer, 0, bytesRead);
+//		}
+//	}
+//}
+
+
+
 
 public class VizGeneration : MonoBehaviour {
+
+	public int j = 0;
+	public int FrameCount = 1;
+//	public int iterations = 0;
+
 
 	// Use this for initialization
 	void Start () {
 	
-		TimeStep.InitialTimestep();
+//		StartCoroutine(TimeStep.instance.InitialTimestep ());
+
+//		FileStream fileStream = new FileStream(@"test3.txt", 
+//			FileMode.OpenOrCreate, 
+//			FileAccess.ReadWrite, 
+//			FileShare.None);
 
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-//		if (Input.GetKeyDown("space"))
-//		{
-//			TimeStep.ReadFile ();
-//		}
+//		OnGUI ();
+
 	}
 
 	void OnGUI()
 	{
-		if (GUI.Button(new Rect(10, 10, 50, 50), "Start"))
-		{
-			TimeStep.ReadFile ();
+	
+			
+		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) {
+		
+			StartCoroutine_Auto (TimeStep.instance.ReadFile ());
+				
+
 		}
+				
+			
 
+
+		// Increases by ? every second
+			FrameCount++;
+
+//			Debug.Log (FrameCount);
+
+		}
+		
 	}
-
-
-
-}
+//}

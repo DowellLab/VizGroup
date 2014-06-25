@@ -7,4 +7,4 @@
 [ (Transcriptional_Machinery, Init0, 5, 15), (Nucleosome, Stable, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ] 
 [ (Transcriptional_Machinery, Init1, 5, 15), (Nucleosome, Unbinding, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 61, 25), (Transcription_Factor, TBP, 90, 5) ] 
 [ (Transcriptional_Machinery, Crick-Forwards, 8, 15), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ] 
-[ (Transcriptional_Machinery, Crick-Forwards, 15, 15), (Nucleosome, Stable, 50, 25), (Transcription_Factor, TBP, 90, 5) ] 
+[ (Transcriptional_Machinery, Crick-Forwards, 15, 15), (Nucleosome, Stable, 50, 25), (Transcription_Factor, TBP, 90, 5) ]
