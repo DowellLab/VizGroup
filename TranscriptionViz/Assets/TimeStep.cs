@@ -274,7 +274,7 @@ public class TimeStep : MonoBehaviour
 
 	}
 
-	public static void InitialTimestep()
+	public IEnumerator InitialTimestep()
 	{
 		// Use stream object to open and read file
 		StreamReader inputFile = File.OpenText ("test3.txt");
@@ -295,7 +295,7 @@ public class TimeStep : MonoBehaviour
 
 //		Debug.Log (TimeStepList [0]);
 
-		CreateObjects (TimeStepList);
+		yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
 
 		j++;
