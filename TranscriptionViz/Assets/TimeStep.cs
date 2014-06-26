@@ -193,30 +193,15 @@ public class TimeStep : MonoBehaviour
 
 	// Implement waiting
 
-	static public bool readyForNext = true;
-
-
-
-	public IEnumerator DoCoroutine()
-	{
-		yield return instance.StartCoroutine ("JustWait");
-	}
-		
 
 	public IEnumerator JustWait()
 	{
-		readyForNext = false;
-		Debug.Log("Start waiting.");
-		yield return new WaitForSeconds (2);
-		Debug.Log("End waiting.");
-		readyForNext = true;
-		Debug.Log("readyForNext reset");
-//		ReadFile ();
+		yield return new WaitForSeconds (0.5f);
 	}
 
 
 	// Generation of Objects ---> Should be better way to implement
-	public IEnumerator CreateObjects(List<string> TimeStep)
+	public static IEnumerator CreateObjects(List<string> TimeStep)
 	{
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
 
@@ -232,7 +217,6 @@ public class TimeStep : MonoBehaviour
 
 
 				yield return TestNucleosome.CreateNucleosome (TestNucleosome);
-//				TestNucleosome.CreateNucleosome (TestNucleosome);
 
 			}
 
@@ -246,7 +230,6 @@ public class TimeStep : MonoBehaviour
 				TestTranscriptionFactor.Length = Convert.ToInt32 (TimeStep [i + 3]);
 
 				yield return TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
-//				TestTranscriptionFactor.CreateTranscriptionFactor (TestTranscriptionFactor);
 
 			}
 
@@ -254,7 +237,7 @@ public class TimeStep : MonoBehaviour
 			// Handle Transcriptional Machinery
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 
-				TranscriptionalMachinery TestTranscriptionalMachinery = new TranscriptionalMachinery ();
+				TranscriptionalMachinery TestTranscriptionalMachinery = new TranscriptionalMachinery();
 				TestTranscriptionalMachinery.Subtype = TimeStep[i + 1];
 				TestTranscriptionalMachinery.StartPosition = Convert.ToInt32 (TimeStep [i + 2]);
 				TestTranscriptionalMachinery.Length = Convert.ToInt32 (TimeStep [i + 3]);
@@ -291,7 +274,7 @@ public class TimeStep : MonoBehaviour
 
 	}
 
-	public IEnumerator InitialTimestep()
+	public static void InitialTimestep()
 	{
 		// Use stream object to open and read file
 		StreamReader inputFile = File.OpenText ("test3.txt");
@@ -312,7 +295,7 @@ public class TimeStep : MonoBehaviour
 
 //		Debug.Log (TimeStepList [0]);
 
-		yield return instance.CreateObjects (TimeStepList);
+		CreateObjects (TimeStepList);
 
 
 		j++;
@@ -357,14 +340,6 @@ public class TimeStep : MonoBehaviour
 
 			} else {
 
-		
-//				instance.StartCoroutine ("JustWait");
-
-//				if (readyForNext == true) {
-
-//					Debug.Log ("Entered Location");
-			
-
 				DestroyObjects ();
 
 				Debug.Log (String.Format ("TimestepList {0}", j));
@@ -374,20 +349,11 @@ public class TimeStep : MonoBehaviour
 
 				yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
-//				DoCoroutine ();
-
-//				Debug.Log("Time for next timestep.");
-
-
 				j++;
+
+				yield return StartCoroutine_Auto (JustWait ());
 				
 				}
-
-	
-
-//			}
-				
-
 		}
 
 		//**************************************//*
@@ -395,8 +361,5 @@ public class TimeStep : MonoBehaviour
 		inputFile.Close();
 
 	}
-
-
-
-
+		
 }

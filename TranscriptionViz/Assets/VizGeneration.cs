@@ -47,12 +47,8 @@ public class VizGeneration : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-//		StartCoroutine(TimeStep.instance.InitialTimestep ());
+		TimeStep.InitialTimestep ();
 
-//		FileStream fileStream = new FileStream(@"test3.txt", 
-//			FileMode.OpenOrCreate, 
-//			FileAccess.ReadWrite, 
-//			FileShare.None);
 
 	}
 
@@ -66,12 +62,11 @@ public class VizGeneration : MonoBehaviour {
 	void OnGUI()
 	{
 	
-			
+		// Starts at 2nd timestep currently	
 		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) {
 		
 			StartCoroutine_Auto (TimeStep.instance.ReadFile ());
 				
-
 		}
 				
 			
