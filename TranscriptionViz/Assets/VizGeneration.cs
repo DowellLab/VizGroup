@@ -28,7 +28,6 @@ public class VizGeneration : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-//		OnGUI ();
 
 	}
 
@@ -41,8 +40,6 @@ public class VizGeneration : MonoBehaviour {
 			StartCoroutine_Auto (TimeStep.instance.ReadFile ());
 				
 		}
-				
-			
 
 
 		// Increases by ? every second
