@@ -33,6 +33,16 @@ public class VizGeneration : MonoBehaviour {
 
 	void OnGUI()
 	{
+
+		/* Chad's non-working code
+		Rect rect = new Rect(0, Screen.height - 60, 60, 60);
+		GUI.DrawTexture(rect, Resources.Load("Play_button"));
+		Event e = Event.current.mousePosition;
+		if (rect.Contains (e)) {
+			Debug.Log("HEEEEEEEEEEEY!");
+
+		}
+		*/
 	
 		// Starts at 2nd timestep currently	
 		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) {
