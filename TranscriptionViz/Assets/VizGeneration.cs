@@ -45,10 +45,25 @@ public class VizGeneration : MonoBehaviour {
 		*/
 	
 		// Starts at 2nd timestep currently	
-		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) {
+		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) 
+		{
 		
 			StartCoroutine_Auto (TimeStep.instance.ReadFile ());
 				
+		}
+
+
+		if (GUI.Button (new Rect (75, 10, 50, 50), "Pause")) 
+		{
+			if (TimeStep.instance.isPaused == false)
+			{
+				TimeStep.instance.PauseTimeStep ();
+
+			} else {
+				TimeStep.instance.UnpauseTimeStep ();
+			}
+
+
 		}
 
 
