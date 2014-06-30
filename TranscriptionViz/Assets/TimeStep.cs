@@ -41,9 +41,9 @@ public class Nucleosome
 		NewNucleosome.transform.localScale = new Vector3 (Length / 3, Length / 3, Length/3);		// Scale extends on both sides, so is a bad ultimate choice
 
 		StartPosition += Length / 3;
-//		NewNucleosome.transform.position = new Vector3 ((StartPosition/3), 0, 0);
+		NewNucleosome.transform.position = new Vector3 ((StartPosition/3), 0, 0);
 
-		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
+//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
 
 		NewNucleosome.name = "Nucleosome";
 		NewNucleosome.tag = "Nucleosome";
@@ -65,7 +65,7 @@ public class Nucleosome
 
 
 
-		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
+//		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
 
 
 
@@ -94,13 +94,13 @@ public class TranscriptionFactor
 	{
 		GameObject NewTranscriptionFactor;
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3, Length / 3, Length/3);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3, Length / 3, Length / 3);		// Scale extends on both sides, so is a bad ultimate choice
 
 		StartPosition += Length / 3;
 
-//		NewTranscriptionFactor.transform.position = new Vector3 (StartPosition / 3, 0, 0);
+		NewTranscriptionFactor.transform.position = new Vector3 (StartPosition / 3, 0, 0);
 
-		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
+//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
 
 		NewTranscriptionFactor.name = "TranscriptionFactor";
 		NewTranscriptionFactor.tag = "TranscriptionFactor";
@@ -121,7 +121,7 @@ public class TranscriptionFactor
 		}
 
 
-		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((StartPosition/3), 0, 0), 2);
+//		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((StartPosition/3), 0, 0), 2);
 
 
 
@@ -179,12 +179,14 @@ public class TimeStep : MonoBehaviour
 {
 
 	static public TimeStep instance;
+	public bool isPaused = false;
+
 
 	void Awake()
 	{
 		instance = this;
 		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = 200;
+		Application.targetFrameRate = 500;
 	}
 
 
@@ -241,14 +243,14 @@ public class TimeStep : MonoBehaviour
 //				Debug.Log (AwesomeObject.StartPosition);
 
 				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
-				yield return instance.StartCoroutine_Auto (instance.JustWait ());
+//				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
 			if (TimeStep [i] == "Transcription_Factor") {
 			
 				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
-				yield return instance.StartCoroutine_Auto (instance.JustWait ());
+//				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
@@ -343,16 +345,14 @@ public class TimeStep : MonoBehaviour
 		{
 		
 			if (j == 1) {
-
+			
 				j++;
 
 			} else {
 
 //				yield return StartCoroutine_Auto (AnimateObjects ());
 
-				yield return StartCoroutine_Auto (JustWait ());
-
-//				DestroyObjects ();
+//				yield return StartCoroutine_Auto (JustWait ());
 
 //				Debug.Log (String.Format ("TimestepList {0}", j));
 				TimeStepList = read_time_step (read);
@@ -360,14 +360,15 @@ public class TimeStep : MonoBehaviour
 //				Debug.Log (TimeStepList [0]);
 
 				yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
-
+			
 				j++;
 
 				yield return StartCoroutine_Auto (JustWait ());
 
-				yield return StartCoroutine_Auto (JustWait ());
+//				yield return StartCoroutine_Auto (JustWait ());
 
-				}
+			}
+
 		}
 
 		//**************************************//*
@@ -402,6 +403,20 @@ public class TimeStep : MonoBehaviour
 			yield return 0;
 		}
 
+	}
+
+
+	public void PauseTimeStep()
+	{
+		isPaused = true;
+		Time.timeScale = 0;
+	}
+
+	public void UnpauseTimeStep()
+	{
+		Time.timeScale = 1;
+		isPaused = false;
+		Debug.Log ("Should unpause now.");
 	}
 
 		
