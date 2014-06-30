@@ -7,12 +7,34 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using UnityEditor;
 
 
 public class Nucleosome
 {
+	public string Subtype;
+	public int StartPosition;
+	public int Length;
+
+	public Nucleosome(string subtype, int startPosition, int length)
+	{
+		Subtype = subtype;
+		StartPosition = startPosition;
+		Length = length;
+
+	}
+
+
 	public static GameObject CreateNucleosome(string Subtype, int StartPosition, int Length)
 	{
+
+//		float testNuc = GameObject.Find ("Nucleosome").transform.position.x;
+//
+//		if (testNuc == StartPosition/3 )
+//		{
+//			Debug.Log ("There we go.");
+//		}
+
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
@@ -23,6 +45,7 @@ public class Nucleosome
 
 		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
 
+		NewNucleosome.name = "Nucleosome";
 		NewNucleosome.tag = "Nucleosome";
 
 		// Nucleosome Color
@@ -48,11 +71,24 @@ public class Nucleosome
 
 		return NewNucleosome;
 	}
+
 }
 
 
 public class TranscriptionFactor
 {
+
+	public string Subtype;
+	public int StartPosition;
+	public int Length;
+
+	public TranscriptionFactor(string subtype, int startPosition, int length)
+	{
+		Subtype = subtype;
+		StartPosition = startPosition;
+		Length = length;
+
+	}
 
 	public static GameObject CreateTranscriptionFactor(string Subtype, int StartPosition, int Length)
 	{
@@ -62,8 +98,11 @@ public class TranscriptionFactor
 
 		StartPosition += Length / 3;
 
-		NewTranscriptionFactor.transform.position = new Vector3 (StartPosition / 3, 0, 0);
+//		NewTranscriptionFactor.transform.position = new Vector3 (StartPosition / 3, 0, 0);
 
+		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
+
+		NewTranscriptionFactor.name = "TranscriptionFactor";
 		NewTranscriptionFactor.tag = "TranscriptionFactor";
 
 
@@ -81,6 +120,11 @@ public class TranscriptionFactor
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (100, 20, 5);
 		}
 
+
+		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((StartPosition/3), 0, 0), 2);
+
+
+
 		return NewTranscriptionFactor;
 	}
 
@@ -91,10 +135,16 @@ public class TranscriptionalMachinery
 //	static int speed = 300;
 
 	public string Subtype;
-
 	public int StartPosition;
-
 	public int Length;
+
+	public TranscriptionalMachinery(string subtype, int startPosition, int length)
+	{
+		Subtype = subtype;
+		StartPosition = startPosition;
+		Length = length;
+
+	}
 
 	public static GameObject CreateTranscriptionalMachinery(string Subtype, int StartPosition, int Length)
 	{
@@ -106,6 +156,7 @@ public class TranscriptionalMachinery
 
 		NewTranscriptionalMachinery.transform.position = new Vector3 (StartPosition / 3, 0, 0);
 
+		NewTranscriptionalMachinery.name = "TranscriptionalMachinery";
 		NewTranscriptionalMachinery.tag = "TranscriptionalMachinery";
 
 
@@ -140,7 +191,7 @@ public class TimeStep : MonoBehaviour
 	// Implement waiting
 	public IEnumerator JustWait()
 	{
-		yield return new WaitForSeconds (1.5f);
+		yield return new WaitForSeconds (0.5f);
 	}
 
 
@@ -185,6 +236,9 @@ public class TimeStep : MonoBehaviour
 			Debug.Log (TimeStep [i]);
 
 			if (TimeStep [i] == "Nucleosome") {
+			
+//				Nucleosome AwesomeObject = new Nucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+//				Debug.Log (AwesomeObject.StartPosition);
 
 				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
 				yield return instance.StartCoroutine_Auto (instance.JustWait ());
@@ -194,6 +248,7 @@ public class TimeStep : MonoBehaviour
 			if (TimeStep [i] == "Transcription_Factor") {
 			
 				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
@@ -246,7 +301,7 @@ public class TimeStep : MonoBehaviour
 
 		read = inputFile.ReadLine ();		// Remove while statement, and this reads the first line only
 
-		Debug.Log (String.Format("TimestepList {0}", j));
+//		Debug.Log (String.Format("TimestepList {0}", j));
 		TimeStepList = read_time_step (read);
 
 //		Debug.Log (TimeStepList [0]);
@@ -293,13 +348,13 @@ public class TimeStep : MonoBehaviour
 
 			} else {
 
-				yield return StartCoroutine_Auto (AnimateObjects ());
+//				yield return StartCoroutine_Auto (AnimateObjects ());
 
 				yield return StartCoroutine_Auto (JustWait ());
 
 //				DestroyObjects ();
 
-				Debug.Log (String.Format ("TimestepList {0}", j));
+//				Debug.Log (String.Format ("TimestepList {0}", j));
 				TimeStepList = read_time_step (read);
 
 //				Debug.Log (TimeStepList [0]);
@@ -307,6 +362,8 @@ public class TimeStep : MonoBehaviour
 				yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
 				j++;
+
+				yield return StartCoroutine_Auto (JustWait ());
 
 				yield return StartCoroutine_Auto (JustWait ());
 
