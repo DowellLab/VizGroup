@@ -1,3 +1,10 @@
-Library/
-Temp/
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+
+/*.csproj
+/*.unityproj
+/*.user
+/*.userprefs
+
 .DS_Store

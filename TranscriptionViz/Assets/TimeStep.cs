@@ -19,7 +19,9 @@ public class Nucleosome
 		NewNucleosome.transform.localScale = new Vector3 (Length / 3, Length / 3, Length/3);		// Scale extends on both sides, so is a bad ultimate choice
 
 		StartPosition += Length / 3;
-		NewNucleosome.transform.position = new Vector3 ((StartPosition/3), 0, 0);
+//		NewNucleosome.transform.position = new Vector3 ((StartPosition/3), 0, 0);
+
+		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
 
 		NewNucleosome.tag = "Nucleosome";
 
@@ -37,6 +39,13 @@ public class Nucleosome
 			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 250);
 		}
 	
+
+
+
+		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
+
+
+
 		return NewNucleosome;
 	}
 }
@@ -131,7 +140,7 @@ public class TimeStep : MonoBehaviour
 	// Implement waiting
 	public IEnumerator JustWait()
 	{
-		yield return new WaitForSeconds (1.75f);
+		yield return new WaitForSeconds (1.5f);
 	}
 
 
@@ -165,27 +174,29 @@ public class TimeStep : MonoBehaviour
 	// Generation of Objects ---> Should be better way to implement
 	public static IEnumerator CreateObjects(List<string> TimeStep)
 	{
+
+		// Call DestroyObjects first
+		DestroyObjects ();
+
+
+		// Then Create New Objects
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
 
 			Debug.Log (TimeStep [i]);
 
-			// Handle Nucleosome Creation
 			if (TimeStep [i] == "Nucleosome") {
 
 				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
-
-
-			// Handle Transcription Factor Creation
+				
 			if (TimeStep [i] == "Transcription_Factor") {
 			
 				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
 
 			}
-
-
-			// Handle Transcriptional Machinery
+				
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 			
 				yield return TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
@@ -242,6 +253,8 @@ public class TimeStep : MonoBehaviour
 
 		yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
+//		yield return StartCoroutine_Auto (AnimateObjects ());
+
 
 		j++;
 
@@ -280,7 +293,11 @@ public class TimeStep : MonoBehaviour
 
 			} else {
 
-				DestroyObjects ();
+				yield return StartCoroutine_Auto (AnimateObjects ());
+
+				yield return StartCoroutine_Auto (JustWait ());
+
+//				DestroyObjects ();
 
 				Debug.Log (String.Format ("TimestepList {0}", j));
 				TimeStepList = read_time_step (read);
@@ -292,7 +309,7 @@ public class TimeStep : MonoBehaviour
 				j++;
 
 				yield return StartCoroutine_Auto (JustWait ());
-				
+
 				}
 		}
 
@@ -301,5 +318,34 @@ public class TimeStep : MonoBehaviour
 		inputFile.Close();
 
 	}
+
+
+	public IEnumerator AnimateObjects()
+	{
+
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		foreach (GameObject go in nucleosomes)
+		{
+			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+			yield return 0;
+		}
+
+		foreach (GameObject go in transcriptionFactors)
+		{
+			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+			yield return 0;
+		}
+
+		foreach (GameObject go in transcriptionalMachineries)
+		{
+			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+			yield return 0;
+		}
+
+	}
+
 		
 }

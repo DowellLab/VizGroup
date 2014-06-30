@@ -1,4 +1,4 @@
-[ (Nucleosome, Stable, 0, 3), (Nucleosome, Binding, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 60, 25), (Transcription_Factor, TBP, 90, 5)]
+[ (Nucleosome, Stable, 0, 3), (Nucleosome, Binding, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 60, 25), (Transcription_Factor, TBP, 90, 5) ]
 [ (Nucleosome, Stable, 0, 3), (Nucleosome, Stable, 22, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ]
 [ (Nucleosome, Stable, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25), (Transcription_Factor, TBP, 90, 5) ]
 [ (Transcription_Factor, MCM1, 2, 8), (Nucleosome, Stable, 21, 25), (Transcription_Factor, REB1, 48, 6), (Nucleosome, Stable, 64, 25) ] 
@@ -17,4 +17,4 @@
 [ (Transcription_Factor, MCM1, 2, 8), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 40, 15), (Transcription_Factor, TBP, 90, 5) ]  
 [ (Transcription_Factor, MCM1, 2, 8), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 41, 15), (Transcription_Factor, TBP, 90, 5) ] 
 [ (Transcription_Factor, MCM1, 2, 8), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 45, 15), (Nucleosome, Binding, 80, 25) ] 
-[ (Transcription_Factor, MCM1, 2, 8), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 46, 15), (Nucleosome, Binding, 80, 25)] 
+[ (Transcription_Factor, MCM1, 2, 8), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 50, 15), (Nucleosome, Binding, 80, 25) ] 
