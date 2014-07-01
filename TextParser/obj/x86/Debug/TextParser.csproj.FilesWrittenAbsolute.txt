@@ -1,5 +1,0 @@
-/Users/emilyowens/Desktop/VizGroup/TextParser/obj/x86/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
-/Users/emilyowens/Desktop/VizGroup/TextParser/bin/Debug/TextParser.exe.mdb
-/Users/emilyowens/Desktop/VizGroup/TextParser/bin/Debug/TextParser.exe
-/Users/emilyowens/Desktop/VizGroup/TextParser/obj/x86/Debug/TextParser.exe
-/Users/emilyowens/Desktop/VizGroup/TextParser/obj/x86/Debug/TextParser.exe.mdb
