@@ -2,9 +2,10 @@
 [Tt]emp/
 [Oo]bj/
 
-/*.csproj
-/*.unityproj
-/*.user
-/*.userprefs
+*.csproj
+*.unityproj
+*.user
+*.userprefs
+*.sln
 
 .DS_Store

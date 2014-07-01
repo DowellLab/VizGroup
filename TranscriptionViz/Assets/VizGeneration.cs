@@ -59,6 +59,7 @@ public class VizGeneration : MonoBehaviour {
 			{
 				TimeStep.instance.PauseTimeStep ();
 
+
 			} else {
 				TimeStep.instance.UnpauseTimeStep ();
 			}
