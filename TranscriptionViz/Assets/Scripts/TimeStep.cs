@@ -16,6 +16,8 @@ public class Nucleosome
 	public float StartPosition;
 	public float Length;
 
+	public static Shader specular = Shader.Find("Specular");
+
 	public Nucleosome(string subtype, float startPosition, float length)
 	{
 		Subtype = subtype;
@@ -31,7 +33,8 @@ public class Nucleosome
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length/3.5f);		// Scale extends on both sides, so is a bad ultimate choice
+		NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length/3.5f); // Scale extends on both sides, so is a bad ultimate choice
+		NewNucleosome.renderer.material.shader = specular;
 
 		StartPosition += Length / 4;
 		NewNucleosome.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
@@ -72,6 +75,7 @@ public class TranscriptionFactor
 	public string Subtype;
 	public float StartPosition;
 	public float Length;
+	public static Shader specular = Shader.Find("Specular");
 
 	public TranscriptionFactor(string subtype, float startPosition, float length)
 	{
@@ -86,6 +90,7 @@ public class TranscriptionFactor
 		GameObject NewTranscriptionFactor;
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
 		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionFactor.renderer.material.shader = specular;
 
 		StartPosition += Length / 3.5f;
 
@@ -142,6 +147,7 @@ public class TranscriptionalMachinery
 		GameObject NewTranscriptionalMachinery;
 		NewTranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
 		NewTranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionalMachinery.renderer.material.shader = Shader.Find("Specular");
 
 		StartPosition += Length / 3.5f;
 
