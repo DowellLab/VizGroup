@@ -15,6 +15,9 @@ public class VizGeneration : MonoBehaviour {
 	public int FrameCount = 1;
 //	public int iterations = 0;
 
+	public Rect rect = new Rect(0, Screen.height - 60, 60, 60);
+	public bool started = false;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -26,21 +29,42 @@ public class VizGeneration : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (Input.GetMouseButtonDown(0)) {
+			if(rect.Contains (new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
+				//simulation has not started
+				if(!started){
+					StartCoroutine_Auto (TimeStep.instance.ReadFile ());
+					started = true;
+				}
+				//simulation has already started
+				else if (started && TimeStep.instance.isPaused == false) {
+					TimeStep.instance.PauseTimeStep ();
+				}
+				else if (started && TimeStep.instance.isPaused == true) {
+					TimeStep.instance.UnpauseTimeStep ();
+				}
+			}
+			
+		}
 	}
 
 	void OnGUI()
 	{
-
-		/* Chad's non-working code
-		Rect rect = new Rect(0, Screen.height - 60, 60, 60);
-		GUI.DrawTexture(rect, Resources.Load("Play_button"));
-		Event e = Event.current.mousePosition;
-		if (rect.Contains (e)) {
-			Debug.Log("HEEEEEEEEEEEY!");
-
+		//Display play button if paused
+		if (TimeStep.instance.isPaused == false && started == false) {
+			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));
+		} 
+		else if (TimeStep.instance.isPaused == false && started == true) {
+			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Pause_button"));	
 		}
-		*/
+		else if (TimeStep.instance.isPaused == true && started == true) {
+			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));	
+		}
+		//Display pause button if playing
+		else {
+			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Pause_button"));
+		}
+
 	
 		// Starts at 2nd timestep currently	
 		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) 
