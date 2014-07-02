@@ -16,7 +16,7 @@ public class VizGeneration : MonoBehaviour {
 //	public int iterations = 0;
 
 	//Play/Pause Button
-	public Rect rect = new Rect(0, Screen.height - 60, 60, 60);
+	public Rect rect = new Rect(0, 500, 60, 60);
 	public bool started = false;
 	public static bool finished = false;
 
@@ -33,6 +33,7 @@ public class VizGeneration : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown(0)) {
 			if(rect.Contains (new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
+				Debug.Log(Input.mousePosition);
 				//simulation has not started
 				if(!started || finished){
 					StartCoroutine_Auto (TimeStep.instance.ReadFile ());
