@@ -27,14 +27,7 @@ public class Nucleosome
 
 	public static GameObject CreateNucleosome(string Subtype, float StartPosition, float Length)
 	{
-
-//		float testNuc = GameObject.Find ("Nucleosome").transform.position.x;
-//
-//		if (testNuc == StartPosition/3 )
-//		{
-//			Debug.Log ("There we go.");
-//		}
-
+	
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
@@ -62,8 +55,6 @@ public class Nucleosome
 			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 250);
 		}
 	
-
-
 
 //		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
 
@@ -117,7 +108,7 @@ public class TranscriptionFactor
 
 		} else {
 
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (100, 20, 5);
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (100, 20, 0);
 		}
 
 
@@ -207,17 +198,23 @@ public class TimeStep : MonoBehaviour
 
 		foreach (GameObject go in nucleosomes)
 		{
-			Destroy (go);
+			if (go.name == "Nucleosome") {
+				Destroy (go);
+			}
 		}
 
 		foreach (GameObject go in transcriptionFactors)
 		{
-			Destroy (go);
+			if (go.name == "TranscriptionFactor") {
+				Destroy (go);
+			}
 		}
 
 		foreach (GameObject go in transcriptionalMachineries)
 		{
-			Destroy (go);
+			if (go.name == "TranscriptionalMachinery") {
+				Destroy (go);
+			}
 		}
 			
 	}
@@ -242,22 +239,30 @@ public class TimeStep : MonoBehaviour
 //				Nucleosome AwesomeObject = new Nucleosome (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 //				Debug.Log (AwesomeObject.StartPosition);
 
-				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				GameObject OurSpecialNucleosome = Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+
+				yield return OurSpecialNucleosome;
+
 //				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
 			if (TimeStep [i] == "Transcription_Factor") {
-			
-				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+
+				GameObject OurSpecialTransFactor = TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+
+				yield return OurSpecialTransFactor;
+
 //				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 			
-				yield return TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				GameObject OurSpecialTransMach = TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
+
+				yield return OurSpecialTransMach;
 			}
 		}
 	}
@@ -416,7 +421,6 @@ public class TimeStep : MonoBehaviour
 	{
 		Time.timeScale = 1;
 		isPaused = false;
-		Debug.Log ("Should unpause now.");
 	}
 
 		
