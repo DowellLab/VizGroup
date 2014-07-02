@@ -380,6 +380,13 @@ public class TimeStep : MonoBehaviour
 
 			}
 
+
+
+		}
+
+		if (read == null) {
+			Debug.Log("END OF FILE");
+			VizGeneration.finished = true;
 		}
 
 		//**************************************//*

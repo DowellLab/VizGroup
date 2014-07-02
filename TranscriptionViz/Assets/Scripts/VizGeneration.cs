@@ -18,6 +18,7 @@ public class VizGeneration : MonoBehaviour {
 	//Play/Pause Button
 	public Rect rect = new Rect(0, Screen.height - 60, 60, 60);
 	public bool started = false;
+	public static bool finished = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,9 +34,10 @@ public class VizGeneration : MonoBehaviour {
 		if (Input.GetMouseButtonDown(0)) {
 			if(rect.Contains (new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
 				//simulation has not started
-				if(!started){
+				if(!started || finished){
 					StartCoroutine_Auto (TimeStep.instance.ReadFile ());
 					started = true;
+					finished = false;
 				}
 				//simulation has already started
 				else if (started && TimeStep.instance.isPaused == false) {
@@ -52,7 +54,7 @@ public class VizGeneration : MonoBehaviour {
 	void OnGUI()
 	{
 		//Display play button if paused
-		if (TimeStep.instance.isPaused == false && started == false) {
+		if (TimeStep.instance.isPaused == false && started == false || finished) {
 			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));
 		} 
 		else if (TimeStep.instance.isPaused == false && started == true) {
@@ -61,9 +63,8 @@ public class VizGeneration : MonoBehaviour {
 		else if (TimeStep.instance.isPaused == true && started == true) {
 			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));	
 		}
-		//Display pause button if playing
-		else {
-			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Pause_button"));
+		else if (finished) {
+			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));
 		}
 
 
