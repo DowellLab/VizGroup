@@ -15,6 +15,7 @@ public class VizGeneration : MonoBehaviour {
 	public int FrameCount = 1;
 //	public int iterations = 0;
 
+	//Play/Pause Button
 	public Rect rect = new Rect(0, Screen.height - 60, 60, 60);
 	public bool started = false;
 
