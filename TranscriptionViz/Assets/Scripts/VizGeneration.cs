@@ -65,27 +65,6 @@ public class VizGeneration : MonoBehaviour {
 			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Pause_button"));
 		}
 
-	
-		// Starts at 2nd timestep currently	
-		if (GUI.Button (new Rect (10, 10, 50, 50), "Start")) 
-		{
-		
-			StartCoroutine_Auto (TimeStep.instance.ReadFile ());
-				
-		}
-
-
-		if (GUI.Button (new Rect (75, 10, 50, 50), "Pause")) 
-		{
-			if (TimeStep.instance.isPaused == false)
-			{
-				TimeStep.instance.PauseTimeStep ();
-			} else {
-				TimeStep.instance.UnpauseTimeStep ();
-			}
-				
-		}
-
 
 		// Increases by ? every second
 			FrameCount++;
