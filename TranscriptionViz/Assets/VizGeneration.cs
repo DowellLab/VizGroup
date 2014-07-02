@@ -12,10 +12,8 @@ using System.Xml;
 
 public class VizGeneration : MonoBehaviour {
 
-//	public int j = 0;
 	public int FrameCount = 1;
 //	public int iterations = 0;
-	//HEY!
 
 	// Use this for initialization
 	void Start () {
@@ -58,13 +56,10 @@ public class VizGeneration : MonoBehaviour {
 			if (TimeStep.instance.isPaused == false)
 			{
 				TimeStep.instance.PauseTimeStep ();
-
-
 			} else {
 				TimeStep.instance.UnpauseTimeStep ();
 			}
-
-
+				
 		}
 
 
