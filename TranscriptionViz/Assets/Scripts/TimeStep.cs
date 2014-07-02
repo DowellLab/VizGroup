@@ -7,7 +7,9 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 
 public class Nucleosome
