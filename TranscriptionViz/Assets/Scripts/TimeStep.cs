@@ -33,7 +33,13 @@ public class Nucleosome
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length/3.5f); // Scale extends on both sides, so is a bad ultimate choice
+
+		if (StartPosition != 0) {
+			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 6f, Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
+		} else {
+			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3f, Length / 3.5f);
+		}
+
 		NewNucleosome.renderer.material.shader = specular;
 
 		StartPosition += Length / 4;
