@@ -13,10 +13,10 @@ using UnityEditor;
 public class Nucleosome
 {
 	public string Subtype;
-	public int StartPosition;
-	public int Length;
+	public float StartPosition;
+	public float Length;
 
-	public Nucleosome(string subtype, int startPosition, int length)
+	public Nucleosome(string subtype, float startPosition, float length)
 	{
 		Subtype = subtype;
 		StartPosition = startPosition;
@@ -25,7 +25,7 @@ public class Nucleosome
 	}
 
 
-	public static GameObject CreateNucleosome(string Subtype, int StartPosition, int Length)
+	public static GameObject CreateNucleosome(string Subtype, float StartPosition, float Length)
 	{
 
 //		float testNuc = GameObject.Find ("Nucleosome").transform.position.x;
@@ -38,10 +38,10 @@ public class Nucleosome
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		NewNucleosome.transform.localScale = new Vector3 (Length / 3, Length / 3, Length/3);		// Scale extends on both sides, so is a bad ultimate choice
+		NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length/3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 
-		StartPosition += Length / 3;
-		NewNucleosome.transform.position = new Vector3 ((StartPosition/3), 0, 0);
+		StartPosition += Length / 4;
+		NewNucleosome.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
 //		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
 
@@ -79,10 +79,10 @@ public class TranscriptionFactor
 {
 
 	public string Subtype;
-	public int StartPosition;
-	public int Length;
+	public float StartPosition;
+	public float Length;
 
-	public TranscriptionFactor(string subtype, int startPosition, int length)
+	public TranscriptionFactor(string subtype, float startPosition, float length)
 	{
 		Subtype = subtype;
 		StartPosition = startPosition;
@@ -90,15 +90,15 @@ public class TranscriptionFactor
 
 	}
 
-	public static GameObject CreateTranscriptionFactor(string Subtype, int StartPosition, int Length)
+	public static GameObject CreateTranscriptionFactor(string Subtype, float StartPosition, float Length)
 	{
 		GameObject NewTranscriptionFactor;
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3, Length / 3, Length / 3);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
 
-		StartPosition += Length / 3;
+		StartPosition += Length / 3.5f;
 
-		NewTranscriptionFactor.transform.position = new Vector3 (StartPosition / 3, 0, 0);
+		NewTranscriptionFactor.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
 //		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
 
@@ -135,10 +135,10 @@ public class TranscriptionalMachinery
 //	static int speed = 300;
 
 	public string Subtype;
-	public int StartPosition;
-	public int Length;
+	public float StartPosition;
+	public float Length;
 
-	public TranscriptionalMachinery(string subtype, int startPosition, int length)
+	public TranscriptionalMachinery(string subtype, float startPosition, float length)
 	{
 		Subtype = subtype;
 		StartPosition = startPosition;
@@ -146,15 +146,15 @@ public class TranscriptionalMachinery
 
 	}
 
-	public static GameObject CreateTranscriptionalMachinery(string Subtype, int StartPosition, int Length)
+	public static GameObject CreateTranscriptionalMachinery(string Subtype, float StartPosition, float Length)
 	{
 		GameObject NewTranscriptionalMachinery;
 		NewTranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-		NewTranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3, Length / 3, Length / 3);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
 
-		StartPosition += Length / 3;
+		StartPosition += Length / 3.5f;
 
-		NewTranscriptionalMachinery.transform.position = new Vector3 (StartPosition / 3, 0, 0);
+		NewTranscriptionalMachinery.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
 		NewTranscriptionalMachinery.name = "TranscriptionalMachinery";
 		NewTranscriptionalMachinery.tag = "TranscriptionalMachinery";
@@ -239,24 +239,24 @@ public class TimeStep : MonoBehaviour
 
 			if (TimeStep [i] == "Nucleosome") {
 			
-//				Nucleosome AwesomeObject = new Nucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+//				Nucleosome AwesomeObject = new Nucleosome (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 //				Debug.Log (AwesomeObject.StartPosition);
 
-				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+				yield return Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 //				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
 			if (TimeStep [i] == "Transcription_Factor") {
 			
-				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+				yield return TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 //				yield return instance.StartCoroutine_Auto (instance.JustWait ());
 
 			}
 				
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 			
-				yield return TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt32 (TimeStep [i + 2]), Convert.ToInt32 (TimeStep [i + 3]));
+				yield return TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
 			}
 		}

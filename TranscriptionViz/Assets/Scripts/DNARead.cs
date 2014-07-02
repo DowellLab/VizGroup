@@ -27,7 +27,7 @@ public class DNARead : MonoBehaviour
 
 	Vector3 Compute_DNA_Position(int position)
 	{
-			Vector3 helixOrigin = helixList [(int)Math.Ceiling (position / 7.0) - 1].transform.position;
+			Vector3 helixOrigin = helixList [(int)Math.Ceiling (position / 7.0) - 2].transform.position;
 
 			return new Vector3(helixOrigin.x + (-0.9f + (i%7) * 0.3f), helixOrigin.y, helixOrigin.z);
 	}
@@ -101,8 +101,10 @@ public class DNARead : MonoBehaviour
 						cytosine.transform.Translate(0.0f, 0.15f, 0.0f, Space.World);
 						break;
 				}
-				++i;
-			}
+
+			++i;
+
+		}
 
 		if(Input.GetKeyDown(KeyCode.D))
 		{
