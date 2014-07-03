@@ -55,15 +55,15 @@ public class Nucleosome
 		// Nucleosome Color
 		if (Subtype == "Binding")
 		{
-			NewNucleosome.gameObject.renderer.material.color = new Color (250, 0, 0);
+			NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
 		
 		} else if (Subtype == "Unbinding") {
 		
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 250, 0);
+			NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
 
 		} else {
 
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 250);
+			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 1);
 		}
 	
 
@@ -97,7 +97,7 @@ public class TranscriptionFactor
 	{
 		GameObject NewTranscriptionFactor;
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 		NewTranscriptionFactor.renderer.material.shader = specular;
 
 		StartPosition += Length / 3.5f;
@@ -113,15 +113,23 @@ public class TranscriptionFactor
 		// Transcription Factor Color
 		if (Subtype == "REB1")
 		{
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (250, 0, 10);
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
 
 		} else if (Subtype == "TBP") {
 
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (250, 10, 0);
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.6f, 1, 0.3f);
 
+		} else if (Subtype == "MCM1"){
+
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.729f, 0.333f, 0.827f);
+		
+		} else if (Subtype == "DAL80"){
+
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
+		
 		} else {
 
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (100, 20, 0);
+			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0.85f, 0);
 		}
 
 
@@ -168,11 +176,11 @@ public class TranscriptionalMachinery
 		// Transcription Factor Color
 		if (Subtype == "Init0" || Subtype == "Init1")
 		{
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (100, 0, 50);
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
 
 		} else {
 
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (50, 100, 0);
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
 		}
 
 		return NewTranscriptionalMachinery;
