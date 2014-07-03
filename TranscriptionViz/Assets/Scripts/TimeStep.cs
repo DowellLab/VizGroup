@@ -178,9 +178,13 @@ public class TranscriptionalMachinery
 		{
 			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
 
-		} else {
+		} else if (Subtype == "Crick-Forwards" || Subtype == "Crick-Backwards"){
 
 			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+		} else {
+
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.855f, 0.647f, 0.125f);
 		}
 
 		return NewTranscriptionalMachinery;
