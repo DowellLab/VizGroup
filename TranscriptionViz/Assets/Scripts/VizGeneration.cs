@@ -33,10 +33,10 @@ public class VizGeneration : MonoBehaviour {
 	{
 		if (Input.GetMouseButtonDown(0)) {
 			if(rect.Contains (new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
-				Debug.Log(Input.mousePosition);
+//				Debug.Log(Input.mousePosition);
 				//simulation has not started
 				if(!started || finished){
-					StartCoroutine_Auto (TimeStep.instance.ReadFile ());
+					StartCoroutine_Auto (TimeStep.instance.ReadFile (58));
 					started = true;
 					finished = false;
 				}

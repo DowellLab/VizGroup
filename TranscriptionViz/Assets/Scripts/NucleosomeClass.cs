@@ -64,11 +64,7 @@ public class NucleosomeClass
 
 			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 1);
 		}
-
-
-		//		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
-
-
+			
 
 		return NewNucleosome;
 	}

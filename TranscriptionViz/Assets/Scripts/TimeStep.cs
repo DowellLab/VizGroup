@@ -16,6 +16,7 @@ public class TimeStep : MonoBehaviour
 
 	static public TimeStep instance;
 	public bool isPaused = false;
+	static public int lineCount = 0;
 
 
 	void Awake()
@@ -30,6 +31,20 @@ public class TimeStep : MonoBehaviour
 	public IEnumerator JustWait()
 	{
 		yield return new WaitForSeconds (0.5f);
+	}
+
+
+	public static int CountLinesInFile(string f)
+	{
+		using (StreamReader r = new StreamReader(f))
+		{
+			while (r.ReadLine() != null)
+			{
+				lineCount++;
+			}
+		}
+		return lineCount;
+
 	}
 
 
@@ -174,64 +189,46 @@ public class TimeStep : MonoBehaviour
 
 
 
-	public IEnumerator ReadFile()
+	public IEnumerator ReadFile(int selectTimeStep)
 	{
 
+		// Add all lines of TimeStep file into new List
+		List<string> allTimeSteps = System.IO.File.ReadAllLines("test3.txt").ToList();
+//		Debug.Log (allTimeSteps [32]);
 
-		// Use stream object to open and read file
-		StreamReader inputFile = File.OpenText ("test3.txt");
+		// Number of TimeSteps
+		int numberTimeSteps = CountLinesInFile ("test3.txt");
 
-		//string 'buffer' used to hold streamed 
-		string read = null;
 
 		//*************PARSING LOGIC************//
 
 		// The current Timestep
-		int j = 1;
+
 		var TimeStepList = new List<string>();
 
-
-		while((read = inputFile.ReadLine()) != null)		//Reads the whole line
+		for (int k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
+
+//			yield return StartCoroutine_Auto (AnimateObjects ());
+//
+//			yield return StartCoroutine_Auto (JustWait ());
 		
-			if (j == 1) {
-			
-				j++;
+			TimeStepList = read_time_step (allTimeSteps [k - 1]);
 
-			} else {
+			yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
 
-//				yield return StartCoroutine_Auto (AnimateObjects ());
+			yield return StartCoroutine_Auto (JustWait ());
 
-//				yield return StartCoroutine_Auto (JustWait ());
+//			yield return StartCoroutine_Auto (JustWait ());
 
-//				Debug.Log (String.Format ("TimestepList {0}", j));
-				TimeStepList = read_time_step (read);
-
-//				Debug.Log (TimeStepList [0]);
-
-				yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
-			
-				j++;
-
-				yield return StartCoroutine_Auto (JustWait ());
-
-//				yield return StartCoroutine_Auto (JustWait ());
-
+			if (k == numberTimeSteps)
+			{
+				Debug.Log("END OF FILE");
+				VizGeneration.finished = true;
 			}
 
-
-
 		}
-
-		if (read == null) {
-			Debug.Log("END OF FILE");
-			VizGeneration.finished = true;
-		}
-
-		//**************************************//*
-
-		inputFile.Close();
-
+			
 	}
 
 
