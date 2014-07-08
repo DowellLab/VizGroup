@@ -11,187 +11,6 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-
-public class Nucleosome
-{
-	public string Subtype;
-	public float StartPosition;
-	public float Length;
-
-	public static Shader specular = Shader.Find("Specular");
-
-	public Nucleosome(string subtype, float startPosition, float length)
-	{
-		Subtype = subtype;
-		StartPosition = startPosition;
-		Length = length;
-
-	}
-
-
-	public static GameObject CreateNucleosome(string Subtype, float StartPosition, float Length)
-	{
-	
-		GameObject NewNucleosome;
-
-		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-
-		if (StartPosition != 0) {
-			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 6f, Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
-		} else {
-			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3f, Length / 3.5f);
-		}
-
-		NewNucleosome.renderer.material.shader = specular;
-
-		StartPosition += Length / 4;
-		NewNucleosome.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
-
-//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
-
-		NewNucleosome.name = "Nucleosome";
-		NewNucleosome.tag = "Nucleosome";
-
-		// Nucleosome Color
-		if (Subtype == "Binding")
-		{
-			NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
-		
-		} else if (Subtype == "Unbinding") {
-		
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
-
-		} else {
-
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 1);
-		}
-	
-
-//		iTween.MoveTo (NewNucleosome, new Vector3 ((StartPosition/3), 0, 0), 2);
-
-
-
-		return NewNucleosome;
-	}
-
-}
-
-
-public class TranscriptionFactor
-{
-
-	public string Subtype;
-	public float StartPosition;
-	public float Length;
-	public static Shader specular = Shader.Find("Specular");
-
-	public TranscriptionFactor(string subtype, float startPosition, float length)
-	{
-		Subtype = subtype;
-		StartPosition = startPosition;
-		Length = length;
-
-	}
-
-	public static GameObject CreateTranscriptionFactor(string Subtype, float StartPosition, float Length)
-	{
-		GameObject NewTranscriptionFactor;
-		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
-		NewTranscriptionFactor.renderer.material.shader = specular;
-
-		StartPosition += Length / 3.5f;
-
-		NewTranscriptionFactor.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
-
-//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
-
-		NewTranscriptionFactor.name = "TranscriptionFactor";
-		NewTranscriptionFactor.tag = "TranscriptionFactor";
-
-
-		// Transcription Factor Color
-		if (Subtype == "REB1")
-		{
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
-
-		} else if (Subtype == "TBP") {
-
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.6f, 1, 0.3f);
-
-		} else if (Subtype == "MCM1"){
-
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.729f, 0.333f, 0.827f);
-		
-		} else if (Subtype == "DAL80"){
-
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
-		
-		} else {
-
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0.85f, 0);
-		}
-
-
-//		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((StartPosition/3), 0, 0), 2);
-
-
-
-		return NewTranscriptionFactor;
-	}
-
-}
-
-public class TranscriptionalMachinery
-{
-//	static int speed = 300;
-
-	public string Subtype;
-	public float StartPosition;
-	public float Length;
-
-	public TranscriptionalMachinery(string subtype, float startPosition, float length)
-	{
-		Subtype = subtype;
-		StartPosition = startPosition;
-		Length = length;
-
-	}
-
-	public static GameObject CreateTranscriptionalMachinery(string Subtype, float StartPosition, float Length)
-	{
-		GameObject NewTranscriptionalMachinery;
-		NewTranscriptionalMachinery = GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-		NewTranscriptionalMachinery.transform.localScale = new Vector3 (Length / 3.5f, Length / 5, Length / 5);		// Scale extends on both sides, so is a bad ultimate choice
-		NewTranscriptionalMachinery.renderer.material.shader = Shader.Find("Specular");
-
-		StartPosition += Length / 3.5f;
-
-		NewTranscriptionalMachinery.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
-
-		NewTranscriptionalMachinery.name = "TranscriptionalMachinery";
-		NewTranscriptionalMachinery.tag = "TranscriptionalMachinery";
-
-
-		// Transcription Factor Color
-		if (Subtype == "Init0" || Subtype == "Init1")
-		{
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
-
-		} else if (Subtype == "Crick-Forwards" || Subtype == "Crick-Backwards"){
-
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
-
-		} else {
-
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.855f, 0.647f, 0.125f);
-		}
-
-		return NewTranscriptionalMachinery;
-	}
-}
-
-
 public class TimeStep : MonoBehaviour
 {
 
@@ -262,10 +81,10 @@ public class TimeStep : MonoBehaviour
 
 			if (TimeStep [i] == "Nucleosome") {
 			
-//				Nucleosome AwesomeObject = new Nucleosome (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
-//				Debug.Log (AwesomeObject.StartPosition);
+				NucleosomeClass AwesomeObject = new NucleosomeClass (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				Debug.Log (AwesomeObject.StartPosition);
 
-				GameObject OurSpecialNucleosome = Nucleosome.CreateNucleosome (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+				GameObject OurSpecialNucleosome = NucleosomeClass.CreateNucleosome (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
 				yield return OurSpecialNucleosome;
 
@@ -275,7 +94,7 @@ public class TimeStep : MonoBehaviour
 				
 			if (TimeStep [i] == "Transcription_Factor") {
 
-				GameObject OurSpecialTransFactor = TranscriptionFactor.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+				GameObject OurSpecialTransFactor = TranscriptionFactorClass.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
 				yield return OurSpecialTransFactor;
 
@@ -285,7 +104,7 @@ public class TimeStep : MonoBehaviour
 				
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 			
-				GameObject OurSpecialTransMach = TranscriptionalMachinery.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+				GameObject OurSpecialTransMach = TranscriptionalMachineryClass.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
 
 				yield return OurSpecialTransMach;
