@@ -25,7 +25,7 @@ public class DNARead : MonoBehaviour
 	// Where the start of the sequence is going to be located?
 	private int helixPositionOffset;
 	// Offset for each nucleotide so that they have even spacing
-	private float nucleotideOffset = 0.25f;
+	private float nucleotideOffset = 0.3f;
 
 	Vector3 Compute_DNA_Position(int position)
 	{
@@ -136,7 +136,7 @@ public class DNARead : MonoBehaviour
 						// The position of the DNA is based on the positions of the helix pieces
 						if (i % 7 == 0) 
 						{
-							hel = (GameObject)Instantiate (Hprefab, new Vector3 ((i / 7 * 2), 0, 0), Quaternion.AngleAxis (90, Vector3.up));
+							hel = (GameObject)Instantiate (Hprefab, new Vector3 ((i / 7 * 2.05f), 0, 0), Quaternion.AngleAxis (90, Vector3.up));
 							helixList.Add (hel);
 						}
 
