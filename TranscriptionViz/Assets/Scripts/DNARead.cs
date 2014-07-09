@@ -23,7 +23,9 @@ public class DNARead : MonoBehaviour
 	private int i;
 
 	// Where the start of the sequence is going to be located?
-	private int helixPositionOffset;										
+	private int helixPositionOffset;
+	// Offset for each nucleotide so that they have even spacing
+	private float nucleotideOffset = 0.25f;
 
 	Vector3 Compute_DNA_Position(int position)
 	{
@@ -39,7 +41,7 @@ public class DNARead : MonoBehaviour
 			GameObject thymine = (GameObject) Instantiate(Tprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 			thymine.transform.Rotate(new Vector3(180,90,0), Space.World);
 			thymine.transform.parent = helix.transform;
-			thymine.transform.Translate(-0.9f+(m%7)*0.3f, 0.420f, 0.0f, Space.World);
+			thymine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.420f, 0.0f, Space.World);
 		}
 
 		if (c == 'T') 
@@ -47,7 +49,7 @@ public class DNARead : MonoBehaviour
 			GameObject adenine = (GameObject) Instantiate(Aprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 			adenine.transform.Rotate(new Vector3(0,90,0), Space.World);
 			adenine.transform.parent = helix.transform;
-			adenine.transform.Translate(-0.9f+(m%7)*0.3f, 0.420f, 0.0f, Space.World);
+			adenine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.420f, 0.0f, Space.World);
 		}
 
 		if (c == 'G') 
@@ -55,7 +57,7 @@ public class DNARead : MonoBehaviour
 			GameObject cytosine = (GameObject) Instantiate(Cprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 			cytosine.transform.Rotate(new Vector3(180,90,0), Space.World);
 			cytosine.transform.parent = helix.transform;
-			cytosine.transform.Translate(-0.9f+(m%7)*0.3f, 0.46f, 0.0f, Space.World);
+			cytosine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.46f, 0.0f, Space.World);
 		}
 
 		if (c == 'C') 
@@ -63,7 +65,7 @@ public class DNARead : MonoBehaviour
 			GameObject guanine = (GameObject) Instantiate(Gprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 			guanine.transform.Rotate(new Vector3(180,90,0), Space.World);
 			guanine.transform.parent = helix.transform;
-			guanine.transform.Translate(-0.9f+(m%7)*0.3f, 0.46f, 0.0f, Space.World);
+			guanine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.46f, 0.0f, Space.World);
 		}
 
 	}
@@ -77,7 +79,7 @@ public class DNARead : MonoBehaviour
 				GameObject adenine = (GameObject) Instantiate(Aprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 				adenine.transform.Rotate(new Vector3(180,90,0), Space.World);
 				adenine.transform.parent = helix.transform;
-				adenine.transform.Translate(-0.9f+(m%7)*0.3f, 0.15f, 0.0f, Space.World);
+				adenine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.15f, 0.0f, Space.World);
 				//GameObject go = Instantiate(Resources.Load("MyPrefab")) as GameObject; 
 				
 				Get_Compilmentary_Nucleotide('A', hel, m);
@@ -87,7 +89,7 @@ public class DNARead : MonoBehaviour
 				GameObject thymine = (GameObject) Instantiate(Tprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 				thymine.transform.Rotate(new Vector3(0,90,0), Space.World);
 				thymine.transform.parent = helix.transform;
-				thymine.transform.Translate(-0.9f+(m%7)*0.3f, 0.15f, 0.0f, Space.World);
+				thymine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.15f, 0.0f, Space.World);
 				
 				Get_Compilmentary_Nucleotide('T', hel, m);
 				break;
@@ -96,7 +98,7 @@ public class DNARead : MonoBehaviour
 				GameObject guanine = (GameObject) Instantiate(Gprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 				guanine.transform.Rotate(new Vector3(0,90,0), Space.World);
 				guanine.transform.parent = helix.transform;
-				guanine.transform.Translate(-0.9f+(m%7)*0.3f, 0.15f, 0.0f, Space.World);
+				guanine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.15f, 0.0f, Space.World);
 				
 				Get_Compilmentary_Nucleotide('G', hel, m);
 				break;
@@ -105,7 +107,7 @@ public class DNARead : MonoBehaviour
 				GameObject cytosine = (GameObject) Instantiate(Cprefab, helix.transform.position, Quaternion.AngleAxis(90, Vector3.right));
 				cytosine.transform.Rotate(new Vector3(0,90,0), Space.World);
 				cytosine.transform.parent = helix.transform;
-				cytosine.transform.Translate(-0.9f+(m%7)*0.3f, 0.15f, 0.0f, Space.World);
+				cytosine.transform.Translate(-0.9f+(m%7)* nucleotideOffset, 0.15f, 0.0f, Space.World);
 				
 				Get_Compilmentary_Nucleotide('C', hel, m);
 				break; 
