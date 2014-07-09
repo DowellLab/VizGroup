@@ -7,6 +7,9 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -17,6 +20,11 @@ public class TimeStep : MonoBehaviour
 	static public TimeStep instance;
 	public bool isPaused = false;
 	static public int lineCount = 0;
+	public int k = 0;
+
+
+	private static int numberTimeSteps = CountLinesInFile ("test3.txt");
+
 
 
 	void Awake()
@@ -92,12 +100,12 @@ public class TimeStep : MonoBehaviour
 		// Then Create New Objects
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
 
-			Debug.Log (TimeStep [i]);
+//			Debug.Log (TimeStep [i]);
 
 			if (TimeStep [i] == "Nucleosome") {
 			
-				NucleosomeClass AwesomeObject = new NucleosomeClass (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
-				Debug.Log (AwesomeObject.StartPosition);
+//				NucleosomeClass AwesomeObject = new NucleosomeClass (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+//				Debug.Log (AwesomeObject.StartPosition);
 
 				GameObject OurSpecialNucleosome = NucleosomeClass.CreateNucleosome (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
@@ -134,9 +142,7 @@ public class TimeStep : MonoBehaviour
 		string pattern = @"\(((.*?))\)";
 		string intermediateString1 = "";
 		string[] IntermediateArray = (intermediateString1).Split (new Char[] {' '});
-		List<string> ObjectList;
-
-		ObjectList = new List<string> ();
+		List<string> ObjectList = new List<string> ();
 
 		foreach(Match match in Regex.Matches(input, pattern, RegexOptions.IgnoreCase))
 		{
@@ -164,16 +170,16 @@ public class TimeStep : MonoBehaviour
 
 		// The current Timestep
 		int j = 1;
-		var TimeStepList = new List<string>();
+		var timeStepList = new List<string>();
 
 		read = inputFile.ReadLine ();		// Remove while statement, and this reads the first line only
 
-//		Debug.Log (String.Format("TimestepList {0}", j));
-		TimeStepList = read_time_step (read);
+//		Debug.Log (String.Format("timestepList {0}", j));
+		timeStepList = read_time_step (read);
 
-//		Debug.Log (TimeStepList [0]);
+//		Debug.Log (timeStepList [0]);
 
-		yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
+		yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
 //		yield return StartCoroutine_Auto (AnimateObjects ());
 
@@ -197,25 +203,24 @@ public class TimeStep : MonoBehaviour
 //		Debug.Log (allTimeSteps [32]);
 
 		// Number of TimeSteps
-		int numberTimeSteps = CountLinesInFile ("test3.txt");
 
 
 		//*************PARSING LOGIC************//
 
 		// The current Timestep
 
-		var TimeStepList = new List<string>();
+		var timeStepList = new List<string>();
 
-		for (int k = selectTimeStep; k < (numberTimeSteps + 1); k++)
+		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
 
 //			yield return StartCoroutine_Auto (AnimateObjects ());
 //
 //			yield return StartCoroutine_Auto (JustWait ());
 		
-			TimeStepList = read_time_step (allTimeSteps [k - 1]);
+			timeStepList = read_time_step (allTimeSteps [k - 1]);
 
-			yield return StartCoroutine_Auto (CreateObjects (TimeStepList));
+			yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
 			yield return StartCoroutine_Auto (JustWait ());
 
@@ -225,10 +230,19 @@ public class TimeStep : MonoBehaviour
 			{
 				Debug.Log("END OF FILE");
 				VizGeneration.finished = true;
+				k = selectTimeStep;
+				break;
 			}
 
 		}
+
+
 			
+	}
+
+	public static void SimFinished()
+	{
+
 	}
 
 
