@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 
 #if UNITY_EDITOR
@@ -21,6 +21,8 @@ public class TimeStep : MonoBehaviour
 	public bool isPaused = false;
 	static public int lineCount = 0;
 	public int k = 0;
+
+	public static int objectsInTimestep;
 
 
 	private static int numberTimeSteps = CountLinesInFile ("test3.txt");
@@ -154,6 +156,9 @@ public class TimeStep : MonoBehaviour
 		}	
 			
 //		readyForNext = false;
+
+		objectsInTimestep = (ObjectList.Count) / 4;
+
 		return ObjectList;
 
 	}
@@ -208,8 +213,10 @@ public class TimeStep : MonoBehaviour
 		//*************PARSING LOGIC************//
 
 		// The current Timestep
-
 		var timeStepList = new List<string>();
+
+		// Next Timestep
+		var lookForwardOne = new List<string> (); 
 
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
@@ -217,8 +224,28 @@ public class TimeStep : MonoBehaviour
 //			yield return StartCoroutine_Auto (AnimateObjects ());
 //
 //			yield return StartCoroutine_Auto (JustWait ());
-		
+
 			timeStepList = read_time_step (allTimeSteps [k - 1]);
+
+			if (k < numberTimeSteps) 
+			{
+				lookForwardOne = read_time_step (allTimeSteps [k]);
+				int helloTest = 0;
+
+				// Seems to be accurately comparing the two timesteps, checking if the first object of the current timestep is identical in the next timestep
+				while (helloTest < objectsInTimestep * 4)
+				{
+					if ((timeStepList [0] == lookForwardOne [helloTest]) && (timeStepList [1] == lookForwardOne [helloTest + 1])
+						&& (timeStepList [2] == lookForwardOne [helloTest + 2]) && (timeStepList [3] == lookForwardOne [helloTest + 3])) 
+					{
+						Debug.Log ("BINGO!!!");
+					}
+					helloTest += 4;
+
+				}
+			}
+		
+//			timeStepList = read_time_step (allTimeSteps [k - 1]);
 
 			yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
@@ -228,7 +255,7 @@ public class TimeStep : MonoBehaviour
 
 			if (k == numberTimeSteps)
 			{
-				Debug.Log("END OF FILE");
+//				Debug.Log("END OF FILE");
 				VizGeneration.finished = true;
 				k = selectTimeStep;
 				break;
