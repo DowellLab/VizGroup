@@ -58,7 +58,7 @@
 [ (Nucleosome, Stable, 0, 5), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 38, 15), (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Binding, 90, 15) ]
 [ (Nucleosome, Stable, 0, 5), (Transcription_Factor, DAL80, 12, 15), (Transcriptional_Machinery, Crick-Forwards, 42, 15),(Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
 [ (Nucleosome, Stable, 0, 5), (Transcription_Factor, DAL80, 12, 15), (Nucleosome, Binding, 30, 25) (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
-[ (Nucleosome, Unbinding, 0, 5), (Transcription_Factor, DAL80, 12, 15), (Nucleosome, Stable, 30, 25) (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
+[ (Nucleosome, Unbinding, 0, 5), (Transcription_Factor, DAL80, 12, 15), (Nucleosome, Stable, 30, 25), (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
 [ (Transcription_Factor, DAL80, 12, 15), (Nucleosome, Stable, 30, 25), (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
 [ (Nucleosome, Stable, 30, 25), (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]
 [ (Transcription_Factor, FLO8, 60, 5), (Nucleosome, Stable, 90, 15) ]

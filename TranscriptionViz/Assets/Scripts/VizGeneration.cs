@@ -36,7 +36,7 @@ public class VizGeneration : MonoBehaviour {
 //				Debug.Log(Input.mousePosition);
 				//simulation has not started
 				if(!started || finished){
-					StartCoroutine_Auto (TimeStep.instance.ReadFile (61));
+					StartCoroutine_Auto (TimeStep.instance.ReadFile (60));
 					started = true;
 					finished = false;
 				}
