@@ -11,16 +11,16 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-public class NucleosomeClass
+public class NucleosomeClass : ObjectsOnDNA
 {
-	public string Subtype;
-	public float StartPosition;
-	public float Length;
 
 	public static Shader specular = Shader.Find("Specular");
 
-	public NucleosomeClass(string subtype, float startPosition, float length)
+//	public string MainType = "Nucleosome";
+
+	public NucleosomeClass(string maintype, string subtype, float startPosition, float length) : base(maintype, subtype, startPosition, length)
 	{
+		MainType = maintype;
 		Subtype = subtype;
 		StartPosition = startPosition;
 		Length = length;

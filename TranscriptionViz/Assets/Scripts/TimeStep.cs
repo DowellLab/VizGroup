@@ -7,25 +7,38 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-
-
+using System.Xml.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class TimeStep : MonoBehaviour
 {
-
+	/* PUBLIC VARIABLES */
 	static public TimeStep instance;
 	public bool isPaused = false;
-	static public int lineCount = 0;
+	public static int lineCount = 0;
 	public int k = 0;
 
+	// The current Timestep
+	private static List<string> timeStepList = new List<string>();
+	public static List<ObjectsOnDNA> ObjectsInCurrentTime = new List<ObjectsOnDNA> ();
 
+	// Next Timestep
+	private static List<string> lookForwardOne = new List<string> (); 
+	public static List<ObjectsOnDNA> ObjectsInFutureTime = new List<ObjectsOnDNA> ();
+
+	// Prev Timestep
+	private static List<string> lookBackOne = new List<string> ();
+	public static List<ObjectsOnDNA> ObjectsInPastTime = new List<ObjectsOnDNA> ();
+
+
+
+	/* PRIVATE VARIABLES */
 	private static int numberTimeSteps = CountLinesInFile ("test3.txt");
 
 
+	/* METHODS */
 
 	void Awake()
 	{
@@ -35,11 +48,18 @@ public class TimeStep : MonoBehaviour
 	}
 
 
+	/// <summary>
+	/// Justs the wait.
+	/// </summary>
+	/// <returns>The wait.</returns>
+
 	// Implement waiting
 	public IEnumerator JustWait()
 	{
 		yield return new WaitForSeconds (0.5f);
 	}
+
+
 
 
 	public static int CountLinesInFile(string f)
@@ -54,7 +74,6 @@ public class TimeStep : MonoBehaviour
 		return lineCount;
 
 	}
-
 
 
 	//Implement Destruction of Objects
@@ -87,50 +106,125 @@ public class TimeStep : MonoBehaviour
 			
 	}
 
-
-
-	// Generation of Objects ---> Should be better way to implement
+	
 	public static IEnumerator CreateObjects(List<string> TimeStep)
 	{
 
-		// Call DestroyObjects first
+		// Call DestroyObjects (first?)
 		DestroyObjects ();
 
+		// Add List to Node !!!!!!!!!!!
 
-		// Then Create New Objects
+
+		// Clear list for repopulation
+		ObjectsInCurrentTime.Clear();
+
+
+
+		// Then Repopulate list for new timestep
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
 
 //			Debug.Log (TimeStep [i]);
 
 			if (TimeStep [i] == "Nucleosome") {
 			
-//				NucleosomeClass AwesomeObject = new NucleosomeClass (TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
-//				Debug.Log (AwesomeObject.StartPosition);
+				NucleosomeClass AwesomeNuc = new NucleosomeClass (TimeStep[i],TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
-				GameObject OurSpecialNucleosome = NucleosomeClass.CreateNucleosome (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
-				yield return OurSpecialNucleosome;
+				if (TimeStep == timeStepList)
+				{
+					ObjectsInCurrentTime.Add (AwesomeNuc);
 
-//				yield return instance.StartCoroutine_Auto (instance.JustWait ());
+//					Debug.Log ("Added Nuc to Current");
+//					Debug.Log (ObjectsInCurrentTime.Count);
+
+					yield return ObjectsInCurrentTime;
+
+				} else if (TimeStep == lookForwardOne){
+
+					ObjectsInFutureTime.Add(AwesomeNuc);
+
+					yield return ObjectsInFutureTime;
+
+
+				} else if (TimeStep == lookBackOne) {
+
+					ObjectsInPastTime.Add(AwesomeNuc);
+
+					yield return ObjectsInPastTime;
+				
+				} else {
+
+					yield return 0;
+				}
 
 			}
 				
 			if (TimeStep [i] == "Transcription_Factor") {
 
-				GameObject OurSpecialTransFactor = TranscriptionFactorClass.CreateTranscriptionFactor (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+				TranscriptionFactorClass AwesomeTF = new TranscriptionFactorClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
-				yield return OurSpecialTransFactor;
+				if (TimeStep == timeStepList)
+				{
+					ObjectsInCurrentTime.Add (AwesomeTF);
 
-//				yield return instance.StartCoroutine_Auto (instance.JustWait ());
+//					Debug.Log ("Added TF to Current");
+
+					yield return ObjectsInCurrentTime;
+
+				} else if (TimeStep == lookForwardOne){
+
+					ObjectsInFutureTime.Add(AwesomeTF);
+					yield return ObjectsInFutureTime;
+
+
+				} else if (TimeStep == lookBackOne) {
+
+					ObjectsInPastTime.Add(AwesomeTF);
+
+					yield return ObjectsInPastTime;
+
+				} else {
+
+					yield return 0;
+				}
 
 			}
 				
 			if (TimeStep [i] == "Transcriptional_Machinery") {
 			
-				GameObject OurSpecialTransMach = TranscriptionalMachineryClass.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+				TranscriptionalMachineryClass AwesomeTM = new TranscriptionalMachineryClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+
+				if (TimeStep == timeStepList)
+				{
+					ObjectsInCurrentTime.Add (AwesomeTM);
+//					Debug.Log ("Added TM to Current");
+
+					yield return ObjectsInCurrentTime;
+
+				} else if (TimeStep == lookForwardOne){
+
+					ObjectsInFutureTime.Add(AwesomeTM);
+					yield return ObjectsInFutureTime;
 
 
-				yield return OurSpecialTransMach;
+				} else if (TimeStep == lookBackOne) {
+
+					ObjectsInPastTime.Add(AwesomeTM);
+
+					Debug.Log (ObjectsInPastTime);
+					yield return ObjectsInPastTime;
+
+				} else {
+
+					yield return 0;
+				}
+
+
+//				GameObject OurSpecialTransMach = TranscriptionalMachineryClass.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
+
+
+//				yield return OurSpecialTransMach;
 			}
 		}
 	}
@@ -154,9 +248,13 @@ public class TimeStep : MonoBehaviour
 		}	
 			
 //		readyForNext = false;
+
+//		objectsInTimestep = (ObjectList.Count) / 4;
+
 		return ObjectList;
 
 	}
+
 
 	public IEnumerator InitialTimestep()
 	{
@@ -181,7 +279,7 @@ public class TimeStep : MonoBehaviour
 
 		yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
-//		yield return StartCoroutine_Auto (AnimateObjects ());
+//		yield return StartCoroutine_Auto (AnimateObjects (ObjectsInCurrentTime));
 
 
 		j++;
@@ -192,7 +290,6 @@ public class TimeStep : MonoBehaviour
 
 		inputFile.Close();
 	}
-
 
 
 	public IEnumerator ReadFile(int selectTimeStep)
@@ -207,69 +304,104 @@ public class TimeStep : MonoBehaviour
 
 		//*************PARSING LOGIC************//
 
-		// The current Timestep
-
-		var timeStepList = new List<string>();
+//		// The current Timestep
+//		var timeStepList = new List<string>();
+//
+//		// Next Timestep
+//		var lookForwardOne = new List<string> (); 
+//		var lookBackOne = new List<string> ();
 
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
 
-//			yield return StartCoroutine_Auto (AnimateObjects ());
 //
 //			yield return StartCoroutine_Auto (JustWait ());
-		
+
+			if (k > 1)
+			{
+				lookBackOne = read_time_step (allTimeSteps[k - 2]);
+			}
+
+
 			timeStepList = read_time_step (allTimeSteps [k - 1]);
+
+
+			if (k < numberTimeSteps) 
+			{
+				lookForwardOne = read_time_step(allTimeSteps [k]);
+			}
+		
+//			timeStepList = read_time_step (allTimeSteps [k - 1]);
 
 			yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
-			yield return StartCoroutine_Auto (JustWait ());
-
 //			yield return StartCoroutine_Auto (JustWait ());
+
+			yield return StartCoroutine_Auto (AnimateObjects (ObjectsInCurrentTime));
+
+			yield return StartCoroutine_Auto (JustWait ());
 
 			if (k == numberTimeSteps)
 			{
-				Debug.Log("END OF FILE");
+//				Debug.Log("END OF FILE");
 				VizGeneration.finished = true;
 				k = selectTimeStep;
 				break;
 			}
 
 		}
-
-
 			
 	}
 
-	public static void SimFinished()
+
+
+	public IEnumerator AnimateObjects(List <ObjectsOnDNA> AnimateList)
 	{
-
-	}
-
-
-	public IEnumerator AnimateObjects()
-	{
-
-		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
-		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
-		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
-
-		foreach (GameObject go in nucleosomes)
+	
+		foreach (ObjectsOnDNA cool in AnimateList)
 		{
-			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-			yield return 0;
+//			DestroyObjects ();
+			if (cool.MainType == "Nucleosome")
+			{
+				NucleosomeClass.CreateNucleosome (cool.Subtype, cool.StartPosition, cool.Length);
+			} else if (cool.MainType == "Transcription_Factor")
+			{
+				TranscriptionFactorClass.CreateTranscriptionFactor (cool.Subtype, cool.StartPosition, cool.Length);
+			} else if (cool.MainType == "Transcriptional_Machinery"){
+				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (cool.Subtype, cool.StartPosition, cool.Length);
+			}
+//			Debug.Log (cool.Subtype + " " + cool.StartPosition + " " + cool.Length);
+
 		}
 
-		foreach (GameObject go in transcriptionFactors)
-		{
-			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-			yield return 0;
-		}
+		// RETURN ANIMATION INSTRUCTIONS!!! A LIST
 
-		foreach (GameObject go in transcriptionalMachineries)
-		{
-			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-			yield return 0;
-		}
+		yield return AnimateList;
+
+
+//		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+//		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+//		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+//
+//		foreach (GameObject go in nucleosomes)
+//		{
+//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+//			yield return 0;
+//		}
+//
+//		foreach (GameObject go in transcriptionFactors)
+//		{
+//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+//			yield return 0;
+//		}
+//
+//		foreach (GameObject go in transcriptionalMachineries)
+//		{
+//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
+//			yield return 0;
+//		}
+
+
 
 	}
 

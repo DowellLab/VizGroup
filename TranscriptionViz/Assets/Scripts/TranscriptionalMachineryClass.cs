@@ -11,16 +11,13 @@ using System.Linq;
 using UnityEditor;
 #endif
 
-public class TranscriptionalMachineryClass
+public class TranscriptionalMachineryClass : ObjectsOnDNA
 {
-	//	static int speed = 300;
+	public static Shader specular = Shader.Find("Specular");
 
-	public string Subtype;
-	public float StartPosition;
-	public float Length;
-
-	public TranscriptionalMachineryClass(string subtype, float startPosition, float length)
+	public TranscriptionalMachineryClass(string maintype, string subtype, float startPosition, float length) : base(maintype, subtype, startPosition, length)
 	{
+		MainType = maintype;
 		Subtype = subtype;
 		StartPosition = startPosition;
 		Length = length;
