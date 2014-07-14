@@ -212,7 +212,7 @@ public class TimeStep : MonoBehaviour
 
 					ObjectsInPastTime.Add(AwesomeTM);
 
-					Debug.Log (ObjectsInPastTime);
+//					Debug.Log (ObjectsInPastTime);
 					yield return ObjectsInPastTime;
 
 				} else {
@@ -314,6 +314,7 @@ public class TimeStep : MonoBehaviour
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
 
+			Debug.Log ("NEW TIMESTEP " + k);
 //
 //			yield return StartCoroutine_Auto (JustWait ());
 
@@ -337,7 +338,7 @@ public class TimeStep : MonoBehaviour
 
 //			yield return StartCoroutine_Auto (JustWait ());
 
-			yield return StartCoroutine_Auto (AnimateObjects (ObjectsInCurrentTime));
+			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime));
 
 			yield return StartCoroutine_Auto (JustWait ());
 
@@ -349,13 +350,15 @@ public class TimeStep : MonoBehaviour
 				break;
 			}
 
+
+
 		}
 			
 	}
 
 
 
-	public IEnumerator AnimateObjects(List <ObjectsOnDNA> AnimateList)
+	public IEnumerator ParseObjects(List <ObjectsOnDNA> AnimateList)
 	{
 	
 		foreach (ObjectsOnDNA cool in AnimateList)
@@ -363,44 +366,32 @@ public class TimeStep : MonoBehaviour
 //			DestroyObjects ();
 			if (cool.MainType == "Nucleosome")
 			{
+				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
+				InstructionObject.CreateInstructList (NewInstruct);
+
+				// Won't actually create objects here in the future ---> This is for debugging purposes only
 				NucleosomeClass.CreateNucleosome (cool);
-			} else if (cool.MainType == "Transcription_Factor")
-			{
-				TranscriptionFactorClass.CreateTranscriptionFactor (cool.Subtype, cool.StartPosition, cool.Length);
+
+			} else if (cool.MainType == "Transcription_Factor"){
+
+				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
+				InstructionObject.CreateInstructList (NewInstruct);
+
+				TranscriptionFactorClass.CreateTranscriptionFactor (cool);
 			} else if (cool.MainType == "Transcriptional_Machinery"){
-				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (cool.Subtype, cool.StartPosition, cool.Length);
+
+				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+				InstructionObject.CreateInstructList (NewInstruct);
+
+				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (cool);
 			}
 //			Debug.Log (cool.Subtype + " " + cool.StartPosition + " " + cool.Length);
 
 		}
 
-		// RETURN ANIMATION INSTRUCTIONS!!! A LIST
+		// RETURN ANIMATION INSTRUCTIONS!!! A LIST ---> NOPE
 
 		yield return AnimateList;
-
-
-//		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
-//		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
-//		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
-//
-//		foreach (GameObject go in nucleosomes)
-//		{
-//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-//			yield return 0;
-//		}
-//
-//		foreach (GameObject go in transcriptionFactors)
-//		{
-//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-//			yield return 0;
-//		}
-//
-//		foreach (GameObject go in transcriptionalMachineries)
-//		{
-//			iTween.MoveTo (go, new Vector3 (0, 50, 25), 5);
-//			yield return 0;
-//		}
-
 
 
 	}

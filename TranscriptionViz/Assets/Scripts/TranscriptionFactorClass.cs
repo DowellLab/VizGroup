@@ -24,16 +24,16 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 	}
 
-	public static GameObject CreateTranscriptionFactor(string Subtype, float StartPosition, float Length)
+	public static GameObject CreateTranscriptionFactor(ObjectsOnDNA TF)
 	{
 		GameObject NewTranscriptionFactor;
 		NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
-		NewTranscriptionFactor.transform.localScale = new Vector3 (Length / 3.5f, Length / 3.5f, Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
+		NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 		NewTranscriptionFactor.renderer.material.shader = specular;
 
-		StartPosition += Length / 3.5f;
+		TF.StartPosition += TF.Length / 3.5f;
 
-		NewTranscriptionFactor.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+		NewTranscriptionFactor.transform.position = new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
 		//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
 
@@ -42,19 +42,19 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 
 		// Transcription Factor Color
-		if (Subtype == "REB1")
+		if (TF.Subtype == "REB1")
 		{
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
 
-		} else if (Subtype == "TBP") {
+		} else if (TF.Subtype == "TBP") {
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.6f, 1, 0.3f);
 
-		} else if (Subtype == "MCM1"){
+		} else if (TF.Subtype == "MCM1"){
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.729f, 0.333f, 0.827f);
 
-		} else if (Subtype == "DAL80"){
+		} else if (TF.Subtype == "DAL80"){
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
 

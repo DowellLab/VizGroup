@@ -5,8 +5,6 @@ using System;
 public class Animator : MonoBehaviour
 {
 
-
-
 		// Use this for initialization
 		void Start ()
 		{
@@ -31,7 +29,6 @@ public class Animator : MonoBehaviour
 			
 			iTween.MoveTo(IO.TranscriptionSimObject, iTween.Hash("x", xyz[0], "y", xyz[1], "z", xyz[2], "time", 5));
 			//IO.TranscriptionSimObject.transform.position += new Vector3(xyz[0], xyz[1], xyz[2]);
-
 
 				
 		}
