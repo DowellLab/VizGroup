@@ -2,19 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class DoublyLinkedList : MonoBehaviour {
+public class DoublyLinkedList 
+{
 
-	public LinkedList<InstructionObject> timestepLinkedList;
+	public static LinkedList<List<InstructionObject>> timestepLinkedList;
 	public LinkedListNode<InstructionObject> cursor;
-
 
 
 	//constructor
 	public DoublyLinkedList() {
-		timestepLinkedList = new LinkedList<InstructionObject>(); 
 
+		timestepLinkedList = new LinkedList<List<InstructionObject>>(); 
 
 	}
+
 	/*
 	//prints entire linked list
 	public void printList() {
@@ -32,14 +33,10 @@ public class DoublyLinkedList : MonoBehaviour {
 		Debug.Log ("List Count: " + timesteps.Count);
 		cursor = tempCursor;
 	}
-
-<<<<<<< HEAD
+		
 	public void printNode(LinkedListNode<InstructionObject> lln) {
 //		Debug.Log("Type: " + lln.Value.type + " / Subtype: " + lln.Value.subtype + " / Position: " + lln.Value.pos + " / Length: " + lln.Value.length);
-=======
 
->>>>>>> 343bd19cdbc71381c9a3b4eab868efd796b137a0
-	}
 	*/
 
 	// Use this for initialization
