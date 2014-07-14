@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Obj
 {
@@ -8,6 +9,7 @@ public class Obj
 		public string subtype;
 		public int pos;
 		public int length;
+		public string status;
 
 		public Obj ()
 		{
@@ -15,6 +17,7 @@ public class Obj
 				subtype = "none";
 				pos = 0;
 				length = 0;
+				status = "none"; 
 		}
 
 		public Obj (string t, string st, int p, int l)
@@ -23,6 +26,16 @@ public class Obj
 				subtype = st;
 				pos = p;
 				length = l;
+				status = "none";
+		}
+	
+		public Obj (string t, string st, int p, int l, string s)
+		{
+				type = t;
+				subtype = st;
+				pos = p;
+				length = l;
+				status = s;
 		}
 
 		public void set (string t, string st, int p, int l)
@@ -33,23 +46,18 @@ public class Obj
 				this.length = l;
 		}
 
-		//public void print()
-		//{
-		//Console.WriteLine (this.type + " " + this.subtype + " " + this.pos + " " + this.length); 
-		//}
 
 
 	
 
 }
-// Use this for initialization
-//void Start ()
-//{
-//Node n1 = new Node ("TF", "REB1", 22, 3);
-//n1.print ();
-//n1.set ("yeah!", "no!", 1, 2);
-//n1.print ();
-	
-//}
 
-//}
+public class ObjList {
+
+	public List<Obj> list;
+
+	public ObjList () {
+		list = new List<Obj>();
+	}
+}
+
