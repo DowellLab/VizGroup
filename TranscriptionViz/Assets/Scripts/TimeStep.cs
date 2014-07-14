@@ -363,7 +363,7 @@ public class TimeStep : MonoBehaviour
 //			DestroyObjects ();
 			if (cool.MainType == "Nucleosome")
 			{
-				NucleosomeClass.CreateNucleosome (cool.Subtype, cool.StartPosition, cool.Length);
+				NucleosomeClass.CreateNucleosome (cool);
 			} else if (cool.MainType == "Transcription_Factor")
 			{
 				TranscriptionFactorClass.CreateTranscriptionFactor (cool.Subtype, cool.StartPosition, cool.Length);

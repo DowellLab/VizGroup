@@ -16,8 +16,6 @@ public class NucleosomeClass : ObjectsOnDNA
 
 	public static Shader specular = Shader.Find("Specular");
 
-//	public string MainType = "Nucleosome";
-
 	public NucleosomeClass(string maintype, string subtype, float startPosition, float length) : base(maintype, subtype, startPosition, length)
 	{
 		MainType = maintype;
@@ -28,23 +26,23 @@ public class NucleosomeClass : ObjectsOnDNA
 	}
 
 
-	public static GameObject CreateNucleosome(string Subtype, float StartPosition, float Length)
+	public static GameObject CreateNucleosome(ObjectsOnDNA Nucleosome)
 	{
 
 		GameObject NewNucleosome;
 
 		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
-		if (StartPosition != 0) {
-			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 6f, Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
+		if (Nucleosome.StartPosition != 0) {
+			NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 6f, Nucleosome.Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
 		} else {
-			NewNucleosome.transform.localScale = new Vector3 (Length / 3.5f, Length / 3f, Length / 3.5f);
+			NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 3f, Nucleosome.Length / 3.5f);
 		}
 
 		NewNucleosome.renderer.material.shader = specular;
 
-		StartPosition += Length / 4;
-		NewNucleosome.transform.position = new Vector3 ((StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+		Nucleosome.StartPosition += Nucleosome.Length / 4;
+		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
 		//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
 
@@ -52,11 +50,11 @@ public class NucleosomeClass : ObjectsOnDNA
 		NewNucleosome.tag = "Nucleosome";
 
 		// Nucleosome Color
-		if (Subtype == "Binding")
+		if (Nucleosome.Subtype == "Binding")
 		{
 			NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
 
-		} else if (Subtype == "Unbinding") {
+		} else if (Nucleosome.Subtype == "Unbinding") {
 
 			NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
 
