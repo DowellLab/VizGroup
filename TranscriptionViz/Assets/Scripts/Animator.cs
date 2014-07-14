@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Animator : MonoBehaviour
 {
@@ -10,20 +11,28 @@ public class Animator : MonoBehaviour
 		void Start ()
 		{
 			GameObject nucleosome  = new GameObject();
-			string move = "(1,2,3)";
-			string paren = "(";
+			String move = "10,20,30";
+			
+			int[] xyz = new int[3];
+			int index = 0;
+			foreach(string j in move.Split(','))
+			{
+				xyz[index] = Convert.ToInt32(j);
+				index++;
+				if(index >= 3)
+				{
+					index = 0;
+				}
+			}
+
+		
 			InstructionObject IO = new InstructionObject(nucleosome, move);
-			Debug.Log(nucleosome.transform.position);
- 
-			if(IO.instruction.StartsWith(paren))
-			{
-				Debug.Log ("has paren");
-				IO.TranscriptionSimObject.transform.position = 0;
-			}
-			else
-			{
-				Debug.Log("no create");
-			}
+			IO.TranscriptionSimObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+			
+			iTween.MoveTo(IO.TranscriptionSimObject, iTween.Hash("x", xyz[0], "y", xyz[1], "z", xyz[2], "time", 5));
+			//IO.TranscriptionSimObject.transform.position += new Vector3(xyz[0], xyz[1], xyz[2]);
+
+
 				
 		}
 	
