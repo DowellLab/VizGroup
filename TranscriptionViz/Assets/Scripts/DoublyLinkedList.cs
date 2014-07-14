@@ -4,17 +4,15 @@ using System.Collections.Generic;
 
 public class DoublyLinkedList : MonoBehaviour {
 
-<<<<<<< HEAD
 	public LinkedList<InstructionObject> timestepLinkedList;
 	public LinkedListNode<InstructionObject> cursor;
 
->>>>>>> 343bd19cdbc71381c9a3b4eab868efd796b137a0
+
 
 	//constructor
 	public DoublyLinkedList() {
-<<<<<<< HEAD
 		timestepLinkedList = new LinkedList<InstructionObject>(); 
->>>>>>> 343bd19cdbc71381c9a3b4eab868efd796b137a0
+
 
 	}
 	/*
@@ -47,7 +45,7 @@ public class DoublyLinkedList : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-<<<<<<< HEAD
+
 //		Obj n1 = new Obj ("chad", "bryan", 1, -1);
 //		Obj n2 = new Obj ("chad", "bryan", 2, -2);
 //		Obj n3 = new Obj ("chad", "bryan", 3, -3);
@@ -63,10 +61,6 @@ public class DoublyLinkedList : MonoBehaviour {
 //		timestepLinkedList.AddFirst (n1);
 //		cursor = timestepLinkedList.First;
 //		printNode (cursor);
-
-
->>>>>>> 343bd19cdbc71381c9a3b4eab868efd796b137a0
-
 
 	}
 	
