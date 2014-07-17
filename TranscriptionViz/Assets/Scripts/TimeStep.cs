@@ -22,7 +22,7 @@ public class TimeStep : MonoBehaviour
 
 	// The current Timestep
 	private static List<string> timeStepList = new List<string>();
-	public static List<ObjectsOnDNA> ObjectsInCurrentTime = new List<ObjectsOnDNA> ();
+	public static List<ObjectsOnDNA> ObjectsInCurrentTime; // = new List<ObjectsOnDNA> ();
 
 	// Next Timestep
 	private static List<string> lookForwardOne = new List<string> (); 
@@ -31,6 +31,12 @@ public class TimeStep : MonoBehaviour
 	// Prev Timestep
 	private static List<string> lookBackOne = new List<string> ();
 	public static List<ObjectsOnDNA> ObjectsInPastTime = new List<ObjectsOnDNA> ();
+
+	// Instruction Object List
+	public static List<InstructionObject> listOfInstructions;
+
+	// TimeStep Linked List
+	public static LinkedList<List<InstructionObject>> ourLinkedList;
 
 
 
@@ -109,17 +115,12 @@ public class TimeStep : MonoBehaviour
 	
 	public static IEnumerator CreateObjects(List<string> TimeStep)
 	{
-
-		// Call DestroyObjects (first?)
+	
+		// TEMP CALL DURING TEST ANIMATION PHASE
 		DestroyObjects ();
 
-		// Add List to Node !!!!!!!!!!!
-
-
-		// Clear list for repopulation
-		ObjectsInCurrentTime.Clear();
-
-
+		// Clear list for repopulation 
+		ObjectsInCurrentTime = new List<ObjectsOnDNA> ();
 
 		// Then Repopulate list for new timestep
 		for (int i = 0; i < (TimeStep.Count); i += 4) {
@@ -282,6 +283,7 @@ public class TimeStep : MonoBehaviour
 //		yield return StartCoroutine_Auto (AnimateObjects (ObjectsInCurrentTime));
 
 
+
 		j++;
 
 
@@ -297,9 +299,10 @@ public class TimeStep : MonoBehaviour
 
 		// Add all lines of TimeStep file into new List
 		List<string> allTimeSteps = System.IO.File.ReadAllLines("test3.txt").ToList();
-//		Debug.Log (allTimeSteps [32]);
 
-		// Number of TimeSteps
+		// LINKED LIST TIME
+		ourLinkedList = new LinkedList<List<InstructionObject>> ();
+
 
 
 		//*************PARSING LOGIC************//
@@ -315,7 +318,9 @@ public class TimeStep : MonoBehaviour
 		{
 
 			Debug.Log ("NEW TIMESTEP " + k);
-//
+
+			listOfInstructions = new List<InstructionObject> ();
+
 //			yield return StartCoroutine_Auto (JustWait ());
 
 			if (k > 1)
@@ -340,6 +345,18 @@ public class TimeStep : MonoBehaviour
 
 			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime));
 
+			yield return StartCoroutine_Auto (LookAtList (listOfInstructions));
+
+			yield return StartCoroutine_Auto (TempAni (listOfInstructions));
+
+
+
+
+			// ADD TO LINKED LIST
+			ourLinkedList.AddLast (listOfInstructions);
+
+
+
 			yield return StartCoroutine_Auto (JustWait ());
 
 			if (k == numberTimeSteps)
@@ -350,51 +367,93 @@ public class TimeStep : MonoBehaviour
 				break;
 			}
 
-
+//			yield return StartCoroutine_Auto(DoublyLinkedList.AddToList (InstructionObject.InstructionList));
 
 		}
+
 			
 	}
 
 
-
+	// AnimateList currently takes in Objects in Current Time
+	// Here's where to look ---> Add additional input for Objects in Future Time
 	public IEnumerator ParseObjects(List <ObjectsOnDNA> AnimateList)
 	{
-	
 		foreach (ObjectsOnDNA cool in AnimateList)
 		{
 //			DestroyObjects ();
 			if (cool.MainType == "Nucleosome")
 			{
 				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
-				InstructionObject.CreateInstructList (NewInstruct);
-
-				// Won't actually create objects here in the future ---> This is for debugging purposes only
-				NucleosomeClass.CreateNucleosome (cool);
+				listOfInstructions.Add (NewInstruct);
 
 			} else if (cool.MainType == "Transcription_Factor"){
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
-				InstructionObject.CreateInstructList (NewInstruct);
+				listOfInstructions.Add (NewInstruct);
 
-				TranscriptionFactorClass.CreateTranscriptionFactor (cool);
 			} else if (cool.MainType == "Transcriptional_Machinery"){
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
-				InstructionObject.CreateInstructList (NewInstruct);
+				listOfInstructions.Add (NewInstruct);
 
-				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (cool);
 			}
-//			Debug.Log (cool.Subtype + " " + cool.StartPosition + " " + cool.Length);
 
 		}
+			
+		foreach (ObjectsOnDNA cool in AnimateList)
+		{
+			InstructionObject NewInstruct = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+			listOfInstructions.Add (NewInstruct);
+		}
 
-		// RETURN ANIMATION INSTRUCTIONS!!! A LIST ---> NOPE
+//		InstructionObject.AddToLink();
 
 		yield return AnimateList;
 
-
 	}
+
+
+	// TEST TO MAKE SURE LIST POPULATING PROPERLY
+	public IEnumerator LookAtList(List<InstructionObject> toLook)
+	{
+		foreach (InstructionObject testing in toLook)
+		{
+			if (testing.instruction != "ObjectsOnDNA.DeleteObject") {
+				Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
+			}
+		}
+			
+		yield return 0;
+	}
+		
+
+	// TEMPORARY HANDLING OF ANIMATION
+	public IEnumerator TempAni(List <InstructionObject> toAnimate)
+	{
+		foreach (InstructionObject joe in toAnimate) {
+
+			if (joe.TranscriptionSimObject.MainType == "Nucleosome" && joe.instruction != "ObjectsOnDNA.DeleteObject") 
+			{
+				NucleosomeClass.CreateNucleosome (joe.TranscriptionSimObject);
+
+			} else if (joe.TranscriptionSimObject.MainType == "Transcription_Factor" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+				TranscriptionFactorClass.CreateTranscriptionFactor (joe.TranscriptionSimObject);
+
+			} else if (joe.TranscriptionSimObject.MainType == "Transcriptional_Machinery" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (joe.TranscriptionSimObject);
+
+			} else if (joe.instruction == "ObjectsOnDNA.DeleteObject"){
+				Debug.Log (joe.TranscriptionSimObject.MainType + "DELETED");
+			}
+
+
+		}
+
+		yield return 0;
+	}
+
+
 
 
 	public void PauseTimeStep()
