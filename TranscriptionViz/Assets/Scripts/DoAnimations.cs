@@ -7,7 +7,7 @@ public class DoAnimations : MonoBehaviour
 {
 
 		List<ObjectsOnDNA> objs  = new List<ObjectsOnDNA>();
-		LinkedList<List<ObjectsOnDNA>> mylist = new LinkedList<List<ObjectsOnDNA>>();
+//		LinkedList<List<ObjectsOnDNA>> mylist = new LinkedList<List<ObjectsOnDNA>>();
 
 		public IEnumerator createshit (ObjectsOnDNA obj)
 		{

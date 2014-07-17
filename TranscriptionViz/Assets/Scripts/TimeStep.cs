@@ -50,7 +50,7 @@ public class TimeStep : MonoBehaviour
 	{
 		instance = this;
 		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = 500;
+		Application.targetFrameRate = 1000;
 	}
 
 
@@ -127,7 +127,7 @@ public class TimeStep : MonoBehaviour
 
 //			Debug.Log (TimeStep [i]);
 
-			if (TimeStep [i] == "Nucleosome") {
+			if (TimeStep [i] == "'Nucleosome'") {
 			
 				NucleosomeClass AwesomeNuc = new NucleosomeClass (TimeStep[i],TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
@@ -161,7 +161,7 @@ public class TimeStep : MonoBehaviour
 
 			}
 				
-			if (TimeStep [i] == "Transcription_Factor") {
+			if (TimeStep [i] == "'Transcription_Factor'") {
 
 				TranscriptionFactorClass AwesomeTF = new TranscriptionFactorClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
@@ -192,7 +192,7 @@ public class TimeStep : MonoBehaviour
 
 			}
 				
-			if (TimeStep [i] == "Transcriptional_Machinery") {
+			if (TimeStep [i] == "'Transcriptional_Machinery'") {
 			
 				TranscriptionalMachineryClass AwesomeTM = new TranscriptionalMachineryClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
@@ -341,7 +341,7 @@ public class TimeStep : MonoBehaviour
 
 			yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
-//			yield return StartCoroutine_Auto (JustWait ());
+
 
 			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime));
 
@@ -350,6 +350,9 @@ public class TimeStep : MonoBehaviour
 			yield return StartCoroutine_Auto (TempAni (listOfInstructions));
 
 
+			// ADD FOR ANIMATIONS
+//			yield return StartCoroutine_Auto (JustWait ());
+//			yield return StartCoroutine_Auto (JustWait ());
 
 
 			// ADD TO LINKED LIST
@@ -382,17 +385,17 @@ public class TimeStep : MonoBehaviour
 		foreach (ObjectsOnDNA cool in AnimateList)
 		{
 //			DestroyObjects ();
-			if (cool.MainType == "Nucleosome")
+			if (cool.MainType == "'Nucleosome'")
 			{
 				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
 				listOfInstructions.Add (NewInstruct);
 
-			} else if (cool.MainType == "Transcription_Factor"){
+			} else if (cool.MainType == "'Transcription_Factor'"){
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
 				listOfInstructions.Add (NewInstruct);
 
-			} else if (cool.MainType == "Transcriptional_Machinery"){
+			} else if (cool.MainType == "'Transcriptional_Machinery'"){
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
 				listOfInstructions.Add (NewInstruct);
@@ -433,14 +436,14 @@ public class TimeStep : MonoBehaviour
 	{
 		foreach (InstructionObject joe in toAnimate) {
 
-			if (joe.TranscriptionSimObject.MainType == "Nucleosome" && joe.instruction != "ObjectsOnDNA.DeleteObject") 
+			if (joe.TranscriptionSimObject.MainType == "'Nucleosome'" && joe.instruction != "ObjectsOnDNA.DeleteObject") 
 			{
 				NucleosomeClass.CreateNucleosome (joe.TranscriptionSimObject);
 
-			} else if (joe.TranscriptionSimObject.MainType == "Transcription_Factor" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+			} else if (joe.TranscriptionSimObject.MainType == "'Transcription_Factor'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
 				TranscriptionFactorClass.CreateTranscriptionFactor (joe.TranscriptionSimObject);
 
-			} else if (joe.TranscriptionSimObject.MainType == "Transcriptional_Machinery" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+			} else if (joe.TranscriptionSimObject.MainType == "'Transcriptional_Machinery'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
 				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (joe.TranscriptionSimObject);
 
 			} else if (joe.instruction == "ObjectsOnDNA.DeleteObject"){

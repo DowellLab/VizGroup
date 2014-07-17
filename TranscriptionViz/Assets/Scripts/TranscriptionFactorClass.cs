@@ -35,26 +35,27 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		NewTranscriptionFactor.transform.position = new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-		//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
+//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
+//		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
 
 		NewTranscriptionFactor.name = "TranscriptionFactor";
 		NewTranscriptionFactor.tag = "TranscriptionFactor";
 
 
 		// Transcription Factor Color
-		if (TF.Subtype == "REB1")
+		if (TF.Subtype == "'REB1'")
 		{
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
 
-		} else if (TF.Subtype == "TBP") {
+		} else if (TF.Subtype == "'TBP'") {
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.6f, 1, 0.3f);
 
-		} else if (TF.Subtype == "MCM1"){
+		} else if (TF.Subtype == "'MCM1'"){
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0.729f, 0.333f, 0.827f);
 
-		} else if (TF.Subtype == "DAL80"){
+		} else if (TF.Subtype == "'DAL80'"){
 
 			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
 
