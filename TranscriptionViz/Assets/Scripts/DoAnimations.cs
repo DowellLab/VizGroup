@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class DoAnimations : MonoBehaviour
 {
 
-		ObjectsOnDNA TF  = new ObjectsOnDNA("Transcription_Factor", "REB1", 100, 5);
+		List<ObjectsOnDNA> objs  = new List<ObjectsOnDNA>();
+		LinkedList<List<ObjectsOnDNA>> mylist = new LinkedList<List<ObjectsOnDNA>>();
 
 		public IEnumerator createshit (ObjectsOnDNA obj)
 		{
@@ -13,10 +15,27 @@ public class DoAnimations : MonoBehaviour
 			yield return TranscriptionFactorClass.CreateTranscriptionFactor(obj);
 			
 		}
+		//LinkedList<List<ObjectsOnDNA>> list
+		void parseList ()
+		{
+			ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
+			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
+			ObjectsOnDNA three = new ObjectsOnDNA("Nucleosome", "Stable", 15, 5);
+			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
+			objs.Add(one);
+			objs.Add(two);
+			objs.Add(three);
+			objs.Add(four);
+			foreach (ObjectsOnDNA thing in objs)
+			{
+				Debug.Log(thing.Subtype);
+			}
+		}
 
 		// Use this for initialization
 		void Start ()
 		{
+		
 			
 			String move = "10,20,30";
 			
@@ -47,7 +66,7 @@ public class DoAnimations : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				StartCoroutine_Auto(createshit(TF));
+				//StartCoroutine_Auto(createshit(TF));
 			}
 			
 		}
