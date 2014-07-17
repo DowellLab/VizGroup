@@ -6,50 +6,80 @@ using System.Collections.Generic;
 public class DoAnimations : MonoBehaviour
 {
 
-		List<ObjectsOnDNA> objs  = new List<ObjectsOnDNA>();
-		LinkedList<List<ObjectsOnDNA>> mylist = new LinkedList<List<ObjectsOnDNA>>();
-
-		public IEnumerator createshit (ObjectsOnDNA obj)
-		{
+		public List<InstructionObject> listIO = new List<InstructionObject>();
+		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
 		
-			yield return TranscriptionFactorClass.CreateTranscriptionFactor(obj);
-			
-		}
-		//LinkedList<List<ObjectsOnDNA>> list
-		void parseList ()
+
+		public IEnumerator parseList ()
 		{
 			ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
 			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
-			ObjectsOnDNA three = new ObjectsOnDNA("Nucleosome", "Stable", 15, 5);
+			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
 			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
-			objs.Add(one);
-			objs.Add(two);
-			objs.Add(three);
-			objs.Add(four);
-			foreach (ObjectsOnDNA thing in objs)
+			InstructionObject IO1 = new InstructionObject(one, "1,2,3");
+			InstructionObject IO2 = new InstructionObject(two, "two");
+			InstructionObject IO3 = new InstructionObject(three, "CreateTranscriptionFactor");
+			InstructionObject IO4 = new InstructionObject(four, "CreateNucleosome");
+			listIO.Add(IO1);
+			listIO.Add(IO2);
+			listIO.Add(IO3);
+			listIO.Add(IO4);
+			ll.AddFirst(listIO);
+			LinkedListNode<List<InstructionObject>> cursor;
+			cursor = ll.First;
+			
+			while(cursor != null)
 			{
-				Debug.Log(thing.Subtype);
+				foreach(InstructionObject current in cursor.Value)
+				{
+					//Create TF
+					if (current.instruction == "CreateTranscriptionFactor")
+					{
+						yield return TranscriptionFactorClass.CreateTranscriptionFactor(current.TranscriptionSimObject);
+					}
+					
+					//Create Nucleosome
+					if(current.instruction == "CreateNucleosome")
+					{
+						yield return NucleosomeClass.CreateNucleosome(current.TranscriptionSimObject);
+					}
+					
+					//Delete ObjectsOnDNA
+					if(current.instruction == "Delete")
+					{
+						yield return ObjectsOnDNA.DeleteObject(current.TranscriptionSimObject);
+					}
+					
+					//Move Handling
+					else if (current.instruction.Contains(","))
+					{
+						int[] xyz = new int[3];
+						int index = 0;
+						foreach(string j in current.instruction.Split(','))
+						{
+							xyz[index] = Convert.ToInt32(j);
+							index++;
+						}
+						foreach(int i in xyz)
+						{
+							Debug.Log(i);
+						}
+					}
+
+				}
+				
+				cursor = cursor.Next;
+				
 			}
 		}
+		
 
 		// Use this for initialization
 		void Start ()
 		{
-		
+			StartCoroutine_Auto(parseList());
 			
-			String move = "10,20,30";
-			
-			int[] xyz = new int[3];
-			int index = 0;
-			foreach(string j in move.Split(','))
-			{
-				xyz[index] = Convert.ToInt32(j);
-				index++;
-				if(index >= 3)
-				{
-					index = 0;
-				}
-			}
+		}
 			
 
 			//ObjectsOnDNA TF  = new ObjectsOnDNA("Transcription_Factor", "REB1", 100, 5);
@@ -59,15 +89,11 @@ public class DoAnimations : MonoBehaviour
 			//IO.TranscriptionSimObject.transform.position += new Vector3(xyz[0], xyz[1], xyz[2]);
 
 				
-		}
+		
 	
 		// Update is called once per frame
 		void Update ()
 		{
-			if (Input.GetMouseButtonDown(0))
-			{
-				//StartCoroutine_Auto(createshit(TF));
-			}
 			
 		}
 		
