@@ -6,7 +6,7 @@ public class DoublyLinkedList
 {
 
 	public static LinkedList<List<InstructionObject>> timestepLinkedList;
-	public LinkedListNode<InstructionObject> cursor;
+	public static LinkedListNode<List<InstructionObject>> cursor;
 
 
 	//constructor
@@ -16,25 +16,40 @@ public class DoublyLinkedList
 
 	}
 
+	public static void AddToList(List<InstructionObject> toAdd)
+	{
+		timestepLinkedList = new LinkedList<List<InstructionObject>>();
+
+		timestepLinkedList.AddFirst (toAdd);
+
+	}
+
+	public static void printList(){
+//		int index = 0;
+//		LinkedListNode<List<InstructionObject>> tempCursor = cursor;
+//		cursor = timestepLinkedList.First;
+
+	}
+
 	/*
 	//prints entire linked list
-	public void printList() {
-		int index = 0;
-		LinkedListNode<Obj> tempCursor = cursor;
-		cursor = timesteps.First;
-
-		while (cursor != null) {
-			Debug.Log("Node Index: " + index);
-			printNode (cursor);
-			cursor = cursor.Next;
-			index++;
-		}
-
-		Debug.Log ("List Count: " + timesteps.Count);
-		cursor = tempCursor;
-	}
-		
-	public void printNode(LinkedListNode<InstructionObject> lln) {
+//	public void printList() {
+//		int index = 0;
+//		LinkedListNode<Obj> tempCursor = cursor;
+//		cursor = timesteps.First;
+//
+//		while (cursor != null) {
+//			Debug.Log("Node Index: " + index);
+//			printNode (cursor);
+//			cursor = cursor.Next;
+//			index++;
+//		}
+//
+//		Debug.Log ("List Count: " + timesteps.Count);
+//		cursor = tempCursor;
+//	}
+//		
+//	public void printNode(LinkedListNode<InstructionObject> lln) {
 //		Debug.Log("Type: " + lln.Value.type + " / Subtype: " + lln.Value.subtype + " / Position: " + lln.Value.pos + " / Length: " + lln.Value.length);
 
 	*/

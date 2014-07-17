@@ -33,12 +33,29 @@ public class InstructionObject
 		InstructionList = new List<InstructionObject>();
 		InstructionList.Add (toInsert);
 
-		foreach (InstructionObject testing in InstructionList)
-		{
-			Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
-		}
+//		foreach (InstructionObject testing in InstructionList)
+//		{
+//			Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
+//		}
 
 		return InstructionList;
+	}
+
+	public static void ClearList()
+	{
+		InstructionList.Clear ();
+	}
+
+
+	public static void AddToLink()
+	{
+
+//		foreach (InstructionObject testing in InstructionList)
+//		{
+//			Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
+//		}
+//
+//		DoublyLinkedList.AddToList (InstructionList);
 	}
 
 }

@@ -26,4 +26,41 @@ public class ObjectsOnDNA
 		Length = length;
 	}
 
+	public static void DeleteObject(ObjectsOnDNA toDelete)
+	{
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		// toDelete.StartPosition needs to be properly calculated for this to work!!!
+
+
+		foreach (GameObject nuc in nucleosomes)
+		{
+			if (nuc.transform.position.x == toDelete.StartPosition)
+			{
+				GameObject.Destroy (nuc);
+			}
+		}
+
+		foreach (GameObject tf in transcriptionFactors)
+		{
+			if (tf.transform.position.x == toDelete.StartPosition)
+			{
+				GameObject.Destroy (tf);
+			}
+		}
+
+
+		foreach (GameObject tm in transcriptionalMachineries)
+		{
+			if (tm.transform.position.x == toDelete.StartPosition)
+			{
+				GameObject.Destroy (tm);
+			}
+		}
+
+
+	}
+
 }
