@@ -44,11 +44,17 @@ public class DoAnimations : MonoBehaviour
 						yield return NucleosomeClass.CreateNucleosome(current.TranscriptionSimObject);
 					}
 					
-					//Delete ObjectsOnDNA
-					if(current.instruction == "Delete")
+					//Create TM
+					if (current.instruction == "CreateTranscriptionalMachinery")
 					{
-						yield return ObjectsOnDNA.DeleteObject(current.TranscriptionSimObject);
+						yield return TranscriptionalMachineryClass.CreateTranscriptionalMachinery(current.TranscriptionSimObject);
 					}
+					
+					//Delete ObjectsOnDNA
+//					if(current.instruction == "Delete")
+//					{
+//						yield return ObjectsOnDNA.DeleteObject(current.TranscriptionSimObject);
+//					}
 					
 					//Move Handling
 					else if (current.instruction.Contains(","))
