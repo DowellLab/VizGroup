@@ -20,16 +20,18 @@ public class TimeStep : MonoBehaviour
 	public static int lineCount = 0;
 	public int k = 0;
 
+	public int testInt = 0;
+
 	// The current Timestep
 	private static List<string> timeStepList = new List<string>();
 	public static List<ObjectsOnDNA> ObjectsInCurrentTime; // = new List<ObjectsOnDNA> ();
 
 	// Next Timestep
-	private static List<string> lookForwardOne = new List<string> (); 
-	public static List<ObjectsOnDNA> ObjectsInFutureTime = new List<ObjectsOnDNA> ();
+//	private static List<string> lookForwardOne = new List<string> (); 
+	public static List<ObjectsOnDNA> ObjectsInFutureTime;
 
 	// Prev Timestep
-	private static List<string> lookBackOne = new List<string> ();
+//	private static List<string> lookBackOne = new List<string> ();
 	public static List<ObjectsOnDNA> ObjectsInPastTime = new List<ObjectsOnDNA> ();
 
 	// Instruction Object List
@@ -50,7 +52,7 @@ public class TimeStep : MonoBehaviour
 	{
 		instance = this;
 		QualitySettings.vSyncCount = 0;
-		Application.targetFrameRate = 1000;
+		Application.targetFrameRate = 500;
 	}
 
 
@@ -64,8 +66,6 @@ public class TimeStep : MonoBehaviour
 	{
 		yield return new WaitForSeconds (0.5f);
 	}
-
-
 
 
 	public static int CountLinesInFile(string f)
@@ -128,107 +128,71 @@ public class TimeStep : MonoBehaviour
 //			Debug.Log (TimeStep [i]);
 
 			if (TimeStep [i] == "'Nucleosome'") {
-			
-				NucleosomeClass AwesomeNuc = new NucleosomeClass (TimeStep[i],TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+		
+				NucleosomeClass AwesomeNuc = new NucleosomeClass (TimeStep [i], TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
 
+				ObjectsInCurrentTime.Add (AwesomeNuc);
 
-				if (TimeStep == timeStepList)
-				{
-					ObjectsInCurrentTime.Add (AwesomeNuc);
-
-//					Debug.Log ("Added Nuc to Current");
+//				Debug.Log ("Added Nuc to Current");
 //					Debug.Log (ObjectsInCurrentTime.Count);
 
-					yield return ObjectsInCurrentTime;
-
-				} else if (TimeStep == lookForwardOne){
-
-					ObjectsInFutureTime.Add(AwesomeNuc);
-
-					yield return ObjectsInFutureTime;
-
-
-				} else if (TimeStep == lookBackOne) {
-
-					ObjectsInPastTime.Add(AwesomeNuc);
-
-					yield return ObjectsInPastTime;
-				
-				} else {
-
-					yield return 0;
-				}
-
-			}
-				
-			if (TimeStep [i] == "'Transcription_Factor'") {
-
-				TranscriptionFactorClass AwesomeTF = new TranscriptionFactorClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
-
-				if (TimeStep == timeStepList)
-				{
+				yield return ObjectsInCurrentTime;
+			} else if (TimeStep [i] == "'Transcription_Factor'") {
+			
+					TranscriptionFactorClass AwesomeTF = new TranscriptionFactorClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 					ObjectsInCurrentTime.Add (AwesomeTF);
 
 //					Debug.Log ("Added TF to Current");
 
 					yield return ObjectsInCurrentTime;
 
-				} else if (TimeStep == lookForwardOne){
-
-					ObjectsInFutureTime.Add(AwesomeTF);
-					yield return ObjectsInFutureTime;
-
-
-				} else if (TimeStep == lookBackOne) {
-
-					ObjectsInPastTime.Add(AwesomeTF);
-
-					yield return ObjectsInPastTime;
-
-				} else {
-
-					yield return 0;
-				}
-
-			}
-				
-			if (TimeStep [i] == "'Transcriptional_Machinery'") {
+			}else if (TimeStep [i] == "'Transcriptional_Machinery'") {
 			
-				TranscriptionalMachineryClass AwesomeTM = new TranscriptionalMachineryClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 
-				if (TimeStep == timeStepList)
-				{
+					TranscriptionalMachineryClass AwesomeTM = new TranscriptionalMachineryClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
 					ObjectsInCurrentTime.Add (AwesomeTM);
 //					Debug.Log ("Added TM to Current");
 
 					yield return ObjectsInCurrentTime;
 
-				} else if (TimeStep == lookForwardOne){
-
-					ObjectsInFutureTime.Add(AwesomeTM);
-					yield return ObjectsInFutureTime;
-
-
-				} else if (TimeStep == lookBackOne) {
-
-					ObjectsInPastTime.Add(AwesomeTM);
-
-//					Debug.Log (ObjectsInPastTime);
-					yield return ObjectsInPastTime;
-
-				} else {
-
-					yield return 0;
-				}
-
-
-//				GameObject OurSpecialTransMach = TranscriptionalMachineryClass.CreateTranscriptionalMachinery (TimeStep [i + 1], Convert.ToInt64 (TimeStep [i + 2]), Convert.ToInt64 (TimeStep [i + 3]));
-
-
-//				yield return OurSpecialTransMach;
 			}
 		}
 	}
+
+
+	public static IEnumerator CreateFutureObjects(List<string> TimeStep)
+	{
+		ObjectsInFutureTime = new List<ObjectsOnDNA> ();
+
+		for (int i = 0; i < (TimeStep.Count); i += 4) {
+		
+		
+			if (TimeStep [i] == "'Nucleosome'") {
+
+				NucleosomeClass AwesomeNuc = new NucleosomeClass (TimeStep[i],TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				ObjectsInFutureTime.Add(AwesomeNuc);
+//				Debug.Log ("Added Nuc to Future");
+				yield return ObjectsInFutureTime;
+
+			} else if (TimeStep[i] == "'Transcription_Factor'" ){
+
+				TranscriptionFactorClass AwesomeTF = new TranscriptionFactorClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				ObjectsInFutureTime.Add(AwesomeTF);
+//				Debug.Log ("Added TF to Future");
+				yield return ObjectsInFutureTime;
+
+			} else if (TimeStep [i] == "'Transcriptional_Machinery'") {
+
+				TranscriptionalMachineryClass AwesomeTM = new TranscriptionalMachineryClass (TimeStep[i], TimeStep [i + 1], Convert. ToInt64 (TimeStep [i + 2]), Convert. ToInt64 (TimeStep [i + 3]));
+				ObjectsInFutureTime.Add(AwesomeTM);
+//				Debug.Log ("Added TM to Future");
+
+				yield return ObjectsInFutureTime;
+			}
+		}
+	}
+
+
 
 	// Reads in a string (a timestep) with format [(type, subtype, position, length), (type, subtype, position, length)...].
 	// It takes each component (type, subtype, position, length) and separates out the components into a list of strings called 'IntermediateArray'.
@@ -311,7 +275,7 @@ public class TimeStep : MonoBehaviour
 //		var timeStepList = new List<string>();
 //
 //		// Next Timestep
-//		var lookForwardOne = new List<string> (); 
+		var lookForwardOne = new List<string> (); 
 //		var lookBackOne = new List<string> ();
 
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
@@ -325,7 +289,7 @@ public class TimeStep : MonoBehaviour
 
 			if (k > 1)
 			{
-				lookBackOne = read_time_step (allTimeSteps[k - 2]);
+//				lookBackOne = read_time_step (allTimeSteps[k - 2]);
 			}
 
 
@@ -335,15 +299,18 @@ public class TimeStep : MonoBehaviour
 			if (k < numberTimeSteps) 
 			{
 				lookForwardOne = read_time_step(allTimeSteps [k]);
+
 			}
-		
-//			timeStepList = read_time_step (allTimeSteps [k - 1]);
+
+
+			yield return StartCoroutine_Auto (CreateFutureObjects (lookForwardOne));
 
 			yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
 
 
-			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime));
+
+			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime, ObjectsInFutureTime));
 
 			yield return StartCoroutine_Auto (LookAtList (listOfInstructions));
 
@@ -380,22 +347,113 @@ public class TimeStep : MonoBehaviour
 
 	// AnimateList currently takes in Objects in Current Time
 	// Here's where to look ---> Add additional input for Objects in Future Time
-	public IEnumerator ParseObjects(List <ObjectsOnDNA> AnimateList)
+	public IEnumerator ParseObjects(List <ObjectsOnDNA> AnimateList, List <ObjectsOnDNA> lookAhead)
 	{
+		//Handles Creation of objects
+		foreach(ObjectsOnDNA tests in lookAhead)
+		{
+			var found = false;
+
+			foreach(ObjectsOnDNA cool in AnimateList)
+			{
+				if (tests.MainType  == cool.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length)
+				{
+					if(Math.Abs(cool.StartPosition - tests.StartPosition) <= tests.Length)
+					{
+						found = true;
+					}
+				}
+			}
+
+			if (!found)
+			{
+				Debug.Log ("CREATE " + tests.MainType + " at Position " + tests.StartPosition);
+			}
+		}
+
+		// Handles Object Changes (movement and deletion of Objects)
 		foreach (ObjectsOnDNA cool in AnimateList)
 		{
-//			DestroyObjects ();
+			var found = false;
+
 			if (cool.MainType == "'Nucleosome'")
 			{
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+				
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
+						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10){
+							found = true;
+							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
+						} else {
+//							found = false;
+						}
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+				}
+
+
+
 				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
 				listOfInstructions.Add (NewInstruct);
 
+
 			} else if (cool.MainType == "'Transcription_Factor'"){
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME TF " + cool.StartPosition);
+						} 
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+				}
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
 				listOfInstructions.Add (NewInstruct);
 
 			} else if (cool.MainType == "'Transcriptional_Machinery'"){
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME TM " + cool.StartPosition);
+						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3){
+							found = true;
+							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
+						} 
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+				}
+
 
 				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
 				listOfInstructions.Add (NewInstruct);
@@ -422,9 +480,9 @@ public class TimeStep : MonoBehaviour
 	{
 		foreach (InstructionObject testing in toLook)
 		{
-			if (testing.instruction != "ObjectsOnDNA.DeleteObject") {
-				Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
-			}
+//			if (testing.instruction != "ObjectsOnDNA.DeleteObject") {
+//				Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
+//			}
 		}
 			
 		yield return 0;
@@ -447,7 +505,7 @@ public class TimeStep : MonoBehaviour
 				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (joe.TranscriptionSimObject);
 
 			} else if (joe.instruction == "ObjectsOnDNA.DeleteObject"){
-				Debug.Log (joe.TranscriptionSimObject.MainType + "DELETED");
+//				Debug.Log (joe.TranscriptionSimObject.MainType + "DELETED");
 			}
 
 

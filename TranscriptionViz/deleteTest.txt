@@ -1,0 +1,3 @@
+[('Nucleosome', 'Stable', 35, 25), ('Nucleosome', 'Stable', 75, 25)]
+[('Nucleosome', 'Stable', 0, 25), ('Nucleosome', 'Stable', 35, 25), ('Nucleosome', 'Stable', 75, 25)]
+[('Nucleosome', 'Stable', 0, 25), ('Nucleosome', 'Stable', 75, 25)]
