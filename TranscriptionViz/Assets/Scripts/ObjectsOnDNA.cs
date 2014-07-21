@@ -32,20 +32,21 @@ public class ObjectsOnDNA
 		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
 		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
 
-		// toDelete.StartPosition needs to be properly calculated for this to work!!!
-
+		//toDelete.StartPosition has to be converted to nucleotide location
+		float convertPos = (toDelete.StartPosition / 3.5f) - .6f;
 
 		foreach (GameObject nuc in nucleosomes)
 		{
-			if (nuc.transform.position.x == toDelete.StartPosition)
+			if (nuc.transform.position.x == convertPos)
 			{
+
 				GameObject.Destroy (nuc);
 			}
 		}
 
 		foreach (GameObject tf in transcriptionFactors)
 		{
-			if (tf.transform.position.x == toDelete.StartPosition)
+			if (tf.transform.position.x == convertPos)
 			{
 				GameObject.Destroy (tf);
 			}
@@ -54,7 +55,7 @@ public class ObjectsOnDNA
 
 		foreach (GameObject tm in transcriptionalMachineries)
 		{
-			if (tm.transform.position.x == toDelete.StartPosition)
+			if (tm.transform.position.x == convertPos)
 			{
 				GameObject.Destroy (tm);
 			}
