@@ -358,11 +358,24 @@ public class TimeStep : MonoBehaviour
 			{
 				if (tests.MainType  == cool.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length)
 				{
-					if(Math.Abs(cool.StartPosition - tests.StartPosition) <= tests.Length)
+					if (tests.MainType == "'Nucleosome") {
+						if (Math.Abs (cool.StartPosition - tests.StartPosition) <= 10) {
+							found = true;
+						}
+					} else if (tests.MainType == "Transcriptional_Machinery")
+					{
+						if (Math.Abs (cool.StartPosition - tests.StartPosition) <= 3) {
+							found = true;
+						}
+					}
+				} else if (cool.Subtype != tests.Subtype && tests.MainType != "'Transcription_Factor'")
+				{
+					if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
 					{
 						found = true;
 					}
 				}
+
 			}
 
 			if (!found)
@@ -390,8 +403,12 @@ public class TimeStep : MonoBehaviour
 							found = true;
 							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
 						} else {
-//							found = false;
+//							???
 						}
+					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					{
+						found = true;
+						Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
 					}
 
 				}
@@ -444,6 +461,10 @@ public class TimeStep : MonoBehaviour
 							found = true;
 							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
 						} 
+					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					{
+						found = true;
+						Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
 					}
 
 				}
