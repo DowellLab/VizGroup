@@ -358,15 +358,20 @@ public class TimeStep : MonoBehaviour
 			{
 				if (tests.MainType  == cool.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length)
 				{
-					if (tests.MainType == "'Nucleosome") {
+					if (tests.MainType == "'Nucleosome'") {
 						if (Math.Abs (cool.StartPosition - tests.StartPosition) <= 10) {
 							found = true;
 						}
-					} else if (tests.MainType == "Transcriptional_Machinery")
+					} else if (tests.MainType == "'Transcriptional_Machinery'")
 					{
-						if (Math.Abs (cool.StartPosition - tests.StartPosition) <= 3) {
+						if (cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+						} else if (Math.Abs (cool.StartPosition - tests.StartPosition) <= 3) {
 							found = true;
 						}
+					} else if (tests.MainType == "'Transcription_Factor'") {
+						found = true;
 					}
 				} else if (cool.Subtype != tests.Subtype && tests.MainType != "'Transcription_Factor'")
 				{
@@ -499,12 +504,12 @@ public class TimeStep : MonoBehaviour
 	// TEST TO MAKE SURE LIST POPULATING PROPERLY
 	public IEnumerator LookAtList(List<InstructionObject> toLook)
 	{
-		foreach (InstructionObject testing in toLook)
-		{
+//		foreach (InstructionObject testing in toLook)
+//		{
 //			if (testing.instruction != "ObjectsOnDNA.DeleteObject") {
 //				Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
 //			}
-		}
+//		}
 			
 		yield return 0;
 	}
