@@ -6,9 +6,11 @@ using System.Collections.Generic;
 public class DoAnimations : MonoBehaviour
 {
 
+
 		public List<InstructionObject> listIO = new List<InstructionObject>();
 		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
-		
+		List<ObjectsOnDNA> objs  = new List<ObjectsOnDNA>();
+//		LinkedList<List<ObjectsOnDNA>> mylist = new LinkedList<List<ObjectsOnDNA>>();
 
 		public IEnumerator parseList ()
 		{

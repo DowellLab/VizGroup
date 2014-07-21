@@ -42,19 +42,21 @@ public class NucleosomeClass : ObjectsOnDNA
 		NewNucleosome.renderer.material.shader = specular;
 
 		Nucleosome.StartPosition += Nucleosome.Length / 4;
+
 		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-		//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
+//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
+//		iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
 
 		NewNucleosome.name = "Nucleosome";
 		NewNucleosome.tag = "Nucleosome";
 
 		// Nucleosome Color
-		if (Nucleosome.Subtype == "Binding")
+		if (Nucleosome.Subtype == "'Binding'")
 		{
 			NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
 
-		} else if (Nucleosome.Subtype == "Unbinding") {
+		} else if (Nucleosome.Subtype == "'Unbinding'") {
 
 			NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
 

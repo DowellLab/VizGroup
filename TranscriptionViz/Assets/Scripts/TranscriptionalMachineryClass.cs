@@ -35,16 +35,32 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 		NewTranscriptionalMachinery.transform.position = new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
+//		NewTranscriptionalMachinery.transform.position = new Vector3 (10, -25, 0);
+//		iTween.MoveTo (NewTranscriptionalMachinery, new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
+
+
+
 		NewTranscriptionalMachinery.name = "TranscriptionalMachinery";
 		NewTranscriptionalMachinery.tag = "TranscriptionalMachinery";
 
 
 		// Transcription Factor Color
-		if (TM.Subtype == "Init0" || TM.Subtype == "Init1")
-		{
+		if (TM.Subtype == "'Crick-Init0'" || TM.Subtype == "'Crick-Init1'" || TM.Subtype == "'Crick-Init2'" || TM.Subtype == "'Crick-Init3'" || TM.Subtype == "'Crick-Init4'") {
 			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
 
-		} else if (TM.Subtype == "Crick-Forwards" || TM.Subtype == "Crick-Backwards"){
+		} else if (TM.Subtype == "'Watson-Init0'" || TM.Subtype == "'Watson-Init1'" || TM.Subtype == "'Watson-Init2'" || TM.Subtype == "'Watson-Init3'" || TM.Subtype == "'Watson-Init4'") {
+
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
+
+		} else if (TM.Subtype == "'Crick'" || TM.Subtype == "'Watson'") {
+
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+		} else if (TM.Subtype == "'Crick-Transcribed'" || TM.Subtype == "'Watson-Transcribed'") {
+
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+		} else if (TM.Subtype == "'Crick-Paused'" || TM.Subtype == "'Watson-Paused'") {
 
 			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
 
