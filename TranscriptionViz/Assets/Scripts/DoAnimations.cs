@@ -115,6 +115,8 @@ public class DoAnimations : MonoBehaviour
 						iTween.MoveTo(nuc, iTween.Hash("x", xyz[0], "time", 5));
 					}
 				}
+				
+				yield return new WaitForSeconds(6);
 			}
 		
 			//Transcription Factor move handling 
@@ -127,6 +129,8 @@ public class DoAnimations : MonoBehaviour
 						iTween.MoveTo(tf, iTween.Hash("x", xyz[0], "time", 5));
 					}
 				}
+				
+				yield return new WaitForSeconds(6);
 			}
 		
 			//Transcriptional Machinery move handling
@@ -145,6 +149,8 @@ public class DoAnimations : MonoBehaviour
 						Debug.Log("new pos: " + tm.transform.position);
 						
 						moveMe.TranscriptionSimObject.StartPosition = xyz[0];
+						
+						yield return new WaitForSeconds(6);
 					
 					}
 				}
@@ -156,7 +162,7 @@ public class DoAnimations : MonoBehaviour
 		{
 			iTween.MoveTo(tweenMe, iTween.Hash("x", x, "time", 5));
 			tweenMe.transform.position = new Vector3((x / 3.5f) - .6f, 0, 0);
-			yield return new WaitForSeconds(5);
+			yield return null;
 		}
 
 		// Use this for initialization
@@ -179,7 +185,7 @@ public class DoAnimations : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-			
+			//StartCoroutine_Auto(parseList());
 		}
 		
 }
