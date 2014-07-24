@@ -57,27 +57,56 @@ public class ObjectsOnDNA
 		{
 			if (nuc.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (nuc, new Vector3 (10, -25, 0), 1.5f);
+				iTween.MoveTo (nuc, new Vector3 (10, -25, 0), 2f);
 //				iTween.MoveTo (nuc, new Vector3 (convertPos, -20, -5), 0.1f);
+
+//				GameObject.Destroy (nuc);
+			}
+
+		}
+
+		foreach (GameObject nuc in nucleosomes) 
+		{
+			if (nuc.transform.position.y == -25)
+			{
 				GameObject.Destroy (nuc);
 			}
 		}
+
 
 		foreach (GameObject tf in transcriptionFactors)
 		{
 			if (tf.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (tf, new Vector3 (convertPos, -20, -5), 1f);
+				iTween.MoveTo (tf, new Vector3 (convertPos, -20, -5), 2f);
+//				GameObject.Destroy (tf);
+			}
+		}
+
+		foreach (GameObject tf in transcriptionFactors) 
+		{
+			if (tf.transform.position.y == -20)
+			{
 				GameObject.Destroy (tf);
 			}
 		}
+
+
 
 
 		foreach (GameObject tm in transcriptionalMachineries)
 		{
 			if (tm.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (tm, new Vector3 (convertPos, -20, -5), 1f);
+				iTween.MoveTo (tm, new Vector3 (convertPos, -20, -5), 2f);
+//				GameObject.Destroy (tm);
+			}
+		}
+
+		foreach (GameObject tm in transcriptionalMachineries) 
+		{
+			if (tm.transform.position.y == -20)
+			{
 				GameObject.Destroy (tm);
 			}
 		}
