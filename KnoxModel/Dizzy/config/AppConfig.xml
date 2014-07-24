@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<app>
+  <appName>Dizzy</appName>
+  <appVersion>1.11.4</appVersion>
+  <appDate>2006/09/28</appDate>
+  <appHomePage>http://magnet.systemsbiology.net/software/Dizzy</appHomePage>
+  <appIconURL>images/appLogoIcon.png</appIconURL>
+  <appHelpSetName>html/AppHelp.hs</appHelpSetName>
+  <appMaintainerFullName>CompBio Group</appMaintainerFullName>
+  <appCopyright>(c) 2003-2006 Institute for Systems Biology</appCopyright>
+</app>
