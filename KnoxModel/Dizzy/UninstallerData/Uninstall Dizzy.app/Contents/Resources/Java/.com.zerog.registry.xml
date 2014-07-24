@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registry install_date="2014-06-18 14:06:21" version="1.1" last_modified="2014-06-18 14:06:24">
+	<products>
+		<product name="Dizzy v1.11.4" id="670c361c-1ecc-11b2-a082-b3273cbc8e45" version="1.11.4.0" copyright="2005" info_url="http://magnet.systemsbiology.net/software/Dizzy" support_url="http://magnet.systemsbiology.net/software/Dizzy" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy" last_modified="2014-06-18 14:06:21">
+		<![CDATA[Dizzy:  a chemical kinetics stochastic simulation system]]>
+			<vendor name="Institute for Systems Biology" id="4a0be719-1ec6-11b2-9aea-d04ec94d9691" home_page="http://www.systemsbiology.org" email="magnet@systemsbiology.org"/>
+			<feature name="Application" last_modified="2014-06-18 14:06:21">
+			<![CDATA[This installs the application feature.]]>
+				<component ref_id="4a0be76b-1ec6-11b2-9af1-d04ec94d9691" version="1.0.0.0" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData/Uninstall Dizzy.app"/>
+			</feature>
+		</product>
+	</products>
+	<components>
+		<component id="4a0be76b-1ec6-11b2-9af1-d04ec94d9691" version="1.0.0.0" name="Common" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData/Uninstall Dizzy.app" vendor="Institute for Systems Biology">
+			<resource keyfile="false" name="Dizzy_v1.11.4_InstallLog.log" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/Dizzy_v1.11.4_InstallLog.log" type="file" uninstall="true"/>
+			<resource keyfile="false" name="Dizzy" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="UninstallerData" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="Uninstall Dizzy.app" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData/Uninstall Dizzy.app" type="directory" uninstall="true">
+			<![CDATA[true]]>
+			</resource>
+			<resource keyfile="false" name="en.lproj" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData/Uninstall Dizzy.app/Contents/Resources/en.lproj" type="directory" uninstall="true">
+			<![CDATA[true]]>
+			</resource>
+			<resource keyfile="false" name="samples" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/samples" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="GAL.cmdl" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/samples/GAL.cmdl" type="file" uninstall="true"/>
+			<resource keyfile="false" name="repressilator.xml" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/samples/repressilator.xml" type="file" uninstall="true"/>
+			<resource keyfile="false" name="Michaelis.cmdl" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/samples/Michaelis.cmdl" type="file" uninstall="true"/>
+			<resource keyfile="false" name="singlegene.cmdl" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/samples/singlegene.cmdl" type="file" uninstall="true"/>
+			<resource keyfile="false" name="docs" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/docs" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="ReadMe.html" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/docs/ReadMe.html" type="file" uninstall="true"/>
+			<resource keyfile="false" name="License.html" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/docs/License.html" type="file" uninstall="true"/>
+			<resource keyfile="false" name="VersionHistory.html" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/docs/VersionHistory.html" type="file" uninstall="true"/>
+			<resource keyfile="false" name="UserManual.pdf" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/docs/UserManual.pdf" type="file" uninstall="true"/>
+			<resource keyfile="false" name="bin" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="lax.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/lax.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="runmodel.command" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/runmodel.command" type="executable" uninstall="true"/>
+			<resource keyfile="false" name="runmodel.command.lax" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/runmodel.command.lax" type="file" uninstall="true"/>
+			<resource keyfile="false" name="runmodel.sh" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/runmodel.sh" type="file" uninstall="true"/>
+			<resource keyfile="false" name="lax.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/Dizzy.app/Contents/Resources/Java/lax.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="Dizzy.app" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/Dizzy.app" type="directory" uninstall="true">
+			<![CDATA[true]]>
+			</resource>
+			<resource keyfile="false" name="en.lproj" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/Dizzy.app/Contents/Resources/en.lproj" type="directory" uninstall="true">
+			<![CDATA[true]]>
+			</resource>
+			<resource keyfile="false" name="lax.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/lax.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="RegisterSBWSimulators.command" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/RegisterSBWSimulators.command" type="executable" uninstall="true"/>
+			<resource keyfile="false" name="RegisterSBWSimulators.command.lax" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/RegisterSBWSimulators.command.lax" type="file" uninstall="true"/>
+			<resource keyfile="false" name="lax.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/lax.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="LaunchSBWSimulators.command" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/LaunchSBWSimulators.command" type="executable" uninstall="true"/>
+			<resource keyfile="false" name="LaunchSBWSimulators.command.lax" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/bin/LaunchSBWSimulators.command.lax" type="file" uninstall="true"/>
+			<resource keyfile="false" name="lib" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="SBWCore.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/SBWCore.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="ISBJava.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/ISBJava.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="SBMLReader.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/SBMLReader.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="jfreechart.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/jfreechart.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="jcommon.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/jcommon.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="jh.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/jh.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="AppResources.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/AppResources.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="netx.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/netx.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="odeToJava.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/odeToJava.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="Jama.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/Jama.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="colt.jar" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/lib/colt.jar" type="file" uninstall="true"/>
+			<resource keyfile="false" name="config" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/config" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="AppConfig.xml" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/config/AppConfig.xml" type="file" uninstall="true"/>
+			<resource keyfile="false" name="src" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/src" type="directory" uninstall="true">
+			<![CDATA[false]]>
+			</resource>
+			<resource keyfile="false" name="ISBJava-src.tar.gz" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/src/ISBJava-src.tar.gz" type="file" uninstall="true"/>
+			<resource keyfile="false" name=".com.zerog.registry.xml" location="/Users/daniel/Documents/Drive/KnoxModel/Dizzy/Dizzy/UninstallerData/Uninstall Dizzy.app/Contents/Resources/Java/.com.zerog.registry.xml" type="file" uninstall="true"/>
+		</component>
+	</components>
+</registry>

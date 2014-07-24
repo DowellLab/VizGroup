@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This script was automatically generated using Zero G's InstallAnywhere 6.1 Enterprise, builtInInstaller
+     STATUS: Fully-Functional UNLICENSED Trial Edition
+     DATE:   Wed Jun 18 14:06:22 MDT 2014 -->
+<InstallAnywhere_Deployment_Project increments="463">
+	<!-- ** DO NOT EDIT ** Essential authorization and configuration data ** DO NOT EDIT ** -->
+	<essentialScriptInfo>
+		<versionID major="6" minor="1" revision="-1"/>
+		<editionID>54,46,49,32,69,110,116,101,114,112,114,105,115,101,32,98,117,105,108,116,73,110,73,110,115,116,97,108,108,101,114</editionID>
+		<scriptID>12,42,11,117,110,105,110,115,116,97,108,108,101,114</scriptID>
+		<buildID>3,13,71,77,97,99,32,79,83,32,88,44,32,49,48,46,57,46,50,44,32,120,56,54,95,54,52,59,32,74,97,118,97,32,49,46,54,46,48,95,54,53,44,32,65,112,112,108,101,32,73,110,99,46,44,32,104,116,116,112,58,47,47,119,119,119,46,97,112,112,108,101,46,99,111,109,47,59,32,101,110,44,32,85,110,107,110,111,119,110,59,32,77,97,99,82,111,109,97,110</buildID>
+		<!-- The authorizationID may change between project saves and builds.  This does not effect the integrity of the project, nor do changes in this value represent changes in the actual InstallAnywhere project. -->
+		<authorizationID>1,0,0,64,-77,-112,80,0,64,99,70,101,125,121,100,96,105,48,48,49,56,52,67,98,113,112,124,44,81,100,99,62,57,15,14,6,12,6,96,6,1,0,0</authorizationID>
+	</essentialScriptInfo>
+	<installationObjects uniqueObjects="15">
+		<object class="com.zerog.ia.installer.Installer" objectID="c4179b529a87">
+			<property name="classpath">
+				<object class="java.util.Vector"/>
+			</property>
+			<property name="rulesFailedMessage">
+				<string><![CDATA[The installer cannot run on your configuration. It will now quit.]]></string>
+			</property>
+			<property name="userSplashPath">
+				<string><![CDATA[]]></string>
+			</property>
+			<property name="userSplashName">
+				<string><![CDATA[]]></string>
+			</property>
+			<property name="localesToBuild">
+				<object class="java.util.Vector">
+					<method name="addElement">
+						<string><![CDATA[en]]></string>
+					</method>
+				</object>
+			</property>
+			<property name="installLabels">
+				<object class="java.util.Vector">
+					<method name="addElement">
+						<string><![CDATA[Introduction]]></string>
+					</method>
+					<method name="addElement">
+						<string><![CDATA[Choose Install Folder]]></string>
+					</method>
+					<method name="addElement">
+						<string><![CDATA[Choose $SHORTCUT_NAME$ Folder]]></string>
+					</method>
+					<method name="addElement">
+						<string><![CDATA[Pre-Installation Summary]]></string>
+					</method>
+					<method name="addElement">
+						<string><![CDATA[Installing...]]></string>
+					</method>
+					<method name="addElement">
+						<string><![CDATA[Install Complete]]></string>
+					</method>
+				</object>
+			</property>
+			<property name="installProgressLabelIndex">
+				<int>-1</int>
+			</property>
+			<property name="installProgressLabelOption">
+				<int>2</int>
+			</property>
+			<property name="preferredGUIMode">
+				<int>2</int>
+			</property>
+			<property name="supportsAWTUI">
+				<boolean>true</boolean>
+			</property>
+			<property name="supportsSwingUI">
+				<boolean>true</boolean>
+			</property>
+			<property name="supportsConsoleUI">
+				<boolean>false</boolean>
+			</property>
+			<property name="supportsSilentUI">
+				<boolean>false</boolean>
+			</property>
+			<property name="panelImagePath">
+				<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+			</property>
+			<property name="panelImageName">
+				<string><![CDATA[introImage.png]]></string>
+			</property>
+			<property name="installProgressImagePath">
+				<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+			</property>
+			<property name="installProgressImageName">
+				<string><![CDATA[introImage.png]]></string>
+			</property>
+			<property name="installProgressImageOption">
+				<int>1</int>
+			</property>
+			<property name="installLogEnabled">
+				<boolean>false</boolean>
+			</property>
+			<property name="installLogFormat">
+				<int>1</int>
+			</property>
+			<property name="splashHeight">
+				<int>-1</int>
+			</property>
+			<property name="splashWidth">
+				<int>-1</int>
+			</property>
+			<property name="defaultInstallSetIndex">
+				<int>0</int>
+			</property>
+			<property name="disableUnixPermissions">
+				<boolean>false</boolean>
+			</property>
+			<property name="preInstallActions">
+				<object class="java.util.Vector"/>
+			</property>
+			<property name="postInstallActions">
+				<object class="java.util.Vector"/>
+			</property>
+			<property name="installDir">
+				<object class="com.zerog.ia.installer.util.magicfolders.InstallDirMF" factoryID="155" objectID="4a0b0db09aea">
+					<property name="solarisMagicFolder">
+						<object class="com.zerog.ia.installer.util.magicfolders.ProgramsDirMF" factoryID="159" objectID="4a0b0db39aea"/>
+					</property>
+					<property name="macMagicFolder">
+						<object refID="4a0b0db39aea"/>
+					</property>
+					<property name="macXMagicFolder">
+						<object refID="4a0b0db39aea"/>
+					</property>
+					<property name="win32MagicFolder">
+						<object refID="4a0b0db39aea"/>
+					</property>
+					<property name="solarisMagicFolderPath">
+						<string><![CDATA[Dizzy]]></string>
+					</property>
+					<property name="macMagicFolderPath">
+						<string><![CDATA[Dizzy]]></string>
+					</property>
+					<property name="macXMagicFolderPath">
+						<string><![CDATA[Dizzy]]></string>
+					</property>
+					<property name="win32MagicFolderPath">
+						<string><![CDATA[Dizzy]]></string>
+					</property>
+				</object>
+			</property>
+			<property name="shortcutDir">
+				<object class="com.zerog.ia.installer.util.magicfolders.ShortcutsMF" factoryID="158" objectID="4a0be7239aeb">
+					<property name="solarisMagicFolder">
+						<object class="com.zerog.ia.installer.util.magicfolders.UserHomeMF" factoryID="994" objectID="4a0be7249aeb"/>
+					</property>
+					<property name="macMagicFolder">
+						<object class="com.zerog.ia.installer.util.magicfolders.DesktopMF" factoryID="16" objectID="4a0be7299aeb"/>
+					</property>
+					<property name="macXMagicFolder">
+						<object refID="4a0be7299aeb"/>
+					</property>
+					<property name="win32MagicFolder">
+						<object class="com.zerog.ia.installer.util.magicfolders.ProgramsMenuMF" factoryID="2" objectID="4a0be72a9aeb"/>
+					</property>
+					<property name="solarisMagicFolderPath">
+						<string><![CDATA[]]></string>
+					</property>
+					<property name="macMagicFolderPath">
+						<string><![CDATA[]]></string>
+					</property>
+					<property name="macXMagicFolderPath">
+						<string><![CDATA[]]></string>
+					</property>
+					<property name="win32MagicFolderPath">
+						<string><![CDATA[Dizzy]]></string>
+					</property>
+				</object>
+			</property>
+			<property name="bundledJREInstall">
+				<int>2</int>
+			</property>
+			<property name="uninstallJRE">
+				<boolean>true</boolean>
+			</property>
+			<property name="JREInstallDirectory">
+				<int>155</int>
+			</property>
+			<property name="JREDirectoryName">
+				<string><![CDATA[jre]]></string>
+			</property>
+			<property name="installFrameConfigurator">
+				<object class="com.zerog.ia.installer.util.InstallFrameConfigurator" objectID="c4179b559a8a">
+					<property name="decorationType">
+						<int>2</int>
+					</property>
+					<property name="bevelDecoration">
+						<boolean>false</boolean>
+					</property>
+					<property name="useLabelBackgroundImage">
+						<boolean>false</boolean>
+					</property>
+					<property name="labelBackgroundImagePath">
+						<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+					</property>
+					<property name="labelBackgroundImageName">
+						<string><![CDATA[labelBackground.png]]></string>
+					</property>
+					<property name="useBackgroundImage">
+						<boolean>true</boolean>
+					</property>
+					<property name="backgroundImagePath">
+						<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+					</property>
+					<property name="backgroundImageName">
+						<string><![CDATA[background_default.png]]></string>
+					</property>
+					<property name="currentLabelIconPath">
+						<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+					</property>
+					<property name="currentLabelIconName">
+						<string><![CDATA[activeLabelIcon.png]]></string>
+					</property>
+					<property name="previousLabelIconPath">
+						<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+					</property>
+					<property name="previousLabelIconName">
+						<string><![CDATA[completedLabelIcon.png]]></string>
+					</property>
+					<property name="futureLabelIconPath">
+						<string><![CDATA[com/zerog/ia/installer/images/]]></string>
+					</property>
+					<property name="futureLabelIconName">
+						<string><![CDATA[upcomingLabeIcon.png]]></string>
+					</property>
+					<property name="enablePathSubst">
+						<boolean>true</boolean>
+					</property>
+					<property name="fitBackgroundImageHorizontally">
+						<boolean>true</boolean>
+					</property>
+					<property name="fitBackgroundImageVertically">
+						<boolean>true</boolean>
+					</property>
+					<property name="zerogBannerUI">
+						<boolean>false</boolean>
+					</property>
+					<property name="uninstallerTitle">
+						<string><![CDATA[Uninstall $PRODUCT_NAME$]]></string>
+					</property>
+					<property name="installPanelBackgroundRGB">
+						<int>-1</int>
+					</property>
+				</object>
+			</property>
+			<property name="customInstallSet">
+				<object class="com.zerog.ia.installer.InstallSet" objectID="c4179c489a8a">
+					<property name="imagePath">
+						<string><![CDATA[]]></string>
+					</property>
+					<property name="description">
+						<string><![CDATA[Choose this option to customize the features to be installed.]]></string>
+					</property>
+					<property name="imageName">
+						<string><![CDATA[]]></string>
+					</property>
+					<property name="shortName">
+						<string><![CDATA[Custom]]></string>
+					</property>
+					<property name="installSetName">
+						<string><![CDATA[Custom]]></string>
+					</property>
+					<property name="preferredLocalizationVariant">
+						<string><![CDATA[custom]]></string>
+					</property>
+				</object>
+			</property>
+			<property name="fileModificationTimestampBehavior">
+				<int>0</int>
+			</property>
+			<property name="fileModificationTimestamp">
+				<long>-1</long>
+			</property>
+			<property name="suiteObjects">
+				<object class="java.util.Vector"/>
+			</property>
+			<property name="advertisedVariables">
+				<object class="java.util.Vector"/>
+			</property>
+			<property name="isMergeModule">
+				<boolean>false</boolean>
+			</property>
+			<property name="installerInfoData">
+				<object class="com.zerog.ia.installer.util.InstallerInfoData" objectID="c4179b549a89">
+					<property name="installerTitle">
+						<string><![CDATA[$INSTALLER_TITLE$]]></string>
+					</property>
+					<property name="installerName">
+						<string><![CDATA[install]]></string>
+					</property>
+					<property name="productName">
+						<string><![CDATA[$PRODUCT_NAME$]]></string>
+					</property>
+					<property name="productID">
+						<object class="com.zerog.registry.UUID">
+							<method name="update">
+								<string><![CDATA[c4179b54-1f18-11b2-9a8a-83c4ef483583]]></string>
+							</method>
+						</object>
+					</property>
+					<property name="productVersionMajor">
+						<int>1</int>
+					</property>
+					<property name="productVersionMinor">
+						<int>0</int>
+					</property>
+					<property name="productVersionRevision">
+						<int>0</int>
+					</property>
+					<property name="productVersionSubRevision">
+						<int>0</int>
+					</property>
+					<property name="vendorID">
+						<object class="com.zerog.registry.UUID">
+							<method name="update">
+								<string><![CDATA[c4179b56-1f18-11b2-9a89-83c4ef483583]]></string>
+							</method>
+						</object>
+					</property>
+					<property name="copyright">
+						<string><![CDATA[2014]]></string>
+					</property>
+				</object>
+			</property>
+			<property name="installLogUninstall">
+				<boolean>true</boolean>
+			</property>
+			<property name="neverReboots">
+				<boolean>false</boolean>
+			</property>
+			<property name="suggestedMedias">
+				<object class="com.zerog.resources.Medias" objectID="c4179b539a89">
+					<property name="medias">
+						<object class="java.util.Vector"/>
+					</property>
+				</object>
+			</property>
+			<property name="help">
+				<object class="com.zerog.ia.installer.util.Help" objectID="c4179b549a88">
+					<property name="showHelp">
+						<boolean>false</boolean>
+					</property>
+				</object>
+			</property>
+			<property name="useInstallerHelp">
+				<boolean>false</boolean>
+			</property>
+			<property name="contextualHelp">
+				<boolean>true</boolean>
+			</property>
+			<property name="htmlHelp">
+				<boolean>true</boolean>
+			</property>
+			<property name="defaultTargetCheckKind">
+				<int>1</int>
+			</property>
+			<property name="preUninstallActions">
+				<object class="java.util.Vector">
+					<method name="addElement">
+						<object class="com.zerog.ia.installer.actions.UninstallIntroAction" objectID="66e816dea3e2">
+							<property name="imageOption">
+								<int>1</int>
+							</property>
+							<property name="stepTitle">
+								<string><![CDATA[Uninstall $PRODUCT_NAME$]]></string>
+							</property>
+							<property name="message">
+								<string><![CDATA[About to uninstall...
+
+$PRODUCT_NAME$
+
+This will remove features installed by InstallAnywhere.  It will not remove files and folders created after the installation.]]></string>
+							</property>
+							<property name="justification">
+								<int>0</int>
+							</property>
+							<property name="alignment">
+								<int>3</int>
+							</property>
+							<property name="labelOption">
+								<int>3</int>
+							</property>
+							<property name="labelIndex">
+								<int>0</int>
+							</property>
+							<property name="help">
+								<object class="com.zerog.ia.installer.util.Help" objectID="67169363a071">
+									<property name="showHelp">
+										<boolean>false</boolean>
+									</property>
+								</object>
+							</property>
+						</object>
+					</method>
+				</object>
+			</property>
+			<property name="postUninstallActions">
+				<object class="java.util.Vector">
+					<method name="addElement">
+						<object class="com.zerog.ia.installer.actions.UninstallCompleteAction" objectID="66e816e4a3e2">
+							<property name="imageOption">
+								<int>1</int>
+							</property>
+							<property name="stepTitle">
+								<string><![CDATA[Uninstall Complete]]></string>
+							</property>
+							<property name="justification">
+								<int>0</int>
+							</property>
+							<property name="alignment">
+								<int>3</int>
+							</property>
+							<property name="labelOption">
+								<int>3</int>
+							</property>
+							<property name="labelIndex">
+								<int>0</int>
+							</property>
+							<property name="uninstallSuccessMessage">
+								<string><![CDATA[All items were successfully uninstalled.]]></string>
+							</property>
+							<property name="uninstallIncompleteMessage">
+								<string><![CDATA[The following items could not be removed:]]></string>
+							</property>
+							<property name="rebootNotNeededMessage">
+								<string><![CDATA[]]></string>
+							</property>
+							<property name="rebootRecommendedMessage">
+								<string><![CDATA[You should restart the system to complete the uninstallation.]]></string>
+							</property>
+							<property name="rebootRequiredMessage">
+								<string><![CDATA[You need to restart the system to complete the uninstallation.]]></string>
+							</property>
+							<property name="allowUserChoice">
+								<boolean>true</boolean>
+							</property>
+							<property name="showsRebootStatusMessage">
+								<boolean>false</boolean>
+							</property>
+							<property name="showsInstallStatusMessage">
+								<boolean>true</boolean>
+							</property>
+							<property name="showsUnhandledFileList">
+								<boolean>true</boolean>
+							</property>
+						</object>
+					</method>
+				</object>
+			</property>
+			<property name="inputLanguage">
+				<string><![CDATA[en]]></string>
+			</property>
+		</object>
+	</installationObjects>
+	<restorationObjects count="0"/>
+</InstallAnywhere_Deployment_Project>

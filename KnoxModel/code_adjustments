@@ -1,0 +1,27 @@
+adjustments:
+
+rename 'SRB.ini' to 'PARAM.INI'
+add 'GROUPING = 4' to SRB section of PARAM.INI
+
+
+__makefile__
+
+SOURCE_DIR = $(HOME)/Documents/Drive/KnoxModel
+DIZZY_DIR = $(HOME)/Documents/Drive/KnoxModel/Dizzy
+
+RULE_DIR_NAME = $(DNA)_Results
+UTILS     = $(SOURCE_DIR)/KnoxUtils.py
+
+DROP = ~/Documents/Drive/KnoxModel/backup/.
+DROPC = ~/Documents/Drive/KnoxModel/backup/.
+
+Replaced "~/Development/SSA_Rule_Builder" with "$(SOURCE_DIR)" in BACKUP
+
+
+__install__
+
+installed Dizzy to ~/Documents/Drive/KnoxModel/Dizzy
+
+__VisModelResults.py__
+
+ln 616: key = "'TF_%s_size'%tf_name" -> "key = 'TF_%s_SIZE'%tf_name"
