@@ -9,7 +9,12 @@ public class DoAnimations : MonoBehaviour
 
 		public List<InstructionObject> listIO = new List<InstructionObject>();
 		public List<InstructionObject> listIO2 = new List<InstructionObject>();
+
+		public List<InstructionObject> listIO3 = new List<InstructionObject> ();	
+
 		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
+
+	  	public LinkedListNode<List<InstructionObject>> cursor;
 
 
 		public IEnumerator parseList ()
@@ -18,7 +23,9 @@ public class DoAnimations : MonoBehaviour
 			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
 			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
 			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
-			ObjectsOnDNA five = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
+			ObjectsOnDNA five = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 5, 5);
+			ObjectsOnDNA six = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 40, 5);
+
 			InstructionObject IO1 = new InstructionObject(five, "CreateTranscriptionalMachinery");
 			InstructionObject IO2 = new InstructionObject(one, "1,2,3");
 			InstructionObject IO3 = new InstructionObject(two, "two");
@@ -28,6 +35,11 @@ public class DoAnimations : MonoBehaviour
 			InstructionObject IO7 = new InstructionObject(three, "40, 0, 0");
 			InstructionObject IO8 = new InstructionObject(five, "10, 0, 0");
 			InstructionObject IO9 = new InstructionObject(five, "35, 0, 0");
+			InstructionObject I11 = new InstructionObject(four, "10, 0, 0");
+
+
+			InstructionObject I10 = new InstructionObject(five, "JustWait");
+
 			
 			listIO.Add(IO1);
 			listIO.Add(IO2);
@@ -37,14 +49,25 @@ public class DoAnimations : MonoBehaviour
 			listIO.Add(IO6);
 			listIO.Add(IO7);
 			listIO.Add(IO8);
-			listIO.Add(IO9);
-			ll.AddFirst(listIO);
-			LinkedListNode<List<InstructionObject>> cursor;
-			cursor = ll.First;
 			
+			listIO2.Add(IO9);
+			listIO2.Add (I11);
+
+			listIO3.Add (I10);
+			
+			ll.AddFirst(listIO);
+			ll.AddLast (listIO3);
+			ll.AddLast (listIO2);
+	
+			cursor = ll.First;
+
+
 			while(cursor != null)
 			{
-				foreach(InstructionObject current in cursor.Value)
+
+//			yield return StartCoroutine_Auto (TimeStep.instance.JustWait ());
+
+			foreach(InstructionObject current in cursor.Value)
 				{
 					//Create TF
 					if (current.instruction == "CreateTranscriptionFactor")
@@ -75,13 +98,23 @@ public class DoAnimations : MonoBehaviour
 					//Move Handling
 					else if (current.instruction.Contains(","))
 					{
-						StartCoroutine(move(current));
+//					yield return StartCoroutine_Auto (TimeStep.instance.JustWait ());
+						
+					yield return StartCoroutine(move(current));
 						
 					}	
 
+				if (current.instruction == "JustWait")
+				{
+					Debug.Log("KNOWS TO WAIT");
+					yield return TimeStep.instance.JustWait ();
+					Debug.Log("TRIED TO WAIT");
 				}
-				
-				cursor = cursor.Next;
+
+
+			}
+
+			cursor = cursor.Next;
 				
 			}
 		}
@@ -90,6 +123,9 @@ public class DoAnimations : MonoBehaviour
 		
 		public IEnumerator move(InstructionObject moveMe)
 		{
+			
+//			yield return StartCoroutine_Auto (TimeStep.instance.JustWait ());
+
 			//Extract coordinates and place into xyz array
 			int[] xyz = new int[3];
 			int index = 0;
@@ -140,7 +176,8 @@ public class DoAnimations : MonoBehaviour
 					{
 						Debug.Log("positions equal");
 						
-						StartCoroutine(iTweenCmd(tm, xyz[0]));
+						yield return StartCoroutine(iTweenCmd(tm, xyz[0]));
+						TimeStep.instance.JustWait ();
 						
 						Debug.Log("new pos: " + tm.transform.position);
 						
@@ -162,7 +199,7 @@ public class DoAnimations : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-			StartCoroutine_Auto(parseList());
+//			StartCoroutine_Auto(parseList());
 			
 		}
 			
@@ -175,10 +212,14 @@ public class DoAnimations : MonoBehaviour
 
 				
 		
-	
+
 		// Update is called once per frame
 		void Update ()
 		{
+		if (Input.GetKeyDown("space")) {
+			StartCoroutine_Auto(parseList());
+		}	
+
 			
 		}
 		

@@ -33,10 +33,10 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 		TM.StartPosition += TM.Length / 3.5f;
 
-		NewTranscriptionalMachinery.transform.position = new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+//		NewTranscriptionalMachinery.transform.position = new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-//		NewTranscriptionalMachinery.transform.position = new Vector3 (10, -25, 0);
-//		iTween.MoveTo (NewTranscriptionalMachinery, new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
+		NewTranscriptionalMachinery.transform.position = new Vector3 (10, -25, 0);
+		iTween.MoveTo (NewTranscriptionalMachinery, new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
 
 
 

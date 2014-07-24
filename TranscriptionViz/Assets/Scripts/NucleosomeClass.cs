@@ -43,10 +43,10 @@ public class NucleosomeClass : ObjectsOnDNA
 
 		Nucleosome.StartPosition += Nucleosome.Length / 4;
 
-		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+//		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-//		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
-//		iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
+		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
+		iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
 
 		NewNucleosome.name = "Nucleosome";
 		NewNucleosome.tag = "Nucleosome";

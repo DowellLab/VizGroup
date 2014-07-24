@@ -33,13 +33,32 @@ public class ObjectsOnDNA
 		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
 
 		//toDelete.StartPosition has to be converted to nucleotide location
-		float convertPos = (toDelete.StartPosition / 3.5f) - .6f;
+		float convertPos = 0;
+		float tempStartPos = 0;
+
+		if (toDelete.MainType == "'Nucleosome'")
+		{
+			tempStartPos = toDelete.StartPosition + (toDelete.Length / 4);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		} else if (toDelete.MainType == "'Transcription_Factor'"){
+
+			tempStartPos = toDelete.StartPosition + (toDelete.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		} else if (toDelete.MainType == "'Transcriptional_Machinery"){
+
+			tempStartPos = toDelete.StartPosition + (toDelete.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+		}
+
 
 		foreach (GameObject nuc in nucleosomes)
 		{
 			if (nuc.transform.position.x == convertPos)
 			{
-
+				iTween.MoveTo (nuc, new Vector3 (10, -25, 0), 1.5f);
+//				iTween.MoveTo (nuc, new Vector3 (convertPos, -20, -5), 0.1f);
 				GameObject.Destroy (nuc);
 			}
 		}
@@ -48,6 +67,7 @@ public class ObjectsOnDNA
 		{
 			if (tf.transform.position.x == convertPos)
 			{
+				iTween.MoveTo (tf, new Vector3 (convertPos, -20, -5), 1f);
 				GameObject.Destroy (tf);
 			}
 		}
@@ -57,6 +77,7 @@ public class ObjectsOnDNA
 		{
 			if (tm.transform.position.x == convertPos)
 			{
+				iTween.MoveTo (tm, new Vector3 (convertPos, -20, -5), 1f);
 				GameObject.Destroy (tm);
 			}
 		}
