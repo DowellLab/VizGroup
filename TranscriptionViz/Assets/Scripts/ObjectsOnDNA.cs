@@ -7,12 +7,16 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+//using System.Diagnostics;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 public class ObjectsOnDNA
 {
+	static public ObjectsOnDNA instance;
 	public string MainType;
 	public string Subtype;
 	public float StartPosition;
@@ -24,6 +28,11 @@ public class ObjectsOnDNA
 		Subtype = subtype;
 		StartPosition = startPosition;
 		Length = length;
+	}
+
+	void Awake()
+	{
+		instance = this;
 	}
 
 	public static void DeleteObject(ObjectsOnDNA toDelete)
@@ -46,7 +55,7 @@ public class ObjectsOnDNA
 			tempStartPos = toDelete.StartPosition + (toDelete.Length / 3.5f);
 			convertPos = (tempStartPos / 3.5f) - .6f;
 
-		} else if (toDelete.MainType == "'Transcriptional_Machinery"){
+		} else if (toDelete.MainType == "'Transcriptional_Machinery'"){
 
 			tempStartPos = toDelete.StartPosition + (toDelete.Length / 3.5f);
 			convertPos = (tempStartPos / 3.5f) - .6f;
@@ -144,7 +153,7 @@ public class ObjectsOnDNA
 			tempMovePoint = xPosition + (toMove.Length / 3.5f);
 			finalMovePoint = (tempMovePoint / 3.5f) - 0.6f;
 
-		} else if (toMove.MainType == "'Transcriptional_Machinery"){
+		} else if (toMove.MainType == "'Transcriptional_Machinery'"){
 
 			tempStartPos = toMove.StartPosition + (toMove.Length / 3.5f);
 			convertPos = (tempStartPos / 3.5f) - .6f;
@@ -177,11 +186,43 @@ public class ObjectsOnDNA
 			if (tm.transform.position.x == convertPos)
 			{
 				iTween.MoveTo (tm, new Vector3 (finalMovePoint, 0.3f, 0), 2f);
+				Debug.Log (convertPos);
+				Debug.Log (finalMovePoint);
 			}
 		}
 
-
-
 	}
+
+	public static void ChangeSubtype(ObjectsOnDNA toChange, string newSub)
+	{
+//		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+//		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+//		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		//toDelete.StartPosition has to be converted to nucleotide location
+		float convertPos = 0;
+		float tempStartPos = 0;
+
+		if (toChange.MainType == "'Nucleosome'")
+		{
+			tempStartPos = toChange.StartPosition + (toChange.Length / 4);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+			NucleosomeClass.ChangeNuc (toChange, newSub, convertPos);
+
+		} else if (toChange.MainType == "'Transcription_Factor'"){
+
+			tempStartPos = toChange.StartPosition + (toChange.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		} else if (toChange.MainType == "'Transcriptional_Machinery'"){
+
+			tempStartPos = toChange.StartPosition + (toChange.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+			TranscriptionalMachineryClass.ChangeTM (toChange, newSub, convertPos);
+		}
+	}
+
 
 }

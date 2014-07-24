@@ -45,7 +45,7 @@ public class NucleosomeClass : ObjectsOnDNA
 
 //		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-		NewNucleosome.transform.position = new Vector3 (10, -25, 0);
+		NewNucleosome.transform.position = new Vector3 (10, 25, 0);
 		iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
 
 		NewNucleosome.name = "Nucleosome";
@@ -67,6 +67,28 @@ public class NucleosomeClass : ObjectsOnDNA
 			
 
 		return NewNucleosome;
+	}
+
+	public static void ChangeNuc(ObjectsOnDNA toChange, string newSub, float convertPos )
+	{
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+
+		foreach (GameObject nuc in nucleosomes)
+		{
+			if (nuc.transform.position.x == convertPos)
+			{
+				if (newSub == "'Binding'")
+				{
+					nuc.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
+				} else if (newSub == "'Unbinding'") {
+					nuc.gameObject.renderer.material.color = new Color (0, 1, 1);
+				} else if (newSub == "'Stable'") {
+					nuc.gameObject.renderer.material.color = new Color (0, 0, 1);
+				}
+			}
+
+		}
+
 	}
 
 }

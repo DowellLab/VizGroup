@@ -35,7 +35,7 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 //		NewTranscriptionalMachinery.transform.position = new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-		NewTranscriptionalMachinery.transform.position = new Vector3 (10, -25, 0);
+		NewTranscriptionalMachinery.transform.position = new Vector3 (10, 25, 0);
 		iTween.MoveTo (NewTranscriptionalMachinery, new Vector3 ((TM.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
 
 
@@ -71,4 +71,42 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 		return NewTranscriptionalMachinery;
 	}
+
+	public static void ChangeTM(ObjectsOnDNA toChange, string newSub, float convertPos )
+	{
+		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		foreach (GameObject tm in transcriptionalMachineries)
+		{
+			if (tm.transform.position.x == convertPos)
+			{
+				if (newSub == "'Crick-Init0'" || newSub == "'Crick-Init1'" || newSub == "'Crick-Init2'" || newSub == "'Crick-Init3'" || newSub == "'Crick-Init4'") {
+					tm.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
+
+				} else if (newSub == "'Watson-Init0'" || newSub == "'Watson-Init1'" || newSub == "'Watson-Init2'" || newSub == "'Watson-Init3'" || newSub == "'Watson-Init4'") {
+
+					tm.gameObject.renderer.material.color = new Color (0.957f, 0.643f, 0.376f);
+
+				} else if (newSub == "'Crick'" || newSub == "'Watson'") {
+
+					tm.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+				} else if (newSub == "'Crick-Transcribed'" || newSub == "'Watson-Transcribed'") {
+
+					tm.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+				} else if (newSub == "'Crick-Paused'" || newSub == "'Watson-Paused'") {
+
+					tm.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+
+				} else {
+
+					tm.gameObject.renderer.material.color = new Color (0.855f, 0.647f, 0.125f);
+				}
+			}
+
+		}
+
+	}
+
 }

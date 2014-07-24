@@ -65,7 +65,7 @@ public class TimeStep : MonoBehaviour
 	public IEnumerator JustWait()
 	{
 		// 0.5f seconds
-		yield return new WaitForSeconds (1.5f);
+		yield return new WaitForSeconds (1.25f);
 	}
 
 
@@ -366,6 +366,7 @@ public class TimeStep : MonoBehaviour
 						{
 							found = true;
 							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
+
 						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10){
 							found = true;
 							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
@@ -451,10 +452,14 @@ public class TimeStep : MonoBehaviour
 							InstructionObject moveTM = new InstructionObject (cool, tempString1);
 							listOfInstructions.Add (moveTM);
 						} 
+
 					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
 					{
 						found = true;
 						Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
+
+						InstructionObject changeTM = new InstructionObject (cool, tests.Subtype);
+						listOfInstructions.Add (changeTM);
 					}
 
 				}
@@ -578,14 +583,13 @@ public class TimeStep : MonoBehaviour
 			}
 
 
-			if (joe.instruction == "Binding")
+			if (joe.instruction == "'Binding'" || joe.instruction == "'Unbinding'" || joe.instruction == "'Stable'")
 			{
-
-			} else if (joe.instruction == "Unbinding") {
-
-			} else if (joe.instruction == "Stable") {
-
+				ObjectsOnDNA.ChangeSubtype (joe.TranscriptionSimObject, joe.instruction);
+			} else if (joe.instruction.Contains("Crick") || joe.instruction.Contains("Watson")) {
+				ObjectsOnDNA.ChangeSubtype (joe.TranscriptionSimObject, joe.instruction);
 			}
+
 
 
 		}
@@ -604,7 +608,7 @@ public class TimeStep : MonoBehaviour
 
 	public void UnpauseTimeStep()
 	{
-		Time.timeScale = 1;
+		Time.timeScale = 2;
 		isPaused = false;
 	}
 
