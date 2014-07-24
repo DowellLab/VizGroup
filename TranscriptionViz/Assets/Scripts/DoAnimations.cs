@@ -24,7 +24,7 @@ public class DoAnimations : MonoBehaviour
 			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
 			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
 			ObjectsOnDNA five = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 5, 5);
-			ObjectsOnDNA six = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 40, 5);
+//			ObjectsOnDNA six = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 40, 5);
 
 			InstructionObject IO1 = new InstructionObject(five, "CreateTranscriptionalMachinery");
 			InstructionObject IO2 = new InstructionObject(one, "1,2,3");

@@ -370,8 +370,11 @@ public class TimeStep : MonoBehaviour
 							found = true;
 							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
 
-//							InstructionObject moveNuc = new InstructionObject (cool, tests.StartPosition);
-//							listOfInstructions.Add (moveNuc);
+							var tempInt1 = tests.StartPosition;
+							string tempString1 = tempInt1.ToString();
+
+							InstructionObject moveNuc = new InstructionObject (cool, tempString1);
+							listOfInstructions.Add (moveNuc);
 
 						} else {
 //							???
@@ -441,6 +444,12 @@ public class TimeStep : MonoBehaviour
 						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3){
 							found = true;
 							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
+
+							var tempInt1 = tests.StartPosition;
+							string tempString1 = tempInt1.ToString();
+
+							InstructionObject moveTM = new InstructionObject (cool, tempString1);
+							listOfInstructions.Add (moveTM);
 						} 
 					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
 					{
@@ -465,25 +474,6 @@ public class TimeStep : MonoBehaviour
 			}
 
 		}
-
-
-
-		///
-		///	TEMP OBJECT DELETION
-		///
-//		foreach (ObjectsOnDNA cool in AnimateList)
-//		{
-//			InstructionObject NewInstruct = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
-//			listOfInstructions.Add (NewInstruct);
-//		}
-
-
-		///
-		/// RETURN LIST OF INSTRUCTIONS
-		///
-
-//		InstructionObject.AddToLink();
-
 
 
 		///
@@ -548,8 +538,9 @@ public class TimeStep : MonoBehaviour
 
 
 
-
-
+		///
+		/// RETURN LIST OF INSTRUCTIONS
+		///
 
 		yield return listOfInstructions;
 
@@ -576,23 +567,26 @@ public class TimeStep : MonoBehaviour
 				ObjectsOnDNA.DeleteObject (joe.TranscriptionSimObject);
 			}
 
+			if (joe.instruction.Contains("0") || joe.instruction.Contains("1") || joe.instruction.Contains("2") || 
+				joe.instruction.Contains("3") || joe.instruction.Contains("4") || joe.instruction.Contains("5") ||
+				joe.instruction.Contains("6") || joe.instruction.Contains("7") || joe.instruction.Contains("8") || 
+				joe.instruction.Contains("9") ) 
+			{
+				float xPos = Convert.ToInt64 (joe.instruction);
+
+				ObjectsOnDNA.MoveObject (joe.TranscriptionSimObject, xPos);
+			}
 
 
+			if (joe.instruction == "Binding")
+			{
 
-//			if (joe.TranscriptionSimObject.MainType == "'Nucleosome'" && joe.instruction != "ObjectsOnDNA.DeleteObject") 
-//			{
-//				NucleosomeClass.CreateNucleosome (joe.TranscriptionSimObject);
-//
-//			} else if (joe.TranscriptionSimObject.MainType == "'Transcription_Factor'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
-//				TranscriptionFactorClass.CreateTranscriptionFactor (joe.TranscriptionSimObject);
-//
-//			} else if (joe.TranscriptionSimObject.MainType == "'Transcriptional_Machinery'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
-//				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (joe.TranscriptionSimObject);
-//
-//			} else if (joe.instruction == "ObjectsOnDNA.DeleteObject"){
-////				Debug.Log (joe.TranscriptionSimObject.MainType + "DELETED");
-//			}
-//
+			} else if (joe.instruction == "Unbinding") {
+
+			} else if (joe.instruction == "Stable") {
+
+			}
+
 
 		}
 
