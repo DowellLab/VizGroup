@@ -1,9 +1,5 @@
 
-If running the simulation locally, you need to do the following:
-
-* Install Dizzy: http://magnet.systemsbiology.net/software/Dizzy/1.11.4/download.html
-
-* Update lines 21-23 in `makefile` to point to the location of the simulation code and Dizzy install
+To run the simulation locally, you need to update lines 21-23 in `makefile` to point to the location of the simulation code and Dizzy install. Dizzy is included in the repo under KnoxModel/Dizzy/.
 
 
 Example commands:
