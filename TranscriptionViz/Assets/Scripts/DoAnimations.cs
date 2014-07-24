@@ -6,12 +6,12 @@ using System.Collections.Generic;
 public class syncObj
 {
 	public GameObject gObj;
-	public Vector3 coords;
+	public float coord;
 	
-	public syncObj (GameObject g, Vector3 c)
+	public syncObj (GameObject g, float c)
 	{
 		gObj = g;
-		coords = c;
+		coord = c;
 	}
 }
 
@@ -24,9 +24,8 @@ public class DoAnimations : MonoBehaviour
 		
 		public List<syncObj> syncList = new List<syncObj>();
 		public List<InstructionObject> listIO = new List<InstructionObject>();
-		public List<InstructionObject> listIO2 = new List<InstructionObject>();
-
-		public List<InstructionObject> listIO3 = new List<InstructionObject> ();	
+		public List<InstructionObject> listIO2 = new List<InstructionObject>();	
+		public List<InstructionObject> listIO3 = new List<InstructionObject>();	
 
 		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
 
@@ -43,44 +42,42 @@ public class DoAnimations : MonoBehaviour
 
 			foreach(InstructionObject current in cursor.Value)
 				{
+					int x;
+					bool isNumeric = int.TryParse(current.instruction, out x);
+					Debug.Log("CHAAAAAAAAAAAAAAAAAAAD" + x);
+					
 					//Create TF
-					if (current.instruction == "CreateTranscriptionFactor")
+					if (current.instruction == "TranscriptionFactorClass.CreateTranscriptionFactor")
 					{
 						yield return TranscriptionFactorClass.CreateTranscriptionFactor(current.TranscriptionSimObject);
 					}
 					
 					//Create Nucleosome
-					if(current.instruction == "CreateNucleosome")
+					if(current.instruction == "NucleosomeClass.CreateNucleosome")
 					{
 						yield return NucleosomeClass.CreateNucleosome(current.TranscriptionSimObject);
 					}
 					
 					//Create TM
-					if (current.instruction == "CreateTranscriptionalMachinery")
+					if (current.instruction == "TranscriptionalMachineryClass.CreateTranscriptionalMachinery")
 					{
 						yield return TranscriptionalMachineryClass.CreateTranscriptionalMachinery(current.TranscriptionSimObject);
 					}
 					
 					//Delete ObjectsOnDNA
-					if(current.instruction == "Delete")
+					if(current.instruction == "ObjectsOnDNA.DeleteObject")
 					{
 						Debug.Log("Here " + current.TranscriptionSimObject.MainType);
 						ObjectsOnDNA.DeleteObject(current.TranscriptionSimObject);
 						yield return 0;
 					}
-					
+
 					//Move Handling
-					else if (current.instruction.Contains(","))
+					else if (isNumeric)
 					{
 					
 						//Extract coordinates and place into xyz array
-						int[] xyz = new int[3];
-						int index = 0;
-						foreach(string j in current.instruction.Split(','))
-						{
-							xyz[index] = Convert.ToInt32(j);
-							index++;
-						}
+						
 					
 						GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
 						GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
@@ -95,7 +92,17 @@ public class DoAnimations : MonoBehaviour
 							{
 								if(convertPos == nuc.transform.position.x)
 								{
-									iTween.MoveTo(nuc, iTween.Hash("x", xyz[0], "time", 5));
+									Debug.Log("Nuc positions equal");
+									
+									syncList.Add(new syncObj(nuc, x));
+									//iTween.MoveTo(nuc, iTween.Hash("x", x, "time", 5));
+									
+									current.TranscriptionSimObject.StartPosition = x;
+									nuc.transform.position = new Vector3((x / 3.5f) - .6f, .3f, 0);
+								}
+								else{
+									Debug.Log("Nucleosomes not equal");
+									Debug.Log("ConvertPos = " + convertPos + " Current.start = " + current.TranscriptionSimObject.StartPosition + " Nuc.start = " + nuc.transform.position.x);
 								}
 							}
 						
@@ -109,33 +116,38 @@ public class DoAnimations : MonoBehaviour
 							{
 								if(convertPos == tf.transform.position.x)
 								{
-									iTween.MoveTo(tf, iTween.Hash("x", xyz[0], "time", 5));
+									Debug.Log("TF positions equal");
+									
+									syncList.Add(new syncObj(tf, x));
+									//iTween.MoveTo(tf, iTween.Hash("x", xyz[0], "time", 5));
+									
+									current.TranscriptionSimObject.StartPosition = x;
+									tf.transform.position = new Vector3((x / 3.5f) - .6f, .3f, 0);
 								}
 							}
 						
-							//yield return new WaitForSeconds(6);
 						}
 					
 					//Transcriptional Machinery move handling
 					if(current.TranscriptionSimObject.MainType == "Transcriptional_Machinery")
 					{
-						Debug.Log("TM Start: " + convertPos);
+						
 						foreach(GameObject tm in transcriptionalMachineries)
 						{
-							Debug.Log("list of tms: " + tm.transform.position);
 							if(convertPos == tm.transform.position.x)
 							{
-								Debug.Log("positions equal");
+								Debug.Log("TM positions equal");
 								
-								syncList.Add(new syncObj(tm, new Vector3(xyz[0], xyz[1], xyz[2])));
+								syncList.Add(new syncObj(tm, x));
 								
 								//iTween.MoveTo(tm, iTween.Hash("x", convertPos, "time", 5));
 								
-								Debug.Log("new pos: " + tm.transform.position);
-								
-								current.TranscriptionSimObject.StartPosition = xyz[0];
-								tm.transform.position = new Vector3((xyz[0] / 3.5f) - .6f, .3f, 0);
-								
+								current.TranscriptionSimObject.StartPosition = x;
+								tm.transform.position = new Vector3((x / 3.5f) - .6f, .3f, 0);				
+							}
+							else
+							{
+								Debug.Log("ConvertPos = " + convertPos + " Current.start = " + current.TranscriptionSimObject.StartPosition + " TM.start = " + tm.transform.position.x);
 								
 							}
 						}
@@ -151,20 +163,17 @@ public class DoAnimations : MonoBehaviour
 					Debug.Log("TRIED TO WAIT");
 				}
 	
-				cursor = cursor.Next;
 				foreach(syncObj s in syncList)
 				{
-					iTween.MoveTo(s.gObj, iTween.Hash("x", s.coords.x, "time", 5));
-					Debug.Log("Sync coords: " + s.coords);
+					Debug.Log("obj shit" + s.gObj.name);
+					iTween.MoveTo(s.gObj, iTween.Hash("x", s.coord, "time", 5));
+					Debug.Log("Sync coords: " + s.coord);
 				}
 
-
-
 			}
-
-			cursor = cursor.Next;
-
-				
+				yield return new WaitForSeconds(6);
+				syncList.Clear();
+				cursor = cursor.Next;
 			}
 		}
 
@@ -172,44 +181,37 @@ public class DoAnimations : MonoBehaviour
 		void Start ()
 		{
 		
-//			ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
-//			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
-//			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
-//			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
-//			ObjectsOnDNA five = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
-//			InstructionObject IO1 = new InstructionObject(five, "CreateTranscriptionalMachinery");
-//			InstructionObject IO2 = new InstructionObject(one, "1,2,3");
-//			InstructionObject IO3 = new InstructionObject(two, "two");
-//			InstructionObject IO4 = new InstructionObject(three, "CreateTranscriptionFactor");
-//			InstructionObject IO5 = new InstructionObject(four, "CreateNucleosome");
-//			InstructionObject IO6 = new InstructionObject(four, "20, 0, 0");
-//			InstructionObject IO7 = new InstructionObject(three, "40, 0, 0");
-//			InstructionObject IO8 = new InstructionObject(five, "10, 0, 0");
-//			InstructionObject IO9 = new InstructionObject(five, "35, 0, 0");
-//		
-//			listIO.Add(IO1);
-//			listIO.Add(IO2);
-//			listIO.Add(IO3);
-//			listIO.Add(IO4);
-//			listIO.Add(IO5);
-//			listIO.Add(IO6);
-//			listIO.Add(IO7);
-//			listIO.Add(IO8);
-//			listIO.Add(IO9);
-//			ll.AddFirst(listIO);
-//			StartCoroutine_Auto(parseList(ll));
-
+		ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
+		ObjectsOnDNA two = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
+		ObjectsOnDNA three = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
+		
+		InstructionObject IO1 = new InstructionObject(one, "TranscriptionFactorClass.CreateTranscriptionFactor");
+		InstructionObject IO2 = new InstructionObject(two, "NucleosomeClass.CreateNucleosome");
+		InstructionObject IO3 = new InstructionObject(three, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+		InstructionObject IO4 = new InstructionObject(one, "20");
+		InstructionObject IO5 = new InstructionObject(two, "40");	
+		InstructionObject IO6 = new InstructionObject(three, "10");
+		InstructionObject IO7 = new InstructionObject(three, "35");
+		InstructionObject IO8 = new InstructionObject(two, "2");
+		
+		listIO.Add(IO1);
+		listIO.Add(IO2);
+		listIO.Add(IO3);
+		
+		listIO2.Add(IO4);
+		listIO2.Add(IO5);
+		listIO2.Add(IO6);
+		
+		listIO3.Add(IO7);
+		listIO3.Add(IO8);
+		
+		
+		ll.AddFirst(listIO);
+		ll.AddLast(listIO2);
+		ll.AddLast(listIO3);
 			
 		}
-			
-
-			//ObjectsOnDNA TF  = new ObjectsOnDNA("Transcription_Factor", "REB1", 100, 5);
-			//InstructionObject IO = new InstructionObject(TF, move);
-
-			//iTween.MoveTo(chadobj, iTween.Hash("x", xyz[0], "y", xyz[1], "z", xyz[2], "time", 5));
-			//IO.TranscriptionSimObject.transform.position += new Vector3(xyz[0], xyz[1], xyz[2]);
-
-				
+					
 		
 
 		// Update is called once per frame
@@ -217,37 +219,8 @@ public class DoAnimations : MonoBehaviour
 		{
 
 		if (Input.GetKeyDown("space")) {
-			ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
-			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
-			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
-			ObjectsOnDNA four = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
-			ObjectsOnDNA five = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
-			InstructionObject IO1 = new InstructionObject(five, "CreateTranscriptionalMachinery");
-			InstructionObject IO2 = new InstructionObject(one, "1,2,3");
-			InstructionObject IO3 = new InstructionObject(two, "two");
-			InstructionObject IO4 = new InstructionObject(three, "CreateTranscriptionFactor");
-			InstructionObject IO5 = new InstructionObject(four, "CreateNucleosome");
-			InstructionObject IO6 = new InstructionObject(four, "20, 0, 0");
-			InstructionObject IO7 = new InstructionObject(three, "40, 0, 0");
-
-			InstructionObject IO8 = new InstructionObject(five, "10, 0, 0");
-			InstructionObject IO9 = new InstructionObject(five, "35, 0, 0");
-
-			listIO.Add(IO1);
-			listIO.Add(IO2);
-			listIO.Add(IO3);
-			listIO.Add(IO4);
-			listIO.Add(IO5);
-			listIO.Add(IO6);
-			listIO.Add(IO7);
-			listIO.Add(IO8);
 			
-			listIO2.Add(IO9);
-			
-			ll.AddFirst(listIO);
-			ll.AddLast(listIO2);
-			
-			StartCoroutine_Auto(parseList(ll));
+			StartCoroutine(parseList(ll));
 		}	
 
 
