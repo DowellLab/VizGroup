@@ -128,8 +128,8 @@ public class DoAnimations : MonoBehaviour
 								Debug.Log("positions equal");
 								
 								syncList.Add(new syncObj(tm, new Vector3(xyz[0], xyz[1], xyz[2])));
-								Debug.Log("sheeeeit" + syncList[0].coords);
-								iTween.MoveTo(tm, iTween.Hash("x", convertPos, "time", 5));
+								
+								//iTween.MoveTo(tm, iTween.Hash("x", convertPos, "time", 5));
 								
 								Debug.Log("new pos: " + tm.transform.position);
 								
@@ -150,11 +150,20 @@ public class DoAnimations : MonoBehaviour
 					yield return TimeStep.instance.JustWait ();
 					Debug.Log("TRIED TO WAIT");
 				}
+	
+				cursor = cursor.Next;
+				foreach(syncObj s in syncList)
+				{
+					iTween.MoveTo(s.gObj, iTween.Hash("x", s.coords.x, "time", 5));
+					Debug.Log("Sync coords: " + s.coords);
+				}
+
 
 
 			}
 
 			cursor = cursor.Next;
+
 				
 			}
 		}
@@ -220,6 +229,7 @@ public class DoAnimations : MonoBehaviour
 			InstructionObject IO5 = new InstructionObject(four, "CreateNucleosome");
 			InstructionObject IO6 = new InstructionObject(four, "20, 0, 0");
 			InstructionObject IO7 = new InstructionObject(three, "40, 0, 0");
+
 			InstructionObject IO8 = new InstructionObject(five, "10, 0, 0");
 			InstructionObject IO9 = new InstructionObject(five, "35, 0, 0");
 
@@ -231,8 +241,12 @@ public class DoAnimations : MonoBehaviour
 			listIO.Add(IO6);
 			listIO.Add(IO7);
 			listIO.Add(IO8);
-			listIO.Add(IO9);
+			
+			listIO2.Add(IO9);
+			
 			ll.AddFirst(listIO);
+			ll.AddLast(listIO2);
+			
 			StartCoroutine_Auto(parseList(ll));
 		}	
 
