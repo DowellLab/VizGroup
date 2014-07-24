@@ -3,10 +3,26 @@ using System.Collections;
 using System;
 using System.Collections.Generic;
 
+public class syncObj
+{
+	public GameObject gObj;
+	public Vector3 coords;
+	
+	public syncObj (GameObject g, Vector3 c)
+	{
+		gObj = g;
+		coords = c;
+	}
+}
+
+
+
+
+
 public class DoAnimations : MonoBehaviour
 {
-
-
+		
+		public List<syncObj> syncList = new List<syncObj>();
 		public List<InstructionObject> listIO = new List<InstructionObject>();
 		public List<InstructionObject> listIO2 = new List<InstructionObject>();
 		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
@@ -76,7 +92,7 @@ public class DoAnimations : MonoBehaviour
 								}
 							}
 						
-							yield return new WaitForSeconds(6);
+
 						}
 					
 						//Transcription Factor move handling 
@@ -90,7 +106,7 @@ public class DoAnimations : MonoBehaviour
 								}
 							}
 						
-							yield return new WaitForSeconds(6);
+							//yield return new WaitForSeconds(6);
 						}
 					
 					//Transcriptional Machinery move handling
@@ -104,6 +120,8 @@ public class DoAnimations : MonoBehaviour
 							{
 								Debug.Log("positions equal");
 								
+								syncList.Add(new syncObj(tm, new Vector3(xyz[0], xyz[1], xyz[2])));
+								Debug.Log("sheeeeit" + syncList[0].coords);
 								iTween.MoveTo(tm, iTween.Hash("x", convertPos, "time", 5));
 								
 								Debug.Log("new pos: " + tm.transform.position);
@@ -132,6 +150,8 @@ public class DoAnimations : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
+		
+		
 			ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
 			ObjectsOnDNA two = new ObjectsOnDNA("Transcription_Factor", "REB1", 10, 5);
 			ObjectsOnDNA three = new ObjectsOnDNA("Transcription_Factor", "REB1", 15, 5);
