@@ -33,10 +33,10 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		TF.StartPosition += TF.Length / 3.5f;
 
-		NewTranscriptionFactor.transform.position = new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+//		NewTranscriptionFactor.transform.position = new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
 
-//		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
-//		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 2);
+		NewTranscriptionFactor.transform.position = new Vector3 (15, -25, 0);
+		iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
 
 		NewTranscriptionFactor.name = "TranscriptionFactor";
 		NewTranscriptionFactor.tag = "TranscriptionFactor";

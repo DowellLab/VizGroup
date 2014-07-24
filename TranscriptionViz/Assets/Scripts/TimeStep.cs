@@ -64,7 +64,8 @@ public class TimeStep : MonoBehaviour
 	// Implement waiting
 	public IEnumerator JustWait()
 	{
-		yield return new WaitForSeconds (0.5f);
+		// 0.5f seconds
+		yield return new WaitForSeconds (1.5f);
 	}
 
 
@@ -117,7 +118,7 @@ public class TimeStep : MonoBehaviour
 	{
 	
 		// TEMP CALL DURING TEST ANIMATION PHASE
-		DestroyObjects ();
+//		DestroyObjects ();
 
 		// Clear list for repopulation 
 		ObjectsInCurrentTime = new List<ObjectsOnDNA> ();
@@ -312,13 +313,11 @@ public class TimeStep : MonoBehaviour
 
 			yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime, ObjectsInFutureTime));
 
-			yield return StartCoroutine_Auto (LookAtList (listOfInstructions));
-
 			yield return StartCoroutine_Auto (TempAni (listOfInstructions));
 
 
-			// ADD FOR ANIMATIONS
-//			yield return StartCoroutine_Auto (JustWait ());
+			// ADD FOR ANIMATIONS???
+			yield return StartCoroutine_Auto (JustWait ());
 //			yield return StartCoroutine_Auto (JustWait ());
 
 
@@ -349,7 +348,137 @@ public class TimeStep : MonoBehaviour
 	// Here's where to look ---> Add additional input for Objects in Future Time
 	public IEnumerator ParseObjects(List <ObjectsOnDNA> AnimateList, List <ObjectsOnDNA> lookAhead)
 	{
-		//Handles Creation of objects
+	
+		///
+		/// HANDLES OBJECT CHANGES ---> MOVE, ALTER, DELETE
+		///
+		foreach (ObjectsOnDNA cool in AnimateList)
+		{
+			var found = false;
+
+			if (cool.MainType == "'Nucleosome'")
+			{
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+				
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
+						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10){
+							found = true;
+							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
+
+							var tempInt1 = tests.StartPosition;
+							string tempString1 = tempInt1.ToString();
+
+							InstructionObject moveNuc = new InstructionObject (cool, tempString1);
+							listOfInstructions.Add (moveNuc);
+
+						} else {
+//							???
+						}
+					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					{
+						found = true;
+						Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
+
+						InstructionObject changeNuc = new InstructionObject (cool, tests.Subtype);
+						listOfInstructions.Add (changeNuc);
+
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+
+					InstructionObject delNuc = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+					listOfInstructions.Add (delNuc);
+
+				}
+
+
+
+//				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
+//				listOfInstructions.Add (NewInstruct);
+
+
+			} else if (cool.MainType == "'Transcription_Factor'"){
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME TF " + cool.StartPosition);
+						} 
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+					InstructionObject delTF = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+					listOfInstructions.Add (delTF);
+				}
+
+//				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
+//				listOfInstructions.Add (NewInstruct);
+
+			} else if (cool.MainType == "'Transcriptional_Machinery'"){
+
+				foreach (ObjectsOnDNA tests in lookAhead) {
+
+					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
+						if(cool.StartPosition == tests.StartPosition)
+						{
+							found = true;
+							Debug.Log("SAME TM " + cool.StartPosition);
+						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3){
+							found = true;
+							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
+
+							var tempInt1 = tests.StartPosition;
+							string tempString1 = tempInt1.ToString();
+
+							InstructionObject moveTM = new InstructionObject (cool, tempString1);
+							listOfInstructions.Add (moveTM);
+						} 
+					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					{
+						found = true;
+						Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
+					}
+
+				}
+
+				// HANDLING DELETION!!!
+				if (!found)
+				{
+					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+					InstructionObject delTM = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+					listOfInstructions.Add (delTM);
+				}
+
+
+//				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+//				listOfInstructions.Add (NewInstruct);
+
+			}
+
+		}
+
+
+		///
+		/// HANDLES OBJECT CREATION
+		///
 		foreach(ObjectsOnDNA tests in lookAhead)
 		{
 			var found = false;
@@ -371,7 +500,10 @@ public class TimeStep : MonoBehaviour
 							found = true;
 						}
 					} else if (tests.MainType == "'Transcription_Factor'") {
-						found = true;
+						if(cool.StartPosition == tests.StartPosition){
+							found = true;
+						}
+
 					}
 				} else if (cool.Subtype != tests.Subtype && tests.MainType != "'Transcription_Factor'")
 				{
@@ -386,152 +518,73 @@ public class TimeStep : MonoBehaviour
 			if (!found)
 			{
 				Debug.Log ("CREATE " + tests.MainType + " at Position " + tests.StartPosition);
+
+				if (tests.MainType == "'Nucleosome'")
+				{
+					InstructionObject nowCreate = new InstructionObject (tests, "NucleosomeClass.CreateNucleosome");
+					listOfInstructions.Add (nowCreate);
+
+				} else if (tests.MainType == "'Transcription_Factor'") {
+					InstructionObject nowCreate = new InstructionObject (tests, "TranscriptionFactorClass.CreateTranscriptionFactor");
+					listOfInstructions.Add (nowCreate);
+
+				} else if (tests.MainType == "'Transcriptional_Machinery'") {
+					InstructionObject nowCreate = new InstructionObject (tests, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+					listOfInstructions.Add (nowCreate);
+				}
+
 			}
 		}
 
-		// Handles Object Changes (movement and deletion of Objects)
-		foreach (ObjectsOnDNA cool in AnimateList)
-		{
-			var found = false;
 
-			if (cool.MainType == "'Nucleosome'")
-			{
 
-				foreach (ObjectsOnDNA tests in lookAhead) {
+		///
+		/// RETURN LIST OF INSTRUCTIONS
+		///
+
+		yield return listOfInstructions;
+
+	}
 				
-					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
-						if(cool.StartPosition == tests.StartPosition)
-						{
-							found = true;
-							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
-						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10){
-							found = true;
-							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
-						} else {
-//							???
-						}
-					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
-					{
-						found = true;
-						Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
-					}
-
-				}
-
-				// HANDLING DELETION!!!
-				if (!found)
-				{
-					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
-				}
-
-
-
-				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
-				listOfInstructions.Add (NewInstruct);
-
-
-			} else if (cool.MainType == "'Transcription_Factor'"){
-
-				foreach (ObjectsOnDNA tests in lookAhead) {
-
-					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
-						if(cool.StartPosition == tests.StartPosition)
-						{
-							found = true;
-							Debug.Log("SAME TF " + cool.StartPosition);
-						} 
-					}
-
-				}
-
-				// HANDLING DELETION!!!
-				if (!found)
-				{
-					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
-				}
-
-				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
-				listOfInstructions.Add (NewInstruct);
-
-			} else if (cool.MainType == "'Transcriptional_Machinery'"){
-
-				foreach (ObjectsOnDNA tests in lookAhead) {
-
-					if (cool.MainType == tests.MainType && cool.Subtype == tests.Subtype && cool.Length == tests.Length) {
-						if(cool.StartPosition == tests.StartPosition)
-						{
-							found = true;
-							Debug.Log("SAME TM " + cool.StartPosition);
-						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3){
-							found = true;
-							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
-						} 
-					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
-					{
-						found = true;
-						Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
-					}
-
-				}
-
-				// HANDLING DELETION!!!
-				if (!found)
-				{
-					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
-				}
-
-
-				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
-				listOfInstructions.Add (NewInstruct);
-
-			}
-
-		}
-			
-		foreach (ObjectsOnDNA cool in AnimateList)
-		{
-			InstructionObject NewInstruct = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
-			listOfInstructions.Add (NewInstruct);
-		}
-
-//		InstructionObject.AddToLink();
-
-		yield return AnimateList;
-
-	}
-
-
-	// TEST TO MAKE SURE LIST POPULATING PROPERLY
-	public IEnumerator LookAtList(List<InstructionObject> toLook)
-	{
-//		foreach (InstructionObject testing in toLook)
-//		{
-//			if (testing.instruction != "ObjectsOnDNA.DeleteObject") {
-//				Debug.Log (testing.TranscriptionSimObject.MainType + " " + testing.TranscriptionSimObject.Subtype + " " + testing.TranscriptionSimObject.StartPosition);
-//			}
-//		}
-			
-		yield return 0;
-	}
-		
 
 	// TEMPORARY HANDLING OF ANIMATION
 	public IEnumerator TempAni(List <InstructionObject> toAnimate)
 	{
 		foreach (InstructionObject joe in toAnimate) {
 
-			if (joe.TranscriptionSimObject.MainType == "'Nucleosome'" && joe.instruction != "ObjectsOnDNA.DeleteObject") 
+
+			if (joe.instruction == "NucleosomeClass.CreateNucleosome")
 			{
 				NucleosomeClass.CreateNucleosome (joe.TranscriptionSimObject);
-
-			} else if (joe.TranscriptionSimObject.MainType == "'Transcription_Factor'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+			} else if (joe.instruction == "TranscriptionFactorClass.CreateTranscriptionFactor" ) {
 				TranscriptionFactorClass.CreateTranscriptionFactor (joe.TranscriptionSimObject);
-
-			} else if (joe.TranscriptionSimObject.MainType == "'Transcriptional_Machinery'" && joe.instruction != "ObjectsOnDNA.DeleteObject") {
+			} else if (joe.instruction == "TranscriptionalMachineryClass.CreateTranscriptionalMachinery") {
 				TranscriptionalMachineryClass.CreateTranscriptionalMachinery (joe.TranscriptionSimObject);
+			}
 
-			} else if (joe.instruction == "ObjectsOnDNA.DeleteObject"){
-//				Debug.Log (joe.TranscriptionSimObject.MainType + "DELETED");
+			if (joe.instruction == "ObjectsOnDNA.DeleteObject" )
+			{
+				ObjectsOnDNA.DeleteObject (joe.TranscriptionSimObject);
+			}
+
+			if (joe.instruction.Contains("0") || joe.instruction.Contains("1") || joe.instruction.Contains("2") || 
+				joe.instruction.Contains("3") || joe.instruction.Contains("4") || joe.instruction.Contains("5") ||
+				joe.instruction.Contains("6") || joe.instruction.Contains("7") || joe.instruction.Contains("8") || 
+				joe.instruction.Contains("9") ) 
+			{
+				float xPos = Convert.ToInt64 (joe.instruction);
+
+				ObjectsOnDNA.MoveObject (joe.TranscriptionSimObject, xPos);
+			}
+
+
+			if (joe.instruction == "Binding")
+			{
+
+			} else if (joe.instruction == "Unbinding") {
+
+			} else if (joe.instruction == "Stable") {
+
 			}
 
 
