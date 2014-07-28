@@ -198,11 +198,76 @@ public class ObjectsOnDNA
 
 
 
+
+	public static void MakeWait(ObjectsOnDNA toWait)
+	{
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
+		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
+
+		// StartPosition has to be converted to nucleotide location
+		float convertPos = 0;
+		float tempStartPos = 0;
+
+		// SET LOCATIONS
+		if (toWait.MainType == "'Nucleosome'")
+		{
+			// Locate Object to Move
+			tempStartPos = toWait.StartPosition + (toWait.Length / 4);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		} else if (toWait.MainType == "'Transcription_Factor'"){
+
+			tempStartPos = toWait.StartPosition + (toWait.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		} else if (toWait.MainType == "'Transcriptional_Machinery'"){
+
+			tempStartPos = toWait.StartPosition + (toWait.Length / 3.5f);
+			convertPos = (tempStartPos / 3.5f) - .6f;
+
+		}
+
+
+		// HANDLE MOVEMENT
+		foreach (GameObject nuc in nucleosomes)
+		{
+			if (nuc.transform.position.x == convertPos)
+			{
+				iTween.MoveTo (nuc, new Vector3 (convertPos, 5f, 0), 2f);
+			}
+		}
+
+		foreach (GameObject tf in transcriptionFactors)
+		{
+			if (tf.transform.position.x == convertPos)
+			{
+				iTween.MoveTo (tf, new Vector3 (convertPos, 5f, 0), 2f);
+			}
+		}
+
+		foreach (GameObject tm in transcriptionalMachineries)
+		{
+			if (tm.transform.position.x == convertPos)
+			{
+				iTween.MoveTo (tm, new Vector3 (convertPos, 5f, 0), 2f);
+				Debug.Log (convertPos);
+//				Debug.Log (finalMovePoint);
+			}
+		}
+
+
+
+	}
+
+
+
+
+
+
+
 	public static void ChangeSubtype(ObjectsOnDNA toChange, string newSub)
 	{
-//		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
-//		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
-//		GameObject[] transcriptionalMachineries = GameObject.FindGameObjectsWithTag("TranscriptionalMachinery");
 
 		//toDelete.StartPosition has to be converted to nucleotide location
 		float convertPos = 0;

@@ -28,45 +28,72 @@ public class NucleosomeClass : ObjectsOnDNA
 
 	public static GameObject CreateNucleosome(ObjectsOnDNA Nucleosome)
 	{
+		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
 
 		GameObject NewNucleosome;
 
-		NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+		var proceedWithCreation = true;
 
-		if (Nucleosome.StartPosition != 0) {
-			NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 6f, Nucleosome.Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
-		} else {
-			NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 3f, Nucleosome.Length / 3.5f);
-		}
 
-		NewNucleosome.renderer.material.shader = specular;
+		var tempStartPos = Nucleosome.StartPosition + (Nucleosome.Length / 4);
+		var convertPos = (tempStartPos / 3.5f) - .6f;
 
-		Nucleosome.StartPosition += Nucleosome.Length / 4;
-
-//		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
-
-		NewNucleosome.transform.position = new Vector3 (10, 25, 0);
-		iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
-
-		NewNucleosome.name = "Nucleosome";
-		NewNucleosome.tag = "Nucleosome";
-
-		// Nucleosome Color
-		if (Nucleosome.Subtype == "'Binding'")
+		foreach (GameObject nuc in nucleosomes)
 		{
-			NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
+			if (nuc.transform.position.x == convertPos && nuc.transform.position.y == 5)
+			{
+				iTween.MoveTo (nuc, new Vector3 (convertPos, 0.3f, 0), 2f);
+				proceedWithCreation = false;
+			}
 
-		} else if (Nucleosome.Subtype == "'Unbinding'") {
+		}
 
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
+		if (proceedWithCreation == true)
+		{
+			NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
+			if (Nucleosome.StartPosition != 0) {
+				NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 6f, Nucleosome.Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
+			} else {
+				NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 3f, Nucleosome.Length / 3.5f);
+			}
+
+			NewNucleosome.renderer.material.shader = specular;
+
+			Nucleosome.StartPosition += Nucleosome.Length / 4;
+
+			//		NewNucleosome.transform.position = new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0);
+
+			NewNucleosome.transform.position = new Vector3 (10, 25, 0);
+			iTween.MoveTo (NewNucleosome, new Vector3 ((Nucleosome.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
+
+			NewNucleosome.name = "Nucleosome";
+			NewNucleosome.tag = "Nucleosome";
+
+			// Nucleosome Color
+			if (Nucleosome.Subtype == "'Binding'")
+			{
+				NewNucleosome.gameObject.renderer.material.color = new Color (0.2f, 0.4f, 0.5f);
+
+			} else if (Nucleosome.Subtype == "'Unbinding'") {
+
+				NewNucleosome.gameObject.renderer.material.color = new Color (0, 1, 1);
+
+			} else {
+
+				NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 1);
+			}
+
+			return NewNucleosome;
 		} else {
 
-			NewNucleosome.gameObject.renderer.material.color = new Color (0, 0, 1);
-		}
-			
+			//	MEANINGLESS VALUE ---> JUST TO MAKE SURE IT RETURNS A VALUE
+			return NewNucleosome = GameObject.FindGameObjectWithTag("Test");
 
-		return NewNucleosome;
+		}
+	
+
+
 	}
 
 	public static void ChangeNuc(ObjectsOnDNA toChange, string newSub, float convertPos )
