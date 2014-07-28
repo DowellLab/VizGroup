@@ -4,9 +4,9 @@ using System.Collections;
 //Provides a control that has labeled slider 
 public class CompoundControls : MonoBehaviour
 {
-	public static float LabelSlider (Rect screenRect, float sliderValue, float sliderMaxValue, string labelText)
+	public static float LabelSlider (Rect screenRect, float sliderValue, float sliderMaxValue, string labelText, GUIStyle style)
 	{
-		GUI.Label (screenRect, labelText);
+		GUI.Label (screenRect, labelText, style);
 
 		// <- Push the slider to the end of the Label
 		screenRect.x += screenRect.width;
@@ -15,15 +15,15 @@ public class CompoundControls : MonoBehaviour
 		return sliderValue;
 	}
 
-	public static string LabelTextField (Rect labelRect, string labelText, string textField)
+	public static string LabelTextField (Rect labelRect, string labelText, string textField, GUIStyle style)
 	{
-		GUI.Label (labelRect, labelText);
+		GUI.Label (labelRect, labelText, style);
 
 
 		// <- Push the slider to the end of the Label
 		labelRect.x += labelRect.width;
 
-		textField = GUI.TextField (new Rect(labelRect.x + 10, labelRect.y, 20,labelRect.height), textField);
+		textField = GUI.TextField (new Rect(labelRect.x + 10, labelRect.y, labelRect.width, labelRect.height), textField);
 
 		return textField;
 	}

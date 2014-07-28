@@ -10,79 +10,125 @@ public class simParams
 		private void add_section(string section)
 		{
 			if (!dict.ContainsKey (section)) {
-				dict.Add (section, new Dictionary<string, object> ());
+				dict.Add (section, new SortedDictionary<string, string> ());
 				//Console.WriteLine ("\nAdded new section {0}.\n", section);
 			}
 		}
 		
 
 		//DATA STRUCTURE---------------------------------	
-		public Dictionary<string, Dictionary<string, object>> dict;				//Data structure holding all parameters
+		public SortedDictionary<string, SortedDictionary<string, string>> dict;				//Data structure holding all parameters
 		
 			
-		public simParams()																//CONSTRUCTOR
+		public simParams()																	//CONSTRUCTOR
 		{
-			dict = new Dictionary<string, Dictionary<string, object>> ();
+			dict = new SortedDictionary<string, SortedDictionary<string, string>> ();
 		}
-
-			
-		public simParams(simParams s)													//COPY CONSTRUCTOR	
+	
+		public simParams(simParams s)														//COPY CONSTRUCTOR	
 		{
 			
-			dict = new Dictionary<string, Dictionary<string, object>> ();
+			dict = new SortedDictionary<string, SortedDictionary<string, string>> ();
 
-			foreach(KeyValuePair<string, Dictionary<string, object>> sec in s.dict)
+			foreach(KeyValuePair<string, SortedDictionary<string, string>> sec in s.dict)
 			{
-				dict.Add(sec.Key, new Dictionary<string, object>());
-				foreach(KeyValuePair<string, object> attr in s.dict[sec.Key])
+				dict.Add(sec.Key, new SortedDictionary<string, string>());
+				foreach(KeyValuePair<string, string> attr in s.dict[sec.Key])
 				{
 					dict[sec.Key].Add(attr.Key, attr.Value);
 				}
 			}
 		}
 
+	
 		//Initialize defaults
-		public void initialize_defaults()
+		public List<string> initialize_defaults()
 		{
-			dict.Add ("TRAPP", new Dictionary<string, object> ());
-			dict.Add ("NUCLEOSOME", new Dictionary<string, object> ());
-			dict.Add ("RNAP", new Dictionary<string, object> ());
+
+			List<string> sectionList = new List<string> ();
+			dict.Add ("TRAPP", new SortedDictionary<string, string> ());
+				add_string ("TRAPP", "NAME", "");
+				add_string ("TRAPP", "CHR", "");
+				add_string ("TRAPP", "COMMENT", "");
+				add_string ("TRAPP", "END", "");
+				add_string ("TRAPP", "START", "");
+				add_string ("TRAPP", "TF_LIST", "");
+				add_string ("TRAPP", "TIMESTEPS", "");
+			dict.Add ("NUCLEOSOME", new SortedDictionary<string, string> ());
+				add_string ("NUCLEOSOME", "INITIAL_COUNT", "");
+				add_string ("NUCLEOSOME", "MIN_LINKER_SIZE", "");
+				add_string ("NUCLEOSOME", "ON_RATE", "");
+			dict.Add ("RNAP", new SortedDictionary<string, string> ());
+				add_string ("RNAP", "INITIAL_COUNT", "");
+				add_string ("RNAP", "N_INIT_STAGES", "");
+				add_string ("RNAP", "ON_RATE", "");
+				add_string ("RNAP", "TRANSCRIPTION_RATE", "");
+
+			
+			sectionList.Add ("TRAPP");
+			sectionList.Add ("NUCLESOME");
+			sectionList.Add ("RNAP");
+
+		return sectionList;
+
 		}
+
+
 
 		//SET METHODS--------------------------------------
 		public void add_int(string section, string attribute, int value)
 		{
-			if (!dict.ContainsKey (section)) {
+			if (!dict.ContainsKey (section)) 
 				add_section (section);
-		 	}
+	 		
 
-			else {
-				dict[section].Add (attribute, value);
-				
-			}
+			if (!dict [section].ContainsKey (attribute))
+					dict [section].Add (attribute, value.ToString());
+				else
+					dict [section] [attribute] = value.ToString();
 		}
 
 		public void add_float(string section, string attribute, float value)
 		{
-			if (!dict.ContainsKey (section)) {
+			if (!dict.ContainsKey (section)) 
 				add_section (section);
-			}
+
 			
-			else {
-				dict[section].Add (attribute, value);
-			}
+			if (!dict [section].ContainsKey (attribute))
+					dict [section].Add (attribute, value.ToString());
+				else
+					dict [section] [attribute] = value.ToString();
 		}
 
 		public void add_string(string section, string attribute, string value)
 		{
-			if (!dict.ContainsKey (section))	{
+			if (!dict.ContainsKey (section))	
 				add_section (section);
-			}
 			
-			else {
-				dict[section].Add (attribute, value);
+			
+			if (!dict [section].ContainsKey (attribute))
+					dict [section].Add (attribute, value);
+				else
+					dict [section] [attribute] = value;
+		}
+
+
+
+		//REMOVE METHODS--------------------------------------
+
+		public void remove_section(string section)
+		{
+			if(dict.ContainsKey(section))
+			{
+				foreach (KeyValuePair<string, string> sec in dict[section]) 
+				{
+					dict[section].Remove(sec.Key);
+				}
+				dict.Remove(section);
 			}
 		}
+
+
 
 		//GET METHODS--------------------------------------
 		public int get_int(string section, string attribute)
@@ -93,7 +139,7 @@ public class simParams
 			}
 			
 			else {
-				return (int)dict[section][attribute];
+				return Convert.ToInt32(dict[section][attribute]);
 			}
 		}
 
@@ -105,7 +151,7 @@ public class simParams
 			}
 			
 			else {
-				return (float)dict[section][attribute];
+				return Convert.ToSingle(dict[section][attribute]);
 			}
 		}
 
@@ -120,15 +166,15 @@ public class simParams
 				return (string)dict[section][attribute];
 			}
 		}
-
-
+	
 		public void get_section(string section)
 		{
 		Console.WriteLine ("Showing attributes for section '{0}'", section);
-		foreach (KeyValuePair<string, object> sec in dict[section])
+		foreach (KeyValuePair<string, string> sec in dict[section])
 			Console.WriteLine (" '{0}' : '{1}'", sec.Key, sec.Value);
 		}
 
+		
 
 
 		//FILE IO METHODS--------------------------------------
@@ -137,10 +183,10 @@ public class simParams
 
 			StreamWriter wstream = new StreamWriter(filename);
 
-			foreach(KeyValuePair<string, Dictionary<string, object>> sec in dict)
+			foreach(KeyValuePair<string, SortedDictionary<string, string>> sec in dict)
 			{
 				wstream.WriteLine("\n[{0}]", sec.Key);
-				foreach(KeyValuePair<string, object> attr in dict[sec.Key])
+				foreach(KeyValuePair<string, string> attr in dict[sec.Key])
 				{
 					wstream.WriteLine("{0} = {1}", attr.Key, attr.Value);
 				}
@@ -149,17 +195,16 @@ public class simParams
 
 			wstream.Close ();
 		}
-
-
-
-
-		public void read(string filename)
+	
+		public List<string> read(string filename)
 		{
 			bool readingSection = false;											// true - reading within section, false - not reading within a section
 			string sectionBuffer = "Default Section";
+			List<string> sectionList = new List<string>();
 			string buffer;
 			Match m;
 			string sectionMarkerPattern = @"\[(.*?)\]";								// Matches within square brackets 
+			
 
 			//Parsing variables
 			string[] splitByComments; 
@@ -174,7 +219,7 @@ public class simParams
 				//Read one line of .ini file at a time
 				buffer = read.ReadLine();	
 				
-				if(buffer == "")							//If read in blank, skip iteration
+				if(buffer == "")												//If read in blank, skip iteration
 					continue;
 
 
@@ -183,6 +228,7 @@ public class simParams
 				{	
 					sectionBuffer = m.Groups[1].Value;
 					add_section(sectionBuffer); 
+					sectionList.Add(sectionBuffer);
 					readingSection = true;
 				}
 				
@@ -213,7 +259,7 @@ public class simParams
 				
 			}
 				read.Close ();
-
+				return sectionList;
 		}
 
 
