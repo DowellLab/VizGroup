@@ -119,6 +119,8 @@ public class ObjectsOnDNA
 
 	}
 
+
+
 	public static void MoveObject(ObjectsOnDNA toMove, float xPosition) 
 	{
 		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
@@ -192,6 +194,9 @@ public class ObjectsOnDNA
 		}
 
 	}
+
+
+
 
 	public static void ChangeSubtype(ObjectsOnDNA toChange, string newSub)
 	{

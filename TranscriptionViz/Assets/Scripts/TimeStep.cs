@@ -40,10 +40,14 @@ public class TimeStep : MonoBehaviour
 	// TimeStep Linked List
 	public static LinkedList<List<InstructionObject>> ourLinkedList;
 
+	//Select current File
+	public static string currentFile = "test3.txt"; 
+
 
 
 	/* PRIVATE VARIABLES */
-	private static int numberTimeSteps = CountLinesInFile ("test3.txt");
+
+	private static int numberTimeSteps = CountLinesInFile (currentFile);
 
 
 	/* METHODS */
@@ -53,19 +57,15 @@ public class TimeStep : MonoBehaviour
 		instance = this;
 		QualitySettings.vSyncCount = 0;
 		Application.targetFrameRate = 500;
+
 	}
 
 
-	/// <summary>
-	/// Justs the wait.
-	/// </summary>
-	/// <returns>The wait.</returns>
-
-	// Implement waiting
+	// Implements waiting
 	public IEnumerator JustWait()
 	{
 		// 0.5f seconds
-		yield return new WaitForSeconds (1.25f);
+		yield return new WaitForSeconds (1.15f);
 	}
 
 
@@ -225,7 +225,7 @@ public class TimeStep : MonoBehaviour
 	public IEnumerator InitialTimestep()
 	{
 		// Use stream object to open and read file
-		StreamReader inputFile = File.OpenText ("test3.txt");
+		StreamReader inputFile = File.OpenText (currentFile);
 
 		//string 'buffer' used to hold streamed 
 		string read = null;
@@ -245,8 +245,9 @@ public class TimeStep : MonoBehaviour
 
 		yield return StartCoroutine_Auto (CreateObjects (timeStepList));
 
-//		yield return StartCoroutine_Auto (AnimateObjects (ObjectsInCurrentTime));
-
+//		yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime, ObjectsInFutureTime));
+//
+//		yield return StartCoroutine_Auto (TempAni (listOfInstructions));
 
 
 		j++;
@@ -263,7 +264,7 @@ public class TimeStep : MonoBehaviour
 	{
 
 		// Add all lines of TimeStep file into new List
-		List<string> allTimeSteps = System.IO.File.ReadAllLines("test3.txt").ToList();
+		List<string> allTimeSteps = System.IO.File.ReadAllLines(currentFile).ToList();
 
 		// LINKED LIST TIME
 		ourLinkedList = new LinkedList<List<InstructionObject>> ();
@@ -277,7 +278,6 @@ public class TimeStep : MonoBehaviour
 //
 //		// Next Timestep
 		var lookForwardOne = new List<string> (); 
-//		var lookBackOne = new List<string> ();
 
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
@@ -380,13 +380,28 @@ public class TimeStep : MonoBehaviour
 						} else {
 //							???
 						}
-					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					} else if (cool.MainType == tests.MainType && cool.Length == tests.Length)
 					{
-						found = true;
-						Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
 
-						InstructionObject changeNuc = new InstructionObject (cool, tests.Subtype);
-						listOfInstructions.Add (changeNuc);
+						if (cool.StartPosition == tests.StartPosition) {
+							found = true;
+							Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
+
+							InstructionObject changeNuc = new InstructionObject (cool, tests.Subtype);
+							listOfInstructions.Add (changeNuc);
+
+						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10) {
+							found = true;
+							Debug.Log ("NUCLEOSOME MOVING AND CHANGING SUBTYPE");
+
+							var tempInt2 = tests.StartPosition;
+							string tempString2 = tempInt2.ToString();
+
+							InstructionObject firstChangeNuc = new InstructionObject (cool, tests.Subtype);
+							InstructionObject thenMoveNuc = new InstructionObject (cool, tempString2);
+							listOfInstructions.Add (firstChangeNuc);
+							listOfInstructions.Add (thenMoveNuc);
+						}
 
 					}
 
@@ -403,11 +418,9 @@ public class TimeStep : MonoBehaviour
 				}
 
 
-
-//				InstructionObject NewInstruct = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
-//				listOfInstructions.Add (NewInstruct);
-
-
+			//
+			// TF HANDLING
+			//
 			} else if (cool.MainType == "'Transcription_Factor'"){
 
 				foreach (ObjectsOnDNA tests in lookAhead) {
@@ -422,7 +435,7 @@ public class TimeStep : MonoBehaviour
 
 				}
 
-				// HANDLING DELETION!!!
+				// DELETION
 				if (!found)
 				{
 					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
@@ -430,9 +443,11 @@ public class TimeStep : MonoBehaviour
 					listOfInstructions.Add (delTF);
 				}
 
-//				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
-//				listOfInstructions.Add (NewInstruct);
 
+
+			//
+			// TM HANDLING
+			//
 			} else if (cool.MainType == "'Transcriptional_Machinery'"){
 
 				foreach (ObjectsOnDNA tests in lookAhead) {
@@ -453,13 +468,28 @@ public class TimeStep : MonoBehaviour
 							listOfInstructions.Add (moveTM);
 						} 
 
-					} else if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
+					} else if (cool.MainType == tests.MainType && cool.Length == tests.Length)
 					{
-						found = true;
-						Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
+						if (cool.StartPosition == tests.StartPosition) 
+						{
+							found = true;
+							Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
 
-						InstructionObject changeTM = new InstructionObject (cool, tests.Subtype);
-						listOfInstructions.Add (changeTM);
+							InstructionObject changeTM = new InstructionObject (cool, tests.Subtype);
+							listOfInstructions.Add (changeTM);
+						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3) {
+							found = true;
+							Debug.Log ("TM MOVING AND CHANGING SUBTYPE");
+
+							var tempInt2 = tests.StartPosition;
+							string tempString2 = tempInt2.ToString();
+
+							InstructionObject firstChangeTM = new InstructionObject (cool, tests.Subtype);
+							InstructionObject thenMoveTM = new InstructionObject (cool, tempString2);
+							listOfInstructions.Add (firstChangeTM);
+							listOfInstructions.Add (thenMoveTM);
+						}
+
 					}
 
 				}
@@ -471,10 +501,6 @@ public class TimeStep : MonoBehaviour
 					InstructionObject delTM = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
 					listOfInstructions.Add (delTM);
 				}
-
-
-//				InstructionObject NewInstruct = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
-//				listOfInstructions.Add (NewInstruct);
 
 			}
 
@@ -515,6 +541,25 @@ public class TimeStep : MonoBehaviour
 					if (cool.MainType == tests.MainType && cool.StartPosition == tests.StartPosition && cool.Length == tests.Length)
 					{
 						found = true;
+					}
+				} 
+
+
+				// IF MOVE AND SUBTYPE CHANGE
+				if (cool.MainType == tests.MainType && cool.Length == tests.Length) 
+				{
+					if (cool.MainType == "'Nucleosome'")
+					{
+						if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10)
+						{
+							found = true;
+						}
+					} else if (cool.MainType == "'Transcriptional_Machinery'") {
+
+						if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3)
+						{
+							found = true;
+						}
 					}
 				}
 

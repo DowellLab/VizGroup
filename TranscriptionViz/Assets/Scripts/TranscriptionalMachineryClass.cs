@@ -58,7 +58,7 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 		} else if (TM.Subtype == "'Crick-Transcribed'" || TM.Subtype == "'Watson-Transcribed'") {
 
-			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+			NewTranscriptionalMachinery.gameObject.renderer.material.color = new Color (0.800f, 0.500f, 0.118f);
 
 		} else if (TM.Subtype == "'Crick-Paused'" || TM.Subtype == "'Watson-Paused'") {
 
@@ -93,7 +93,7 @@ public class TranscriptionalMachineryClass : ObjectsOnDNA
 
 				} else if (newSub == "'Crick-Transcribed'" || newSub == "'Watson-Transcribed'") {
 
-					tm.gameObject.renderer.material.color = new Color (0.874f, 0.412f, 0.118f);
+					tm.gameObject.renderer.material.color = new Color (0.800f, 0.500f, 0.118f);
 
 				} else if (newSub == "'Crick-Paused'" || newSub == "'Watson-Paused'") {
 
