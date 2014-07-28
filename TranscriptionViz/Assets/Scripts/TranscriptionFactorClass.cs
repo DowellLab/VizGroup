@@ -45,7 +45,10 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 		// Transcription Factor Color
 		if (TF.Subtype == "'REB1'")
 		{
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
+			Debug.Log("REB1 CREATED!");
+			NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
+			
+			//NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
 
 		} else if (TF.Subtype == "'TBP'") {
 
@@ -57,7 +60,8 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		} else if (TF.Subtype == "'DAL80'"){
 
-			NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
+			NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
+			//NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
 
 		} else {
 
