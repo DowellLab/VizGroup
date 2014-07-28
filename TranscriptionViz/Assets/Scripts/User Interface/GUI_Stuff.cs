@@ -7,7 +7,7 @@ public class GUI_Stuff : MonoBehaviour
 {
 	private Rect windowRect = new Rect (100, 100, 500, 500);
 
-	private Rect scrollRect = new Rect (100, 100, 500, 500);
+//	private Rect scrollRect = new Rect (100, 100, 500, 500);
 
 	public List<string> fullSectionList;					//List of all sections
 	public List<string> tfactorList;
@@ -81,7 +81,7 @@ public class GUI_Stuff : MonoBehaviour
 	void WindowFunction (int WindowID)
 	{
 
-		Rect sectionRect = new Rect (10, 20, 70, 20);
+//		Rect sectionRect = new Rect (10, 20, 70, 20);
 		Rect tfactorRect = new Rect (250, 20, 70, 20);
 
 
