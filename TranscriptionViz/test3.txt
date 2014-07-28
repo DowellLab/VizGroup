@@ -85,7 +85,7 @@
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 46, 15), ('Nucleosome', 'Stable', 75, 15) ]
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 48, 15) ]
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 51, 15) ]
-[ ('Transcription_Factor', 'FLO8', 12, 15), ('Nucleosome', 'Binding', 30, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 53, 15), ('Nucleosome', 'Stable', 75, 15) ]
+[ ('Transcription_Factor', 'FLO8', 12, 15), ('Nucleosome', 'Binding', 30, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 53, 15), ('Nucleosome', 'Stable', 77, 15) ]
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Nucleosome', 'Binding', 32, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 56, 15), ('Nucleosome', 'Stable', 75, 15) ]
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Nucleosome', 'Stable', 30, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 57, 15), ('Nucleosome', 'Stable', 75, 15) ]
 [ ('Transcription_Factor', 'FLO8', 12, 15), ('Nucleosome', 'Stable', 30, 15), ('Transcriptional_Machinery', 'Crick-Transcribed', 60, 15), ('Nucleosome', 'Unbinding', 75, 15) ]

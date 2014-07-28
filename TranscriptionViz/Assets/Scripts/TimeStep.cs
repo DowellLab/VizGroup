@@ -44,7 +44,7 @@ public class TimeStep : MonoBehaviour
 	public static LinkedList<List<InstructionObject>> ourLinkedList;
 
 	//Select current File
-	public static string currentFile = "test3.txt"; 
+	public static string currentFile = "RealExampleTest.txt"; 
 
 
 
@@ -407,13 +407,13 @@ public class TimeStep : MonoBehaviour
 
 					foreach (ObjectsOnDNA wait in twoAhead)
 					{
-						if (cool.MainType == wait.MainType && cool.Subtype == wait.Subtype && cool.StartPosition == wait.StartPosition && cool.Length == wait.Length)
+						if (cool.MainType == wait.MainType && cool.Subtype == wait.Subtype && Math.Abs(wait.StartPosition - cool.StartPosition) <= 10 && cool.Length == wait.Length)
 						{
 							waitOnIt = true;
 						} else {
 							foreach(ObjectsOnDNA longer in threeAhead)
 							{
-								if (cool.MainType == longer.MainType && cool.Subtype == longer.Subtype && cool.StartPosition == longer.StartPosition && cool.Length == longer.Length)
+								if (cool.MainType == longer.MainType && cool.Subtype == longer.Subtype && Math.Abs(longer.StartPosition - cool.StartPosition) <= 10 && cool.Length == longer.Length)
 								{
 									waitOnIt = true;
 								}
@@ -710,7 +710,7 @@ public class TimeStep : MonoBehaviour
 
 	public void UnpauseTimeStep()
 	{
-		Time.timeScale = 2;
+		Time.timeScale = 8;
 		isPaused = false;
 	}
 
