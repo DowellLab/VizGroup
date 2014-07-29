@@ -42,7 +42,7 @@ public class TimeStep : MonoBehaviour
 	public static LinkedList<List<InstructionObject>> ourLinkedList;
 
 	//Select current File
-	public static string currentFile = "RealExampleTest.txt"; 
+	public static string currentFile = "test3.txt"; 
 
 
 

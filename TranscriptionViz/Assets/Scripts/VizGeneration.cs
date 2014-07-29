@@ -12,7 +12,7 @@ using System.Xml;
 
 public class VizGeneration : MonoBehaviour {
 
-	public static int startStep = 500;
+	public static int startStep = 66;
 
 	public int FrameCount = 1;
 //	public int iterations = 0;
