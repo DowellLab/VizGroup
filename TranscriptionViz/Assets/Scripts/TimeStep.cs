@@ -21,9 +21,8 @@ public class TimeStep : MonoBehaviour
 	static public TimeStep instance;
 	public bool isPaused = false;
 	public static int lineCount = 0;
+	// k = current timestep
 	public int k = 0;
-
-	public int testInt = 0;
 
 	// The current Timestep
 	private static List<string> timeStepList = new List<string>();

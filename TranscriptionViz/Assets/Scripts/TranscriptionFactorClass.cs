@@ -38,7 +38,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		foreach (GameObject tFactor in transcriptionFactors)
 		{
-			if (tFactor.transform.position.x == convertPos && tFactor.transform.position.y == 15)
+			if (tFactor.transform.position.x == convertPos && tFactor.transform.position.y == 12.5f)
 			{
 				iTween.MoveTo (tFactor, new Vector3 (convertPos, 0.3f, 0), 2f);
 				proceedWithCreation = false;
