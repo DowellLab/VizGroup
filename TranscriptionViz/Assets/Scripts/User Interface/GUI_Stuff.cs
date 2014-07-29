@@ -7,8 +7,6 @@ public class GUI_Stuff : MonoBehaviour
 {
 	private Rect windowRect = new Rect (100, 100, 500, 500);
 
-//	private Rect scrollRect = new Rect (100, 100, 500, 500);
-
 	public List<string> fullSectionList;					//List of all sections
 	public List<string> tfactorList;
 	public List<string> selectedFactorList;
@@ -30,12 +28,7 @@ public class GUI_Stuff : MonoBehaviour
 	public GUISkin test;
 
 	bool showButton;
-
-
-	//Scrolling variables
-	//bool scrollOn;
-
-
+	bool paramsOn;
 
 
 	public Vector2 scrollPosition1 = Vector2.zero;
@@ -53,6 +46,7 @@ public class GUI_Stuff : MonoBehaviour
 		fullSectionList = GUIParams.read ("SAMPLE_TRAPP.ini");
 
 		showButton = true;
+		paramsOn = false;
 
 		string[] tlist = {"REB1", "MCM1", "RSC3", "TEC1", "STE12", "FLO8", "SFL1", "GAL4"}; 
 		tfactorList = new List<string> (tlist);
@@ -68,22 +62,25 @@ public class GUI_Stuff : MonoBehaviour
 	//Called every frame
 	void OnGUI ()
 	{
-			GUI.skin = test;
-
-			//vSbarValue = GUI.VerticalScrollbar(new Rect(Screen.width, Screen.height, 100, 30), vSbarValue, 1.0F, 10.0F, 0.0F);
-
-			
-//			scrollPosition = GUI.BeginScrollView(new Rect(Screen.width/2, Screen.height/2, 50, 100), scrollPosition, new Rect(0, 0, 50, 200));
-//			GUI.Button(new Rect(0, 0, 100, 20), "Top-left");
-//			GUI.Button(new Rect(120, 0, 100, 20), "Top-right");
-//			GUI.Button(new Rect(0, 180, 100, 20), "Bottom-left");
-//			GUI.Button(new Rect(120, 180, 100, 20), "Bottom-right");
-//			GUI.EndScrollView();
+		GUI.skin = test;
 
 
-			
+		if (GUI.Button (new Rect (10, 10, 150, 50), "PARAMETERS"))
+		{ 
+			if (paramsOn)
+					paramsOn = false;
+			if (!paramsOn)
+					paramsOn = true;
+		}
 
-		 windowRect = GUI.Window(0, windowRect, WindowFunction, "My Window");
+		if (paramsOn)
+		{
+			windowRect = GUI.Window (0, windowRect, WindowFunction, "My Window");
+		}
+
+		//Debug.Log (paramsOn);
+		
+		
 		          
 
 	
