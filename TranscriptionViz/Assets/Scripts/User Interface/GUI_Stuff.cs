@@ -33,10 +33,13 @@ public class GUI_Stuff : MonoBehaviour
 
 
 	//Scrolling variables
-	bool scrollOn;
+	//bool scrollOn;
 
 
-	public Vector2 scrollPosition = Vector2.zero;
+
+
+	public Vector2 scrollPosition1 = Vector2.zero;
+	public Vector2 scrollPosition2 = Vector2.zero;
 
 	public float vSbarValue;
 
@@ -50,7 +53,6 @@ public class GUI_Stuff : MonoBehaviour
 		fullSectionList = GUIParams.read ("SAMPLE_TRAPP.ini");
 
 		showButton = true;
-		scrollOn = true;
 
 		string[] tlist = {"REB1", "MCM1", "RSC3", "TEC1", "STE12", "FLO8", "SFL1", "GAL4"}; 
 		tfactorList = new List<string> (tlist);
@@ -84,8 +86,7 @@ public class GUI_Stuff : MonoBehaviour
 		 windowRect = GUI.Window(0, windowRect, WindowFunction, "My Window");
 		          
 
-//		if(GUI.Button (new Rect(100, Screen.height / 2, 150, 50), "WRITE TO FILE"))
-//			GUIParams.write ("GUIParamsTest.ini");
+	
 	}
 
 
@@ -95,69 +96,38 @@ public class GUI_Stuff : MonoBehaviour
 	void WindowFunction (int WindowID)
 	{
 
-//		Rect sectionRect = new Rect (10, 20, 70, 20);
+		//Rect sectionRect = new Rect (10, 20, 70, 20);
 		Rect tfactorRect = new Rect (250, 20, 70, 20);
 
 
 		//Display 'TRAPP', 'NUCLEOSOME', 'RNAP' sections
-
-		DisplaySection ("TRAPP", new Rect (15, 20, 70, 20));
-		DisplaySection ("NUCLEOSOME", new Rect (15, 200, 70, 20));
-		DisplaySection ("RNAP", new Rect (15, 300, 70, 20));
-
+		DisplaySection ("TRAPP", new Rect (15, 20, 70, 20), true);
+		DisplaySection ("NUCLEOSOME", new Rect (15, 200, 70, 20), true);
+		DisplaySection ("RNAP", new Rect (15, 300, 70, 20), true);
 
 
-		//Display Transcription Factor checkboxes
-		GUI.Label (new Rect(tfactorRect.x, tfactorRect.y, 200, 20), "TRANSCRIPTION FACTORS");
+		//Scrollable list of checkboxes
+		selectedFactorList = ComboBoxToggleList (tfactorRect, tfactorList);
 
-		tfactorRect.y += 30;
-		scrollPosition = GUI.BeginScrollView (new Rect (tfactorRect.x + tfactorRect.width, tfactorRect.y, 100, 200), scrollPosition, new Rect (0, 0, 50, 1000));
-		tfactorRect.y -= 30;
-		for (int i = 0; i < tfactorList.Count; ++i) 
-		{
-			factorToggle[i] = ( GUI.Toggle (new Rect(0, i*20, 70, 20), factorToggle[i], tfactorList[i]) );
-			tfactorRect.y += 20;
-			if(factorToggle[i])
-			{
-				if(!selectedFactorList.Contains(tfactorList[i]))
-					selectedFactorList.Add(tfactorList[i]);
-			}
-			else
-			{
-				if(selectedFactorList.Contains(tfactorList[i]))
-					selectedFactorList.Remove(tfactorList[i]);
-			}
-		}
-		GUI.EndScrollView ();
 
 		//Display editable transcription factor dropdown
-		//string item = ComboBox (new Rect(tfactorRect.x, tfactorRect.y += offset, 60, 20), selectedFactorList);
+		string item = ComboBoxButtonList (new Rect(320, 200, 60, 20), selectedFactorList);
 
-		string item = ComboBoxList (new Rect(tfactorRect.x, tfactorRect.y += offset, 60, 20), selectedFactorList);
 		//If factor is selected to edit
 		if(item != "") 
 		{
+			//If key is not in dictionary, add it
 			if(!GUIParams.dict.ContainsKey(item))
-			{
 				AddTFAttributes(ref GUIParams, item);
-	    	}
 
-			//GUI.Label (new Rect (tfactorRect.x, tfactorRect.y += offset, tfactorRect.width, tfactorRect.height), item);
-			tfactorRect.y += 30;
-			foreach (KeyValuePair<string, string> attr in GUIParams.dict[item])
-			{
-				string s = CompoundControls.LabelTextField (tfactorRect, attr.Key, attr.Value, test.label);
-				GUIParams.add_string (item, attr.Key, s);
-				tfactorRect.y += 20;
-			}
+			//Display editable TF
+			DisplaySection(item, new Rect(325, 225, 50, 20), false);
 		}
 
+		if(GUI.Button (new Rect(275, 375, 150, 50), "SUBMIT"))
+			GUIParams.write ("GUIParamsTest.ini");
 
-
-
-
-
-
+			//Make this window draggable
 			GUI.DragWindow ();
 	}
 	
@@ -189,26 +159,26 @@ public class GUI_Stuff : MonoBehaviour
 	}
 
 
-	string ComboBoxList(Rect r, List<string> s)
+	string ComboBoxButtonList(Rect r, List<string> s)
 	{
-		if (s.Count * r.height > 200)
+		bool scrollOn;
+		if (s.Count * r.height > 100)
 			scrollOn = true;
 		else 
 			scrollOn = false;
 	
 		//GUI.Label (new Rect(r.x, r.y, 300, 20), "Transcription Factors", tinyText);
 		if (GUI.Button (r, selectedItem)) 
-		{
 			editing = true;
-		}
+
 
 		//Looking at dropdown menu
 		if (editing) 
 		{
-			//Begin scrollview
+			//Select with scrollview on
 			if(scrollOn)
 			{
-				scrollPosition = GUI.BeginScrollView (new Rect (r.x, r.y, 100, 200), scrollPosition, new Rect (0, 0, 80, 7000));
+				scrollPosition1 = GUI.BeginScrollView (new Rect (r.x, r.y, 100, 100), scrollPosition1, new Rect (0, 0, 80, 500));
 				for (int i = 0; i < s.Count; ++i) 
 				{
 						//If we select from drop down menu
@@ -220,6 +190,7 @@ public class GUI_Stuff : MonoBehaviour
 
 				}
 			}
+			//Select with scrollview off
 			else
 			{
 				for (int i = 0; i < s.Count; ++i) 
@@ -230,9 +201,9 @@ public class GUI_Stuff : MonoBehaviour
 						selectedItem = s [i];
 						editing = false;
 					}
-					
 				}
 			}
+
 			//If we didn't select anything from dropdown
 			if (editing)
 			{
@@ -241,27 +212,57 @@ public class GUI_Stuff : MonoBehaviour
 
 			if(scrollOn)
 				GUI.EndScrollView ();
-			
 		}
 
 		return selectedItem;
 	}
 
 
-
-	void DisplaySection(string sectionLabel, Rect sectionRect)
+	List<string> ComboBoxToggleList(Rect r, List<string> inputList)
 	{
-		GUI.Label (new Rect(sectionRect.x, sectionRect.y, 100.0f, 20.0f), sectionLabel);
-		sectionRect.y += 20;
+		List<string> selectedList = new List<string> ();
+		//Display Transcription Factor checkboxes
+		GUI.Label (new Rect(r.x, r.y, 200, 20), "TRANSCRIPTION FACTORS");
+		
+		r.y += 30;
+		scrollPosition2 = GUI.BeginScrollView (new Rect (r.x + r.width, r.y, 100, 100), scrollPosition2, new Rect (0, 0, 50, 500));
+		r.y -= 30;
+		for (int i = 0; i < inputList.Count; ++i) 
+		{
+			factorToggle[i] = ( GUI.Toggle (new Rect(0, i*20, 70, 20), factorToggle[i], inputList[i]) );
+			r.y += 20;
+			if(factorToggle[i])
+			{
+				if(!selectedFactorList.Contains(inputList[i]))
+					selectedFactorList.Add(inputList[i]);
+			}
+			else
+			{
+				if(selectedFactorList.Contains(inputList[i]))
+					selectedFactorList.Remove(inputList[i]);
+			}
+		}
+		GUI.EndScrollView ();
+
+		return selectedFactorList;
+	}
+
+	
+	void DisplaySection(string sectionLabel, Rect sectionRect, bool DisplayLabel)
+	{
+		if (DisplayLabel) 
+		{
+			GUI.Label (new Rect (sectionRect.x, sectionRect.y, 150, 20), sectionLabel);
+			sectionRect.y += 20;
+		}
 
 		//Showing attribute/value pairs
 		foreach (KeyValuePair<string, string> attr in GUIParams.dict[sectionLabel])
 		{
-			string s = CompoundControls.LabelTextField (sectionRect, attr.Key, attr.Value, test.label);
+			string s = CompoundControls.LabelTextField (sectionRect, attr.Key, attr.Value, tinyText);
 			GUIParams.add_string(sectionLabel, attr.Key, s);
 			sectionRect.y += 20;
 		}
-		sectionRect.y += 50;
 	}
 
 
