@@ -234,7 +234,7 @@ public class ObjectsOnDNA
 		{
 			if (nuc.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (nuc, new Vector3 (convertPos, 5f, 0), 2f);
+				iTween.MoveTo (nuc, new Vector3 (convertPos, 15f, 0), 2f);
 			}
 		}
 
@@ -242,7 +242,7 @@ public class ObjectsOnDNA
 		{
 			if (tf.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (tf, new Vector3 (convertPos, 5f, 0), 2f);
+				iTween.MoveTo (tf, new Vector3 (convertPos, 15f, 0), 2f);
 			}
 		}
 
@@ -250,7 +250,7 @@ public class ObjectsOnDNA
 		{
 			if (tm.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (tm, new Vector3 (convertPos, 5f, 0), 2f);
+				iTween.MoveTo (tm, new Vector3 (convertPos, 15f, 0), 2f);
 				Debug.Log (convertPos);
 //				Debug.Log (finalMovePoint);
 			}

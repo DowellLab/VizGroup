@@ -38,7 +38,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		foreach (GameObject tFactor in transcriptionFactors)
 		{
-			if (tFactor.transform.position.x == convertPos && tFactor.transform.position.y == 5)
+			if (tFactor.transform.position.x == convertPos && tFactor.transform.position.y == 15)
 			{
 				iTween.MoveTo (tFactor, new Vector3 (convertPos, 0.3f, 0), 2f);
 				proceedWithCreation = false;
@@ -50,16 +50,16 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 
 		if (proceedWithCreation == true)
 		{
-<<<<<<< HEAD
+
 			NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
 			NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 			NewTranscriptionFactor.renderer.material.shader = specular;
-=======
-			Debug.Log("REB1 CREATED!");
-			NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
+
+//			Debug.Log("REB1 CREATED!");
+//			NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
 			
 			//NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
->>>>>>> 6b7ff74e059b5ac59e901f98e71b7300af8a78e7
+
 
 			TF.StartPosition += TF.Length / 3.5f;
 
@@ -72,15 +72,14 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 			NewTranscriptionFactor.tag = "TranscriptionFactor";
 
 
-<<<<<<< HEAD
+
 			// Transcription Factor Color
 			if (TF.Subtype == "'REB1'")
 			{
 				NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
-=======
-			NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
-			//NewTranscriptionFactor.gameObject.renderer.material.color = new Color (0, 0, 0.831f);
->>>>>>> 6b7ff74e059b5ac59e901f98e71b7300af8a78e7
+
+//				NewTranscriptionFactor = Resources.Load<GameObject>("TFModels/REB1");
+
 
 			} else if (TF.Subtype == "'TBP'") {
 
@@ -102,7 +101,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 			return NewTranscriptionFactor;
 		} else {
 
-			return NewTranscriptionFactor = GameObject.FindGameObjectWithTag("Test");
+			return NewTranscriptionFactor = GameObject.FindGameObjectWithTag("TranscriptionFactor");
 		}
 
 	}
