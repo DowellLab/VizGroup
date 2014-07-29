@@ -12,6 +12,8 @@ using System.Xml;
 
 public class VizGeneration : MonoBehaviour {
 
+	public static int startStep = 500;
+
 	public int FrameCount = 1;
 //	public int iterations = 0;
 
@@ -37,7 +39,7 @@ public class VizGeneration : MonoBehaviour {
 				//simulation has not started
 				if(!started || finished){
 					TimeStep.DestroyObjects ();
-					StartCoroutine_Auto (TimeStep.instance.ReadFile (1));
+					StartCoroutine_Auto (TimeStep.instance.ReadFile (startStep));
 					started = true;
 					finished = false;
 				}

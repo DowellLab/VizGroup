@@ -348,6 +348,30 @@ public class TimeStep : MonoBehaviour
 		{
 			var found = false;
 
+			if (k == VizGeneration.startStep)
+			{
+				if (cool.MainType == "'Nucleosome'")
+				{
+					InstructionObject initNucCreate = new InstructionObject (cool, "NucleosomeClass.CreateNucleosome");
+					listOfInstructions.Add (initNucCreate);
+				}
+
+				if(cool.MainType == "'Transcription_Factor'")
+				{
+					InstructionObject initTFCreate = new InstructionObject (cool, "TranscriptionFactorClass.CreateTranscriptionFactor");
+					listOfInstructions.Add (initTFCreate);
+				}
+
+				if(cool.MainType == "'Transcriptional_Machinery'")
+				{
+					InstructionObject initTMCreate = new InstructionObject (cool, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+					listOfInstructions.Add (initTMCreate);
+				}
+
+			}
+
+
+
 			if (cool.MainType == "'Nucleosome'")
 			{
 
