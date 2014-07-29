@@ -40,12 +40,10 @@ public class NucleosomeClass : ObjectsOnDNA
 
 		foreach (GameObject nuc in nucleosomes)
 		{
-			if (Math.Abs(nuc.transform.position.x - convertPos ) <= 10 && nuc.transform.position.y >= 10 && nuc.transform.position.y <= 20){
+			if (Math.Abs(nuc.transform.position.x - convertPos ) <= 10 && nuc.transform.position.y == 12.5f){
+			
+				iTween.MoveTo (nuc, new Vector3 (convertPos, 0.3f, 0), 1f);
 
-				iTween.MoveTo (nuc, new Vector3 (convertPos, 20f, 0), 0.5f);
-				iTween.MoveTo (nuc, new Vector3 (convertPos, 15f, 0), 0.5f);
-
-				iTween.MoveTo (nuc, new Vector3 (convertPos, 0.3f, 0), 2f);
 				proceedWithCreation = false;
 			}
 

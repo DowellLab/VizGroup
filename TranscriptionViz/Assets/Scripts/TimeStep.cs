@@ -21,15 +21,14 @@ public class TimeStep : MonoBehaviour
 	static public TimeStep instance;
 	public bool isPaused = false;
 	public static int lineCount = 0;
-	// k = current timestep
+
+	// k is the current timestep number
 	public int k = 0;
 
 	// The current Timestep
-	private static List<string> timeStepList = new List<string>();
 	public static List<ObjectsOnDNA> ObjectsInCurrentTime; // = new List<ObjectsOnDNA> ();
 
 	// Next Timestep
-//	private static List<string> lookForwardOne = new List<string> (); 
 	public static List<ObjectsOnDNA> ObjectsInFutureTime;
 
 	// Timesteps Ahead
@@ -48,6 +47,9 @@ public class TimeStep : MonoBehaviour
 
 
 	/* PRIVATE VARIABLES */
+
+	// Current TimeStep
+	private static List<string> timeStepList = new List<string>();
 
 	private static int numberTimeSteps = CountLinesInFile (currentFile);
 
@@ -85,7 +87,7 @@ public class TimeStep : MonoBehaviour
 	}
 
 
-	//Implement Destruction of Objects
+	//Implement Total Destruction of Objects
 	public static void DestroyObjects()
 	{
 		GameObject[] nucleosomes = GameObject.FindGameObjectsWithTag ("Nucleosome");
@@ -116,7 +118,7 @@ public class TimeStep : MonoBehaviour
 	}
 
 	
-	public static IEnumerator CreateObjects(List<string> TimeStep, string whichTime)
+	public static IEnumerator CreateObjectList(List<string> TimeStep, string whichTime)
 	{
 
 		var thisTime = new List<ObjectsOnDNA>();
@@ -219,7 +221,7 @@ public class TimeStep : MonoBehaviour
 
 //		Debug.Log (timeStepList [0]);
 
-//		yield return StartCoroutine_Auto (CreateObjects (timeStepList));
+//		yield return StartCoroutine_Auto (CreateObjectList (timeStepList));
 
 //		yield return StartCoroutine_Auto (ParseObjects (ObjectsInCurrentTime, ObjectsInFutureTime));
 //
@@ -290,13 +292,13 @@ public class TimeStep : MonoBehaviour
 			}
 
 
-			yield return StartCoroutine_Auto (CreateObjects (lookForwardThree, "ThreeAhead"));
+			yield return StartCoroutine_Auto (CreateObjectList (lookForwardThree, "ThreeAhead"));
 
-			yield return StartCoroutine_Auto (CreateObjects (lookForwardTwo, "TwoAhead"));
+			yield return StartCoroutine_Auto (CreateObjectList (lookForwardTwo, "TwoAhead"));
 
-			yield return StartCoroutine_Auto (CreateObjects (lookForwardOne, "Future"));
+			yield return StartCoroutine_Auto (CreateObjectList (lookForwardOne, "Future"));
 
-			yield return StartCoroutine_Auto (CreateObjects (timeStepList, "Current"));
+			yield return StartCoroutine_Auto (CreateObjectList (timeStepList, "Current"));
 
 
 
@@ -430,14 +432,19 @@ public class TimeStep : MonoBehaviour
 
 					foreach (ObjectsOnDNA wait in twoAhead)
 					{
-						if (cool.MainType == wait.MainType && cool.Subtype == wait.Subtype && Math.Abs(wait.StartPosition - cool.StartPosition) <= 10 && cool.Length == wait.Length)
+						if (cool.MainType == wait.MainType && Math.Abs(wait.StartPosition - cool.StartPosition) <= 10 && cool.Length == wait.Length)
 						{
+							InstructionObject subNuc = new InstructionObject (cool, wait.Subtype);
+							listOfInstructions.Add (subNuc);
+
 							waitOnIt = true;
 						} else {
 							foreach(ObjectsOnDNA longer in threeAhead)
 							{
-								if (cool.MainType == longer.MainType && cool.Subtype == longer.Subtype && Math.Abs(longer.StartPosition - cool.StartPosition) <= 10 && cool.Length == longer.Length)
+								if (cool.MainType == longer.MainType && Math.Abs(longer.StartPosition - cool.StartPosition) <= 10 && cool.Length == longer.Length)
 								{
+									InstructionObject subNuc = new InstructionObject (cool, longer.Subtype);
+									listOfInstructions.Add (subNuc);
 									waitOnIt = true;
 								}
 							}
@@ -556,8 +563,8 @@ public class TimeStep : MonoBehaviour
 							found = true;
 							Debug.Log ("TM MOVING AND CHANGING SUBTYPE");
 
-							var tempInt2 = tests.StartPosition;
-							string tempString2 = tempInt2.ToString();
+//							var tempInt2 = tests.StartPosition;
+							string tempString2 = tests.StartPosition.ToString();
 
 							InstructionObject firstChangeTM = new InstructionObject (cool, tests.Subtype);
 							InstructionObject thenMoveTM = new InstructionObject (cool, tempString2);
@@ -692,12 +699,12 @@ public class TimeStep : MonoBehaviour
 				ObjectsOnDNA.DeleteObject (joe.TranscriptionSimObject);
 			}
 
-			if (joe.instruction.Contains("0") || joe.instruction.Contains("1") || joe.instruction.Contains("2") || 
+			if ((joe.instruction.Contains("0") || joe.instruction.Contains("1") || joe.instruction.Contains("2") || 
 				joe.instruction.Contains("3") || joe.instruction.Contains("4") || joe.instruction.Contains("5") ||
 				joe.instruction.Contains("6") || joe.instruction.Contains("7") || joe.instruction.Contains("8") || 
-				joe.instruction.Contains("9") ) 
+				joe.instruction.Contains("9")) && !joe.instruction.Contains("Init") ) 
 			{
-				float xPos = Convert.ToInt64 (joe.instruction);
+				var xPos = Convert.ToSingle (joe.instruction);
 
 				ObjectsOnDNA.MoveObject (joe.TranscriptionSimObject, xPos);
 			}
