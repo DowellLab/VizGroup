@@ -69,7 +69,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 								return NewTranscriptionFactor;
 
 			} else if (TF.Subtype == "'POLY_A'") {
-				//This TF is now the correct one! Poly A could not be created from a pdb
+				//This TF is not the correct one! Poly A could not be created from a pdb
 				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("STE13")));
 				
 //				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
