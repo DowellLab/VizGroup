@@ -27,6 +27,8 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 	public static GameObject CreateTranscriptionFactor(ObjectsOnDNA TF)
 	{
 		GameObject[] transcriptionFactors = GameObject.FindGameObjectsWithTag("TranscriptionFactor");
+
+		GameObject NewTranscriptionFactor;
 		
 		var proceedWithCreation = true;
 		
@@ -54,7 +56,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 			// Transcription Factor Color
 			if (TF.Subtype == "'REB1'")
 			{
-				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("REB1")));
+				NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("REB1")));
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 				NewTranscriptionFactor.renderer.material.shader = specular;
 				
@@ -66,12 +68,16 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				NewTranscriptionFactor.name = "TranscriptionFactor";
 				NewTranscriptionFactor.tag = "TranscriptionFactor";
 				NewTranscriptionFactor.gameObject.renderer.material.color = new Color (1, 0, 1);
-								return NewTranscriptionFactor;
+
+				return NewTranscriptionFactor;
 
 			} else if (TF.Subtype == "'POLY_A'") {
 				//This TF is not the correct one! Poly A could not be created from a pdb
-				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("STE13")));
-				
+				NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("STE13")));
+
+//				GameObject NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
+				 
+
 //				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length, TF.Length, TF.Length);		// Scale extends on both sides, so is a bad ultimate choice
 				
@@ -81,7 +87,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				NewTranscriptionFactor.transform.position = new Vector3 (15, 25, 0);
 				
 //				iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, 0.3f, 0), 1.5f);
-				iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, -.5f, 0), 1.5f);
+				iTween.MoveTo (NewTranscriptionFactor, new Vector3 ((TF.StartPosition / 3.5f) - 0.6f, -.5f, -0.5f), 1.5f);
 				
 					
 				NewTranscriptionFactor.name = "TranscriptionFactor";
@@ -91,7 +97,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 					
 				
 			} else if (TF.Subtype == "'TBP'") {
-				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("TBP")));
+				NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("TBP")));
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 				NewTranscriptionFactor.renderer.material.shader = specular;
 				
@@ -107,7 +113,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				
 				
 			} else if (TF.Subtype == "'MCM1'"){
-				GameObject NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
+				NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 				NewTranscriptionFactor.renderer.material.shader = specular;
 				
@@ -124,7 +130,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				
 			} else if (TF.Subtype == "'DAL80'"){
 				
-				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("DAL80")));
+				NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("DAL80")));
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 100f, TF.Length / 100f, TF.Length / 100f);		// Scale extends on both sides, so is a bad ultimate choice
 				
 				TF.StartPosition += TF.Length / 3.5f;
@@ -139,7 +145,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 			} else if (TF.Subtype == "'FLO8'"){
 					
 				Debug.Log("flooooooooooo8 created");
-				GameObject NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("FLO8")));
+				NewTranscriptionFactor = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("FLO8")));
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 550f, TF.Length / 550f, TF.Length / 550f);		// Scale extends on both sides, so is a bad ultimate choice
 					
 					
@@ -155,7 +161,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 						
 			} else {
 				
-				GameObject NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
+				NewTranscriptionFactor = GameObject.CreatePrimitive (PrimitiveType.Cube);
 				NewTranscriptionFactor.transform.localScale = new Vector3 (TF.Length / 3.5f, TF.Length / 3.5f, TF.Length / 3.5f);		// Scale extends on both sides, so is a bad ultimate choice
 				NewTranscriptionFactor.renderer.material.shader = specular;
 				
@@ -170,7 +176,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				}
 		} else {
 		
-			GameObject NewTranscriptionFactor = GameObject.FindGameObjectWithTag("TranscriptionFactor");
+			NewTranscriptionFactor = GameObject.FindGameObjectWithTag("TranscriptionFactor");
 			return NewTranscriptionFactor;
 		}
 		

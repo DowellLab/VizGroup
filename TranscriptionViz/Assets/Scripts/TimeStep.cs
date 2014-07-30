@@ -516,10 +516,18 @@ public class TimeStep : MonoBehaviour
 
 					} else {
 
-						Debug.Log ("Move it on up.");
+						if (UnityEngine.Random.Range(0, 10) >= 5)
+						{
+							Debug.Log ("Move it on up.");
 
-						InstructionObject waitTF = new InstructionObject (cool, "WAIT");
-						listOfInstructions.Add (waitTF);
+							InstructionObject waitTF = new InstructionObject (cool, "WAIT");
+							listOfInstructions.Add (waitTF);
+						} else {
+							Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+							InstructionObject delTF = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+							listOfInstructions.Add (delTF);
+						}
+
 					}
 
 
