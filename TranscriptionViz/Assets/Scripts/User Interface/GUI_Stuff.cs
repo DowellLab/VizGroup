@@ -49,6 +49,29 @@ public class GUI_Stuff : MonoBehaviour
 		paramsOn = false;
 
 		string[] tlist = {"REB1", "MCM1", "RSC3", "TEC1", "STE12", "FLO8", "SFL1", "GAL4"}; 
+		string[] alltlist = {
+			"REB1",
+			"MCM1",
+			"RSC3",
+			"TEC1",
+			"STE12",
+			"FLO8",
+			"SFL1",
+			"GAL4",
+			"DAL80",
+			"GAL4",
+			"GTS1",
+			"HAP3",
+			"NRG1",
+			"PHO2",
+			"PHO4",
+			"RAP1",
+			"RIM101",
+			"SOK2",
+			"STE13",
+			"TBP",
+			"YAP5"
+		}; 
 		tfactorList = new List<string> (tlist);
 		selectedFactorList = new List<string> ();
 		for (int i = 0; i < tfactorList.Count; ++i)
@@ -62,15 +85,17 @@ public class GUI_Stuff : MonoBehaviour
 	//Called every frame
 	void OnGUI ()
 	{
+		//Setup skin for User Interface
 		GUI.skin = test;
 
 
 		if (GUI.Button (new Rect (10, 10, 150, 50), "PARAMETERS"))
 		{ 
 			if (paramsOn)
-					paramsOn = false;
-			if (!paramsOn)
-					paramsOn = true;
+				paramsOn = false;
+			else
+				paramsOn = true;
+			
 		}
 
 		if (paramsOn)
