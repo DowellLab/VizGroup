@@ -116,6 +116,11 @@ public class VizGeneration : MonoBehaviour {
 
 		// Displays current TimeScale
 		GUI.Label (new Rect (175, Screen.height - 120, 100, 20), "Time X" + Time.timeScale.ToString());
+		
+		//Exit Button
+		if (GUI.Button (new Rect (Screen.width - 80 , 0, 80, 20), "EXIT")) {
+			Application.Quit();
+		}
 
 			
 		// Increases by ? every second

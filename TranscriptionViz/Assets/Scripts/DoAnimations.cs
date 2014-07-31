@@ -22,11 +22,14 @@ public class syncObj
 public class DoAnimations : MonoBehaviour
 {
 		
-		public List<syncObj> syncList = new List<syncObj>();
+		public List<syncObj> syncList = new List<syncObj>();		
+		
+		//List of Instruction Objects to be placed on LinkedListNode				
 		public List<InstructionObject> listIO = new List<InstructionObject>();
 		public List<InstructionObject> listIO2 = new List<InstructionObject>();	
 		public List<InstructionObject> listIO3 = new List<InstructionObject>();	
-
+		
+		//Linked list of a list of instruction objects
 		public LinkedList<List<InstructionObject>> ll = new LinkedList<List<InstructionObject>>();
 
 		public IEnumerator parseList (LinkedList<List<InstructionObject>> ll)
@@ -180,35 +183,36 @@ public class DoAnimations : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
+		//Adding/Altering Linked List
 		
-		ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
-		ObjectsOnDNA two = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
-		ObjectsOnDNA three = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
-		
-		InstructionObject IO1 = new InstructionObject(one, "TranscriptionFactorClass.CreateTranscriptionFactor");
-		InstructionObject IO2 = new InstructionObject(two, "NucleosomeClass.CreateNucleosome");
-		InstructionObject IO3 = new InstructionObject(three, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
-		InstructionObject IO4 = new InstructionObject(one, "20");
-		InstructionObject IO5 = new InstructionObject(two, "40");	
-		InstructionObject IO6 = new InstructionObject(three, "10");
-		InstructionObject IO7 = new InstructionObject(three, "35");
-		InstructionObject IO8 = new InstructionObject(two, "2");
-		
-		listIO.Add(IO1);
-		listIO.Add(IO2);
-		listIO.Add(IO3);
-		
-		listIO2.Add(IO4);
-		listIO2.Add(IO5);
-		listIO2.Add(IO6);
-		
-		listIO3.Add(IO7);
-		listIO3.Add(IO8);
-		
-		
-		ll.AddFirst(listIO);
-		ll.AddLast(listIO2);
-		ll.AddLast(listIO3);
+//		ObjectsOnDNA one = new ObjectsOnDNA("Transcription_Factor", "MCM1", 5, 5);
+//		ObjectsOnDNA two = new ObjectsOnDNA("Nucleosome", "Binding", 20, 5);
+//		ObjectsOnDNA three = new ObjectsOnDNA("Transcriptional_Machinery", "Crick", 30, 5);
+//		
+//		InstructionObject IO1 = new InstructionObject(one, "TranscriptionFactorClass.CreateTranscriptionFactor");
+//		InstructionObject IO2 = new InstructionObject(two, "NucleosomeClass.CreateNucleosome");
+//		InstructionObject IO3 = new InstructionObject(three, "TranscriptionalMachineryClass.CreateTranscriptionalMachinery");
+//		InstructionObject IO4 = new InstructionObject(one, "20");
+//		InstructionObject IO5 = new InstructionObject(two, "40");	
+//		InstructionObject IO6 = new InstructionObject(three, "10");
+//		InstructionObject IO7 = new InstructionObject(three, "35");
+//		InstructionObject IO8 = new InstructionObject(two, "2");
+//		
+//		listIO.Add(IO1);
+//		listIO.Add(IO2);
+//		listIO.Add(IO3);
+//		
+//		listIO2.Add(IO4);
+//		listIO2.Add(IO5);
+//		listIO2.Add(IO6);
+//		
+//		listIO3.Add(IO7);
+//		listIO3.Add(IO8);
+//		
+//		
+//		ll.AddFirst(listIO);
+//		ll.AddLast(listIO2);
+//		ll.AddLast(listIO3);
 			
 		}
 					
@@ -217,7 +221,8 @@ public class DoAnimations : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-
+		
+		//execute when space is pressed
 		if (Input.GetKeyDown("space")) {
 			
 			StartCoroutine(parseList(ll));
