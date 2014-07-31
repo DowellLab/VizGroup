@@ -14,12 +14,11 @@ public class cameraZoom : MonoBehaviour {
 		float scroll = Input.GetAxis("Mouse ScrollWheel");
 		if (scroll != 0.0f)
 		{
+			camera.fieldOfView -= scroll*zoomSpeed;
+		
+			camera.fieldOfView = Mathf.Clamp(camera.fieldOfView, minZoom, maxZoom);
 
-				camera.fieldOfView -= scroll*zoomSpeed;
-
-				camera.fieldOfView = Mathf.Clamp(camera.fieldOfView, minZoom, maxZoom);
-
-				Debug.Log (camera.fieldOfView);
+			Debug.Log (camera.fieldOfView);
 
 		}
 	}
