@@ -69,7 +69,7 @@ public class TimeStep : MonoBehaviour
 	public IEnumerator JustWait()
 	{
 		// 0.5f seconds
-		yield return new WaitForSeconds (1.15f);
+		yield return new WaitForSeconds (1.15f / (Time.timeScale));
 	}
 
 
@@ -516,7 +516,7 @@ public class TimeStep : MonoBehaviour
 
 					} else {
 
-						if (UnityEngine.Random.Range(0, 10) >= 5)
+						if (UnityEngine.Random.Range(0, 10) <= 10)
 						{
 							Debug.Log ("Move it on up.");
 

@@ -173,7 +173,7 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 				NewTranscriptionFactor.name = "TranscriptionFactor";
 				NewTranscriptionFactor.tag = "TranscriptionFactor";			
 				return NewTranscriptionFactor;
-				}
+			}
 		} else {
 		
 			NewTranscriptionFactor = GameObject.FindGameObjectWithTag("TranscriptionFactor");
