@@ -51,9 +51,13 @@ public class NucleosomeClass : ObjectsOnDNA
 
 		if (proceedWithCreation == true)
 		{
+		
+			//NewNucleosome = (GameObject) GameObject.Instantiate((Resources.Load<GameObject>("Nucleosome")));
+			//NewNucleosome.AddComponent("MeshRenderer");			
 			NewNucleosome = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 
 			if (Nucleosome.StartPosition != 0) {
+				
 				NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 6f, Nucleosome.Length / 3.5f); // Scale extends on both sides, so is a bad ultimate choice
 			} else {
 				NewNucleosome.transform.localScale = new Vector3 (Nucleosome.Length / 3.5f, Nucleosome.Length / 3f, Nucleosome.Length / 3.5f);

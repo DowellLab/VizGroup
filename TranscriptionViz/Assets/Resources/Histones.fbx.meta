@@ -1,8 +1,24 @@
 fileFormatVersion: 2
-guid: 75818e69afd0247e18a741ae328c6e00
+guid: 9548888c7ddea9444b74ea127023c78b
 ModelImporter:
   serializedVersion: 16
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: polySurface5
+    100004: pSphere1
+    100006: pSphere2
+    100008: transform1
+    100010: transform2
+    400000: //RootNode
+    400002: polySurface5
+    400004: pSphere1
+    400006: pSphere2
+    400008: transform1
+    400010: transform2
+    2300000: polySurface5
+    3300000: polySurface5
+    4300000: polySurface5
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -22,7 +38,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 0
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
