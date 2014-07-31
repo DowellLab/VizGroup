@@ -748,7 +748,7 @@ public class TimeStep : MonoBehaviour
 
 	public void UnpauseTimeStep()
 	{
-		Time.timeScale = 8;
+		Time.timeScale = 1;
 		isPaused = false;
 	}
 
