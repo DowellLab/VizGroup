@@ -42,7 +42,7 @@ public class TimeStep : MonoBehaviour
 	public static LinkedList<List<InstructionObject>> ourLinkedList;
 
 	//Select current File
-	public static string currentFile = "test3.txt"; 
+	public static string currentFile = "RealExampleTest.txt"; 
 
 
 
@@ -69,7 +69,7 @@ public class TimeStep : MonoBehaviour
 	public IEnumerator JustWait()
 	{
 		// 0.5f seconds
-		yield return new WaitForSeconds (1.15f);
+		yield return new WaitForSeconds (1.15f / (Time.timeScale));
 	}
 
 
@@ -516,10 +516,18 @@ public class TimeStep : MonoBehaviour
 
 					} else {
 
-						Debug.Log ("Move it on up.");
+						if (UnityEngine.Random.Range(0, 10) <= 10)
+						{
+							Debug.Log ("Move it on up.");
 
-						InstructionObject waitTF = new InstructionObject (cool, "WAIT");
-						listOfInstructions.Add (waitTF);
+							InstructionObject waitTF = new InstructionObject (cool, "WAIT");
+							listOfInstructions.Add (waitTF);
+						} else {
+							Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+							InstructionObject delTF = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
+							listOfInstructions.Add (delTF);
+						}
+
 					}
 
 
@@ -740,7 +748,7 @@ public class TimeStep : MonoBehaviour
 
 	public void UnpauseTimeStep()
 	{
-		Time.timeScale = 8;
+		Time.timeScale = 1;
 		isPaused = false;
 	}
 

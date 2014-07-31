@@ -85,13 +85,13 @@ public class ObjectsOnDNA
 		{
 			if (tf.transform.position.x == convertPos)
 			{
-				iTween.MoveTo (tf, new Vector3 (convertPos, -20, -5), 2f);
+				iTween.MoveTo (tf, new Vector3 (convertPos, -25, -5), 2f);
 			}
 		}
 
 		foreach (GameObject tf in transcriptionFactors) 
 		{
-			if (tf.transform.position.y == -20)
+			if (tf.transform.position.y == -25)
 			{
 				GameObject.Destroy (tf);
 			}

@@ -12,7 +12,7 @@ using System.Xml;
 
 public class VizGeneration : MonoBehaviour {
 
-	public static int startStep = 66;
+	public static int startStep = 500;
 
 	public int FrameCount = 1;
 //	public int iterations = 0;
@@ -21,6 +21,16 @@ public class VizGeneration : MonoBehaviour {
 	private Rect rect = new Rect(0, Screen.height - 100, 100, 100);
 	public bool started = false;
 	public static bool finished = false;
+
+	// FastForward Button
+	private Rect ffRect = new Rect(100, Screen.height - 100, 100, 100);
+
+	// Slow Button
+	private Rect slowRect = new Rect(200, Screen.height - 100, 100, 100);
+
+	// Display Time.Timescale
+//	public static float currentTimescale = Time.timeScale;
+
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +44,7 @@ public class VizGeneration : MonoBehaviour {
 	void Update () 
 	{
 		if (Input.GetMouseButtonDown(0)) {
+			// Play And Pause
 			if(rect.Contains (new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
 //				Debug.Log(Input.mousePosition);
 				//simulation has not started
@@ -51,13 +62,41 @@ public class VizGeneration : MonoBehaviour {
 					TimeStep.instance.UnpauseTimeStep ();
 				}
 			}
+
+			// Fastforward
+			if (ffRect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+			{
+				if (started == true)
+				{
+					if (Time.timeScale < 64)
+					{
+						Time.timeScale *= 2;
+
+					}
+				}
+			}
+
+			// Slow
+			if (slowRect.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y)))
+			{
+				if (started == true)
+				{
+					if (Time.timeScale >= 0.5f)
+					{
+						Time.timeScale = Time.timeScale / 2;
+
+					}
+				}
+			}
+
+
 			
 		}
 	}
 
 	void OnGUI()
 	{
-		//Display play button if paused
+		// Display play button if paused
 		if (TimeStep.instance.isPaused == false && started == false || finished) {
 			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));
 		} 
@@ -70,6 +109,14 @@ public class VizGeneration : MonoBehaviour {
 		else if (finished) {
 			GUI.DrawTexture (rect, Resources.Load<Texture2D> ("Play_button"));
 		}
+
+		// Always display fastforward button and slow button
+		GUI.DrawTexture (ffRect, Resources.Load<Texture2D> ("fastForward_button"));
+		GUI.DrawTexture (slowRect, Resources.Load<Texture2D> ("slow_button"));
+
+		// Displays current TimeScale
+		GUI.Label (new Rect (175, Screen.height - 120, 100, 20), "Time X" + Time.timeScale.ToString());
+
 			
 		// Increases by ? every second
 			FrameCount++;
