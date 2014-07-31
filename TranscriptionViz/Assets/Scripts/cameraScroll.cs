@@ -4,21 +4,26 @@ using System.Collections;
 public class cameraScroll : MonoBehaviour {
 
 	public int scrollArea;
-	public float scrollSpeed;
-	public int dragSpeed;
-
+	private float scrollSpeed;
+	public float scrollForce;
 	
 	// Use this for initialization
 	void Start () 
 	{
-		scrollArea = 100;
-		scrollSpeed = 100;
+		scrollArea = 50;
+		scrollSpeed = 1;
+		scrollForce = 10;
 	}
 
 
 	// Update is called once per frame
 	void Update () 
 	{
+		//Scroll  push, means it screen movement will accelerate
+		scrollSpeed += (scrollForce * Time.deltaTime);
+
+
+
 		var mPosX = Input.mousePosition.x;
 		var mPosY = Input.mousePosition.y;
 
@@ -26,15 +31,6 @@ public class cameraScroll : MonoBehaviour {
 		// Do camera movement by mouse position
 		if (mPosX < scrollArea) {transform.Translate(Vector3.right * -scrollSpeed * Time.deltaTime);}
 		if (mPosX >= Screen.width-scrollArea) {transform.Translate(Vector3.right * scrollSpeed * Time.deltaTime);}
-//		if (mPosY < scrollArea) {transform.Translate(Vector3.up * -scrollSpeed * Time.deltaTime);}
-//		if (mPosY >= Screen.height-scrollArea) {transform.Translate(Vector3.up * scrollSpeed * Time.deltaTime);}
-		
-//		// Do camera movement by keyboard
-//		transform.Translate(new Vector3(Input.GetAxis("EditorHorizontal") * scrollSpeed * Time.deltaTime, Input.GetAxis("EditorVertical") * scrollSpeed * Time.deltaTime) );
-//		
-//		// Do camera movement by holding down option or middle mouse button and then moving mouse
-//		if ( (Input.GetKey("left alt") || Input.GetKey("right alt")) || Input.GetMouseButton(2) ) {
-//			transform.Translate(new Vector3(Input.GetAxis("Mouse X")*dragSpeed, Input.GetAxis("Mouse Y")*dragSpeed) );
-//		}
+		if (mPosX > scrollArea & mPosX < Screen.width - scrollArea) { scrollSpeed = 0; }
 	}
 }
