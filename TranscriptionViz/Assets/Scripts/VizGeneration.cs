@@ -115,7 +115,7 @@ public class VizGeneration : MonoBehaviour {
 		GUI.DrawTexture (slowRect, Resources.Load<Texture2D> ("slow_button"));
 
 		// Displays current TimeScale
-		GUI.Label (new Rect (500, 10, 100, 20), "Time X" + Time.timeScale.ToString());
+		GUI.Label (new Rect (175, Screen.height - 120, 100, 20), "Time X" + Time.timeScale.ToString());
 
 			
 		// Increases by ? every second
