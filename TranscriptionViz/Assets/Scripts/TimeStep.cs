@@ -264,7 +264,7 @@ public class TimeStep : MonoBehaviour
 		for (k = selectTimeStep; k < (numberTimeSteps + 1); k++)
 		{
 
-			Debug.Log ("NEW TIMESTEP " + k);
+//			Debug.Log ("NEW TIMESTEP " + k);
 
 			listOfInstructions = new List<InstructionObject> ();
 
@@ -383,11 +383,11 @@ public class TimeStep : MonoBehaviour
 						if(cool.StartPosition == tests.StartPosition)
 						{
 							found = true;
-							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
+//							Debug.Log("SAME NUCLEOSOME " + cool.StartPosition);
 
 						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10){
 							found = true;
-							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
+//							Debug.Log ("Time to move" + cool.StartPosition + " to " + tests.StartPosition);
 
 							var tempInt1 = tests.StartPosition;
 							string tempString1 = tempInt1.ToString();
@@ -403,14 +403,14 @@ public class TimeStep : MonoBehaviour
 
 						if (cool.StartPosition == tests.StartPosition) {
 							found = true;
-							Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
+//							Debug.Log ("CHANGE NUCLEOSOME SUBTYPE TO " + tests.Subtype);
 
 							InstructionObject changeNuc = new InstructionObject (cool, tests.Subtype);
 							listOfInstructions.Add (changeNuc);
 
 						} else if (Math.Abs(tests.StartPosition - cool.StartPosition) <= 10) {
 							found = true;
-							Debug.Log ("NUCLEOSOME MOVING AND CHANGING SUBTYPE");
+//							Debug.Log ("NUCLEOSOME MOVING AND CHANGING SUBTYPE");
 
 							var tempInt2 = tests.StartPosition;
 							string tempString2 = tempInt2.ToString();
@@ -453,14 +453,14 @@ public class TimeStep : MonoBehaviour
 
 					if (waitOnIt == false)
 					{
-						Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+//						Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
 
 						InstructionObject delNuc = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
 						listOfInstructions.Add (delNuc);
 
 					} else {
 
-						Debug.Log ("Move it on up.");
+//						Debug.Log ("Move it on up.");
 
 						InstructionObject waitNuc = new InstructionObject (cool, "WAIT");
 						listOfInstructions.Add (waitNuc);
@@ -481,7 +481,7 @@ public class TimeStep : MonoBehaviour
 						if(cool.StartPosition == tests.StartPosition)
 						{
 							found = true;
-							Debug.Log("SAME TF " + cool.StartPosition);
+//							Debug.Log("SAME TF " + cool.StartPosition);
 						} 
 					}
 
@@ -510,7 +510,7 @@ public class TimeStep : MonoBehaviour
 
 					if (waitOnIt == false)
 					{
-						Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+//						Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
 						InstructionObject delTF = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
 						listOfInstructions.Add (delTF);
 
@@ -518,12 +518,12 @@ public class TimeStep : MonoBehaviour
 
 						if (UnityEngine.Random.Range(0, 10) <= 10)
 						{
-							Debug.Log ("Move it on up.");
+//							Debug.Log ("Move it on up.");
 
 							InstructionObject waitTF = new InstructionObject (cool, "WAIT");
 							listOfInstructions.Add (waitTF);
 						} else {
-							Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+//							Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
 							InstructionObject delTF = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
 							listOfInstructions.Add (delTF);
 						}
@@ -546,10 +546,10 @@ public class TimeStep : MonoBehaviour
 						if(cool.StartPosition == tests.StartPosition)
 						{
 							found = true;
-							Debug.Log("SAME TM " + cool.StartPosition);
+//							Debug.Log("SAME TM " + cool.StartPosition);
 						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3){
 							found = true;
-							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
+//							Debug.Log ("MOVE TM" + cool.StartPosition + " to " + tests.StartPosition);
 
 							var tempInt1 = tests.StartPosition;
 							string tempString1 = tempInt1.ToString();
@@ -563,13 +563,13 @@ public class TimeStep : MonoBehaviour
 						if (cool.StartPosition == tests.StartPosition) 
 						{
 							found = true;
-							Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
+//							Debug.Log ("CHANGE TM SUBTYPE TO " + tests.Subtype);
 
 							InstructionObject changeTM = new InstructionObject (cool, tests.Subtype);
 							listOfInstructions.Add (changeTM);
 						} else if (Math.Abs(cool.StartPosition - tests.StartPosition) <= 3) {
 							found = true;
-							Debug.Log ("TM MOVING AND CHANGING SUBTYPE");
+//							Debug.Log ("TM MOVING AND CHANGING SUBTYPE");
 
 //							var tempInt2 = tests.StartPosition;
 							string tempString2 = tests.StartPosition.ToString();
@@ -587,7 +587,7 @@ public class TimeStep : MonoBehaviour
 				// HANDLING DELETION!!!
 				if (!found)
 				{
-					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
+//					Debug.Log ("DELETE " + cool.MainType + " at position " + cool.StartPosition);
 					InstructionObject delTM = new InstructionObject (cool, "ObjectsOnDNA.DeleteObject");
 					listOfInstructions.Add (delTM);
 				}
@@ -657,7 +657,7 @@ public class TimeStep : MonoBehaviour
 
 			if (!found)
 			{
-				Debug.Log ("CREATE " + tests.MainType + " at Position " + tests.StartPosition);
+//				Debug.Log ("CREATE " + tests.MainType + " at Position " + tests.StartPosition);
 
 				if (tests.MainType == "'Nucleosome'")
 				{
