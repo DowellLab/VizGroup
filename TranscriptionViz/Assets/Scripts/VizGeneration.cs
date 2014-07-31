@@ -31,10 +31,16 @@ public class VizGeneration : MonoBehaviour {
 	// Display Time.Timescale
 //	public static float currentTimescale = Time.timeScale;
 
+	public static bool splashed = false;
+
 
 	// Use this for initialization
 	void Start () {
-	
+		if(!splashed)
+		{
+			Application.LoadLevel("Splash");
+			splashed = true;
+		}
 		StartCoroutine_Auto (TimeStep.instance.InitialTimestep ());
 
 
