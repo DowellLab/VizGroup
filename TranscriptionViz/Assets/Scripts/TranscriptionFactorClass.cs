@@ -40,8 +40,15 @@ public class TranscriptionFactorClass : ObjectsOnDNA
 		{
 			if (tFactor.transform.position.x == convertPos && tFactor.transform.position.y == 12.5f)
 			{
-				iTween.MoveTo (tFactor, new Vector3 (convertPos, 0.3f, 0), 2f);
-				proceedWithCreation = false;
+				if (TF.Subtype == "'POLY_A'") {
+					iTween.MoveTo (tFactor, new Vector3 (convertPos, -0.5f, -0.5f), 2f);
+					proceedWithCreation = false;
+
+				} else {
+
+					iTween.MoveTo (tFactor, new Vector3 (convertPos, 0.3f, 0), 2f);
+					proceedWithCreation = false;
+				}
 			}
 			
 		}
