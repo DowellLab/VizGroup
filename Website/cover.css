@@ -27,7 +27,7 @@ a:hover {
 html,
 body {
   height: 100%;
-  background-image:url("/Users/slim/Downloads/BigTheCell.jpg");
+  background-image:url("./BigTheCell.jpg");
 }
 body {
   color: #fff;
