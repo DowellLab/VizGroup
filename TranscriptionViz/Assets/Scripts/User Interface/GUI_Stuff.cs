@@ -1,43 +1,81 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+
+/* string ComboBoxList(Rect r, List<string> s)
+ * r - rectangle object used to designate position & dimensions in screen space
+ * s - list of string objects that will act as the drop down list.
+ * Return Value - Returns the string object selected by user
+ * 
+ * Function - Creates a dropdown menu with a number of options designated by the user, 
+ * also known as a combobox. If the number of items in the menu exceeds the height of the rectangle,
+ * a scrollbar pops up and the user can scroll through the items.
+ * 
+ */
+
+/* string ComboBox(Rect r, List<string> s)
+ * 
+ * Function - Same as ComboBoxList but without the scrollbar
+ * 
+ */
+
+/* List<string> ComboToggleList(Rect r, List<string> s)
+ * 'r' - rectangle object used to designate position & dimensions in screen space.
+ * 's' - list of string objects that will act as the drop down toggle list.
+ * Return Value - Returns a list of the string objects selected by user
+ * 
+ * Function - Creates a dropdown toggle menu with a number of options designated by the user, 
+ * also known as a combobox. If the number of items in the menu exceeds the height of the rectangle,
+ * a scrollbar pops up and the user can scroll through the items.
+ * 
+ */
+
+
+/* void DisplaySection(string sectionLabel, Rect sectionRect, bool DisplayLabel)
+ * 'sectionLabel' - section from simParams object whose attributes we wish to display.
+ * 'sectionRect' - rectangle object used to designate position & dimensions in screen space.
+ * 'DisplayLabel' - flag indicating whether to display the actual section name or not.
+ * Return Value - none
+ * 
+ * Function - This function is very specific to the app and simParams class. It takes a 
+ * section (sectionLabel) from the Params structure and displays all of that section's 
+ * attributes with fields to change the attributes.
+ */
+
+
 
 public class GUI_Stuff : MonoBehaviour
 {
 	private Rect windowRect = new Rect (100, 100, 500, 500);
 
-	public List<string> fullSectionList;					//List of all sections
+	//List of all sections
+	public List<string> fullSectionList;	
+
 	public List<string> tfactorList;
 	public List<string> selectedFactorList;
 
-	private List<bool> factorToggle = new List<bool>();		//Says which transcription factors are on/off
+	//Says which transcription factors are on/off
+	private List<bool> factorToggle = new List<bool>();		
 
 	bool editing = false;
 	string selectedItem = "";
-
-	int offset = 100;
-
-
-	//Direct buffer to the screen
+	
+	//simParams object holding all parameters for current session.
 	public simParams GUIParams;
-
-	public GUIStyle header;
+	
 	public GUIStyle tinyText;
-
 	public GUISkin test;
 
-	bool showButton;
+	//Indicating whether to show parameters window or not
 	bool paramsOn;
 
-
+	//Variables for the scrolling GUI elements
 	public Vector2 scrollPosition1 = Vector2.zero;
 	public Vector2 scrollPosition2 = Vector2.zero;
-
 	public float vSbarValue;
 
-
-	//"ACTIVE" FUNCIONS--------------------------------------------
+	
 	//Called once for initialization
 	void Start()
 	{
@@ -45,10 +83,10 @@ public class GUI_Stuff : MonoBehaviour
 		fullSectionList = GUIParams.initialize_defaults ();
 		fullSectionList = GUIParams.read ("SAMPLE_TRAPP.ini");
 
-		showButton = true;
 		paramsOn = false;
 
 		string[] tlist = {"REB1", "MCM1", "RSC3", "TEC1", "STE12", "FLO8", "SFL1", "GAL4"}; 
+		//An attempt at an exhaustive list of all transcription factors that could be possible
 		string[] alltlist = {
 			"REB1",
 			"MCM1",
@@ -88,7 +126,7 @@ public class GUI_Stuff : MonoBehaviour
 		//Setup skin for User Interface
 		GUI.skin = test;
 
-
+		//Button to open the GUI window
 		if (GUI.Button (new Rect (10, 10, 150, 50), "PARAMETERS"))
 		{ 
 			if (paramsOn)
@@ -98,41 +136,33 @@ public class GUI_Stuff : MonoBehaviour
 			
 		}
 
+		//Open GUI window
 		if (paramsOn)
 		{
 			windowRect = GUI.Window (0, windowRect, WindowFunction, "My Window");
 		}
-
-		//Debug.Log (paramsOn);
-		
-		
-		          
-
-	
 	}
 
 
 
-	
-	//"INACTIVE" FUNCIONS--------------------------------------------
+	// Creates the window encapsulating the GUI elements
 	void WindowFunction (int WindowID)
 	{
 
-		//Rect sectionRect = new Rect (10, 20, 70, 20);
 		Rect tfactorRect = new Rect (250, 20, 70, 20);
 
 
-		//Display 'TRAPP', 'NUCLEOSOME', 'RNAP' sections
+		//Display 'TRAPP', 'NUCLEOSOME', 'RNAP' panel sections
 		DisplaySection ("TRAPP", new Rect (15, 20, 70, 20), true);
 		DisplaySection ("NUCLEOSOME", new Rect (15, 200, 70, 20), true);
 		DisplaySection ("RNAP", new Rect (15, 300, 70, 20), true);
 
 
-		//Scrollable list of checkboxes
+		//Scrollable list of Transcription Factor checkboxes
 		selectedFactorList = ComboBoxToggleList (tfactorRect, tfactorList);
 
 
-		//Display editable transcription factor dropdown
+		//Display editable Transcription Factor dropdown
 		string item = ComboBoxButtonList (new Rect(320, 200, 60, 20), selectedFactorList);
 
 		//If factor is selected to edit
@@ -146,6 +176,7 @@ public class GUI_Stuff : MonoBehaviour
 			DisplaySection(item, new Rect(325, 225, 50, 20), false);
 		}
 
+		//Writes out the user defined settings to new .ini file.
 		if(GUI.Button (new Rect(275, 375, 150, 50), "SUBMIT"))
 			GUIParams.write ("GUIParamsTest.ini");
 
